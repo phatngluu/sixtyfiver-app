@@ -1,0 +1,49 @@
+<form method="POST" enctype="multipart/form-data">
+  <input type="file" name="uploadedFiles" multiple>
+  <button type="submit" role="button">Upload File</button>
+</form>
+
+<br>
+<p id="uploadedPercentage"></p>
+
+<script>
+  // define URL and for element
+  const url = "/api/warehouse/upload";
+  const form = document.querySelector('form');
+  const uploadedPercentage = document.getElementById('uploadedPercentage');
+
+  // add event listener
+  form.addEventListener('submit', e => {
+
+    // disable default action
+    e.preventDefault();
+
+    // collect files
+    const files = document.querySelector('[name=uploadedFiles]').files;
+    const formData = new FormData();
+    Array.from(files).forEach(file => {
+      // Changing "uploadedFiles" leads to change "req.files.uploadedFiles" in app.js
+      formData.append("uploadedFiles", file);
+    });
+    // post form data
+    const xhr = new XMLHttpRequest();
+
+    // log response
+    xhr.onload = () => {
+      console.log(xhr.responseText);
+    };
+
+    xhr.upload.onprogress = (event) => {
+      // event.loaded returns how many bytes are downloaded
+      // event.total returns the total number of bytes
+      // event.total is only available if server sends `Content-Length` header
+      console.log(`Uploaded ${event.loaded} / ${event.total} bytes`);
+      uploadedPercentage.textContent = Math.round(event.loaded/event.total*100);
+    }
+
+
+    // create and send the reqeust
+    xhr.open('POST', url);
+    xhr.send(formData);
+  });
+</script>
