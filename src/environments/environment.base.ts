@@ -5,6 +5,8 @@ export const environment = {
 
   // Warehouse
   allFilesUrl: baseUrl + 'api/warehouse/all',
+  deleteFileUrl: baseUrl + 'api/warehouse/',
+  downloadFileUrl: baseUrl + 'api/warehouse/download?id=',
 
   // Colleague Approval Endpoints
   getColleagueApprovalUnlinkBankAccount: 'api/action/colleagueApproval/unlinkSourceAccount',

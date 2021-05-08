@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { WarehouseService } from './shared/service/warehouse.service';
-import { File } from './shared/models/file'
+import { FileModel } from './shared/models/file-model'
 
 @Component({
   selector: 'sf-warehouse',
@@ -8,16 +8,9 @@ import { File } from './shared/models/file'
   styleUrls: ['./warehouse.component.css']
 })
 export class WarehouseComponent implements OnInit {
-  fetchedFiles: File[];
-
-  constructor(
-    private warehouseService: WarehouseService,
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.warehouseService.getAllFiles().subscribe((data) => {
-      this.fetchedFiles = data;
-    })
-  }ß
+  }
 
 }

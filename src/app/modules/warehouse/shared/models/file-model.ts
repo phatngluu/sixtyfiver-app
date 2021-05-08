@@ -1,4 +1,4 @@
-export interface File {
+export interface FileModel {
   size: number;
   type: string;
   name: string;

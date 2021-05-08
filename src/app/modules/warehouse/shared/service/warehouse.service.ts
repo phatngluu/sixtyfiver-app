@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { File } from '../models/file'
+import { FileModel } from '../models/file-model'
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -14,16 +14,22 @@ export class WarehouseService {
     private http: HttpClient
   ) { }
 
-  getAllFiles(): Observable<File[]> {
-    return this.http.get<File[]>(environment.allFilesUrl);
+  getAllFiles(): Observable<FileModel[]> {
+    return this.http.get<FileModel[]>(environment.allFilesUrl);
   }
 
-  getBeautifySize(nBytes) {
-    if (nBytes <= 1024) return `${nBytes} B`;
-    const aMultiples = ["KB", "MB", "GB", "TB"];
-    for (let nMultiple = 0, nApprox = nBytes / 1024; nApprox > 1; nApprox /= 1024, nMultiple++) {
-        var sOutput = nApprox.toFixed(1) + " " + aMultiples[nMultiple];
-    }
-    return sOutput;
+  deleteFile(fileid: string): Observable<any> {
+    console.log(environment.deleteFileUrl + fileid);
+
+    return this.http.delete(environment.deleteFileUrl + fileid);
+  }
+
+  getSelectedFileNames(selectedFileIds: Set<string>, fileInfos: FileModel[]): string {
+    let selectedFileNames = fileInfos.filter(fileInfo => selectedFileIds.has(fileInfo.fileid)).map(fileInfo => `<li>${fileInfo.name}</li>`).join('');
+    return `<ul>${selectedFileNames}</ul>`;
+  }
+
+  downloadFile(fileid: string): Observable<any>{
+    return this.http.get<any>(environment.downloadFileUrl + fileid);
   }
 }

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WarehouseFileItemComponent } from './warehouse-file-item.component';
+import { LayoutShellComponent } from './layout-shell.component';
 
-describe('WarehouseFileItemComponent', () => {
-  let component: WarehouseFileItemComponent;
-  let fixture: ComponentFixture<WarehouseFileItemComponent>;
+describe('LayoutShellComponent', () => {
+  let component: LayoutShellComponent;
+  let fixture: ComponentFixture<LayoutShellComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ WarehouseFileItemComponent ]
+      declarations: [ LayoutShellComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(WarehouseFileItemComponent);
+    fixture = TestBed.createComponent(LayoutShellComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
