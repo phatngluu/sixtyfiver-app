@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { WarehouseRoutingModule } from './warehouse-routing.module';
 import { WarehouseComponent } from './warehouse.component';
@@ -7,6 +8,8 @@ import { WarehouseUploaderComponent } from './shared/components/warehouse-upload
 import { WarehouseFinderComponent } from './shared/components/warehouse-finder/warehouse-finder.component';
 import { WarehouseFileItemComponent } from './shared/components/warehouse-file-item/warehouse-file-item.component';
 
+// UI Modules
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 
 @NgModule({
   declarations: [
@@ -17,7 +20,11 @@ import { WarehouseFileItemComponent } from './shared/components/warehouse-file-i
   ],
   imports: [
     CommonModule,
-    WarehouseRoutingModule
+    FormsModule,
+    WarehouseRoutingModule,
+
+    // UI Modules
+    NzCheckboxModule
   ]
 })
 export class WarehouseModule { }
