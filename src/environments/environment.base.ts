@@ -1,6 +1,10 @@
+const baseUrl = 'http://localhost:3000/';
+
 export const environment = {
+  // Base url
+
   // Warehouse
-  allFilesUrl: 'http://localhost:3000/api/warehouse/all',
+  allFilesUrl: baseUrl + 'api/warehouse/all',
 
   // Colleague Approval Endpoints
   getColleagueApprovalUnlinkBankAccount: 'api/action/colleagueApproval/unlinkSourceAccount',
