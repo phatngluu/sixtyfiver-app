@@ -4,21 +4,32 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FileManagerComponent } from './warehouse/file-manager/file-manager.component';
-import { FileUploaderComponent } from './warehouse/file-uploader/file-uploader.component';
+import { NZ_I18N } from 'ng-zorro-antd/i18n';
+import { vi_VN } from 'ng-zorro-antd/i18n';
+import { registerLocaleData } from '@angular/common';
+import vi from '@angular/common/locales/vi';
+import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { IconsProviderModule } from './icons-provider.module';
+import { SharedModule } from './shared/shared.module';
+
+
+registerLocaleData(vi);
 
 @NgModule({
   declarations: [
-    AppComponent,
-    FileManagerComponent,
-    FileUploaderComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    IconsProviderModule,
+    SharedModule,
   ],
-  providers: [],
+  providers: [{ provide: NZ_I18N, useValue: vi_VN }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

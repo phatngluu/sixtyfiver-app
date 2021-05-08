@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FileManagerComponent } from './file-manager.component';
+import { WarehouseUploaderComponent } from './warehouse-uploader.component';
 
-describe('FileManagerComponent', () => {
-  let component: FileManagerComponent;
-  let fixture: ComponentFixture<FileManagerComponent>;
+describe('WarehouseUploaderComponent', () => {
+  let component: WarehouseUploaderComponent;
+  let fixture: ComponentFixture<WarehouseUploaderComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FileManagerComponent ]
+      declarations: [ WarehouseUploaderComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FileManagerComponent);
+    fixture = TestBed.createComponent(WarehouseUploaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

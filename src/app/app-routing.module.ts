@@ -1,21 +1,19 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { FileManagerComponent } from './warehouse/file-manager/file-manager.component';
-import { FileUploaderComponent } from './warehouse/file-uploader/file-uploader.component';
+import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
+  { path: '', pathMatch: 'full', redirectTo: '/welcome' },
   {
     path: 'warehouse',
-    children: [
-      { path: '', component: FileManagerComponent },
-      { path: 'file-manager', component: FileManagerComponent },
-      { path: 'file-uploader', component: FileUploaderComponent }
-    ]
-  }
+    loadChildren: () =>
+      import('./modules/warehouse/warehouse.module').then(
+        (m) => m.WarehouseModule
+      ),
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
