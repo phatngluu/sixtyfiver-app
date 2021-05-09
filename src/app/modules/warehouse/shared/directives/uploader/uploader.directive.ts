@@ -6,7 +6,7 @@ import { Directive, EventEmitter, HostBinding, HostListener, Output } from '@ang
 export class UploaderDirective {
 
   @Output() onFileDropped = new EventEmitter<any>();
-  @HostBinding('style.background-color') public background = '#fff';
+  @HostBinding('style.background-color') public background = '#195ad3';
   @HostBinding('style.opacity') public opacity = '0';
 
   //Dragover listener, when something is dragged over our host element
@@ -24,7 +24,7 @@ export class UploaderDirective {
     console.log('dragleave');
     evt.preventDefault();
     evt.stopPropagation();
-    this.background = '#fff'
+    this.background = '#195ad3'
     this.opacity = '0'
   }
 

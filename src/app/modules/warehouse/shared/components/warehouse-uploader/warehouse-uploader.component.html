@@ -1,5 +1,7 @@
 <div
+  #uploadContainer
   class="warehouse-uploader"
+  [ngStyle]="{'top': offsetTop, 'left': offsetLeft, 'width': offsetWidth, 'height': offsetHeight}"
   sfUploader
   (onFileDropped)="uploadFile($event)"
 >Drop a file here</div>

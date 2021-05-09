@@ -1,5 +1,6 @@
 .warehouse-uploader{
-  border: 2px dashed #eeeeee;
-  padding: 3em 6em;
-  background-color: transparent;
+  border: 2px dashed #195ad3;
+  background-color: rgb(15, 84, 211);
+  position: absolute;
+  z-index: 1;
 }
