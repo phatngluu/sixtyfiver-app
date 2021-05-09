@@ -1,16 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { WarehouseService } from './shared/service/warehouse.service';
-import { FileModel } from './shared/models/file-model'
+import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { WarehouseFinderComponent } from './shared/components/warehouse-finder/warehouse-finder.component';
 
 @Component({
   selector: 'sf-warehouse',
   templateUrl: './warehouse.component.html',
-  styleUrls: ['./warehouse.component.css']
+  styleUrls: ['./warehouse.component.css'],
 })
 export class WarehouseComponent implements OnInit {
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
+  @ViewChild('warehouseFinder') warehouseFinder: ElementRef<WarehouseFinderComponent>;
+
+  ngAfterViewInit(): void {
+
+    console.log(this.warehouseFinder);
+    console.log(this.warehouseFinder.nativeElement);
   }
 
+  ngOnInit(): void {}
 }

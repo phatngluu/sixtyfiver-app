@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { WarehouseRoutingModule } from './warehouse-routing.module';
 
+// Directives
+import { UploaderDirective } from './shared/directives/uploader/uploader.directive';
+
 // Components
 import { WarehouseComponent } from './warehouse.component';
 import { WarehouseUploaderComponent } from './shared/components/warehouse-uploader/warehouse-uploader.component';
@@ -18,10 +21,16 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { NzUploadModule } from 'ng-zorro-antd/upload';
+
+
 
 @NgModule({
   declarations: [
+    // Directives
+
     // Components
     WarehouseComponent,
     WarehouseFinderComponent,
@@ -29,6 +38,7 @@ import { NzSpaceModule } from 'ng-zorro-antd/space';
 
     // Pipes
     BeautifySizePipe,
+    UploaderDirective,
   ],
   imports: [
     CommonModule,
@@ -42,7 +52,9 @@ import { NzSpaceModule } from 'ng-zorro-antd/space';
     NzIconModule,
     NzButtonModule,
     NzModalModule,
-    NzSpaceModule
+    NzMessageModule,
+    NzSpaceModule,
+    NzUploadModule
   ],
   exports: [
     BeautifySizePipe

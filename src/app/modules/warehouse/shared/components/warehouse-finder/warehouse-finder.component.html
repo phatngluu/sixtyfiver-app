@@ -6,50 +6,29 @@
 
   <span *nzSpaceItem>Selected {{ setOfCheckedId.size }} items</span>
 
-  <button
-    *nzSpaceItem
-    nz-button
-    nzDanger
-    nzShape="square"
-    [disabled]="setOfCheckedId.size === 0"
-    (click)="onDownloadFiles()"
-  ><i nz-icon nzType="download" nzTheme="outline"></i></button>
+  <button *nzSpaceItem nz-button nzShape="square" [disabled]="setOfCheckedId.size === 0" (click)="onDownloadFiles()"><i
+      nz-icon nzType="download" nzTheme="outline"></i></button>
 
-  <button
-    *nzSpaceItem
-    nz-button
-    nzDanger
-    nzShape="square"
-    [disabled]="setOfCheckedId.size === 0"
-    (click)="showDeleteConfirm()"
-  ><i nz-icon nzType="delete"></i></button>
-
-  <a *nzSpaceItem nz-typography>Link</a>
+  <button *nzSpaceItem nz-button nzDanger nzShape="square" [disabled]="setOfCheckedId.size === 0"
+    (click)="showDeleteConfirm()"><i nz-icon nzType="delete"></i></button>
 </nz-space>
 
 <!-- Warehouse Finder -->
-<nz-table
-  #rowSelectionTable
-  nzShowPagination
-  nzShowSizeChanger
-  [nzData]="fetchedFiles"
-  (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
->
+<nz-table #rowSelectionTable [nzShowPagination]="false" [nzShowSizeChanger]="false" [nzPageSize]="fetchedFiles.length" [nzData]="fetchedFiles"
+  (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
   <thead>
     <tr>
       <th [nzChecked]="checked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="onAllChecked($event)"></th>
-      <th nzWidth="400px">Name</th>
-      <th nzWidth="150px">Date</th>
-      <th nzWidth="100px">Size</th>
-      <th nzWidth="100px">Type</th>
+      <th>Name</th>
+      <th nzMinWidth="150px">Date</th>
+      <th>Size</th>
+      <th>Type</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let fileInfo of rowSelectionTable.data">
-      <td
-        [nzChecked]="setOfCheckedId.has(fileInfo.fileid)"
-        (nzCheckedChange)="onItemChecked(fileInfo.fileid, $event)"
-      ></td>
+      <td [nzChecked]="setOfCheckedId.has(fileInfo.fileid)" (nzCheckedChange)="onItemChecked(fileInfo.fileid, $event)">
+      </td>
       <td>{{fileInfo.name}}</td>
       <td>{{fileInfo.date | date}}</td>
       <td>{{fileInfo.size | beautifySize }}</td>

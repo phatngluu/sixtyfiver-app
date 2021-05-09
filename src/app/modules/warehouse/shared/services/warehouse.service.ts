@@ -4,14 +4,13 @@ import { FileModel } from '../models/file-model'
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class WarehouseService {
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
   ) { }
 
   getAllFiles(): Observable<FileModel[]> {
@@ -29,7 +28,7 @@ export class WarehouseService {
     return `<ul>${selectedFileNames}</ul>`;
   }
 
-  downloadFile(fileid: string): Observable<any>{
-    return this.http.get<any>(environment.downloadFileUrl + fileid);
+  downloadFile(fileid: string): Observable<Blob>{
+    return this.http.get(environment.downloadFileUrl + fileid, {responseType: 'blob'});
   }
 }

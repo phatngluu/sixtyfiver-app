@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, TemplateRef, Input, OnInit, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
 import { FileModel } from '../../models/file-model';
-import { WarehouseService } from '../../service/warehouse.service';
+import { WarehouseService } from '../../services/warehouse.service';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzUploadChangeParam } from 'ng-zorro-antd/upload';
 
 @Component({
   selector: 'sf-warehouse-finder',
@@ -68,6 +69,7 @@ export class WarehouseFinderComponent implements OnInit {
               this.warehouseService.getAllFiles().subscribe((data) => {
                 this.fetchedFiles = data;
               });
+              resolve(1);
               this.message.create('success', `Files deleted`);
             },
             () => {
@@ -100,16 +102,36 @@ export class WarehouseFinderComponent implements OnInit {
   onDownloadFiles() {
     if (this.setOfCheckedId.size > 0){
       this.setOfCheckedId.forEach(fileid => {
+        let fileInfo = this.fetchedFiles.filter(file => file.fileid === fileid)[0];
         this.warehouseService.downloadFile(fileid).toPromise()
           .then(
-            () => {
-              this.message.create('success', `Downloaded ${fileid}`);
+            (fileBlob) => {
+              fileBlob = new Blob([fileBlob], {type: fileInfo.type});
+              const objectUrl = window.URL.createObjectURL(fileBlob);
+              let downloadLink = document.createElement('a');
+              downloadLink.href = objectUrl;
+              downloadLink.download = fileInfo.name;
+              downloadLink.click();
+              downloadLink.remove();
+              this.message.create('success', `Downloaded ${fileInfo.name}`);
             },
             () => {
-              this.message.create('error', `Failed to download ${fileid}`);
+              this.message.create('error', `Failed to download ${fileInfo.name}`);
             }
           )
       });
+    }
+  }
+
+  handleChange({ file, fileList }: NzUploadChangeParam): void {
+    const status = file.status;
+    if (status !== 'uploading') {
+      console.log(file, fileList);
+    }
+    if (status === 'done') {
+      this.message.success(`${file.name} file uploaded successfully.`);
+    } else if (status === 'error') {
+      this.message.error(`${file.name} file upload failed.`);
     }
   }
 }
