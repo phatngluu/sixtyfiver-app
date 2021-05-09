@@ -14,7 +14,7 @@
 </nz-space>
 
 <!-- Warehouse Finder -->
-<nz-table #rowSelectionTable [nzShowPagination]="false" [nzShowSizeChanger]="false" [nzPageSize]="fetchedFiles.length" [nzData]="fetchedFiles"
+<nz-table #rowSelectionTable [nzShowPagination]="true" [nzShowSizeChanger]="true" [nzData]="fetchedFiles"
   (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
   <thead>
     <tr>
