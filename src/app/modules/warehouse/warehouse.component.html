@@ -1,4 +1,21 @@
-<sf-warehouse-finder #warehouseFinder>
+<sf-warehouse-finder-toolbar
+  [fetchedFiles]="fetchedFiles"
+  [setOfCheckedId]="setOfCheckedId"
+  (refetchFilesNeeded)="refetchFiles()"
+>
+</sf-warehouse-finder-toolbar>
+<sf-warehouse-finder
+  #warehouseContainer
+  sfFinder
+  (draggedOverFinder)="showUploader = true"
+  (setOfCheckedIdSender)="updateSetOfCheckedId($event)"
+  [fetchedFiles]="fetchedFiles"
+>
 </sf-warehouse-finder>
-<sf-warehouse-uploader [finderOffset]="finderOffset">
+<sf-warehouse-uploader
+  sfUploader
+  [finderOffset]="finderOffset"
+  [hidden]="!showUploader"
+  (draggedLeaveUploader)="showUploader = false"
+>
 </sf-warehouse-uploader>

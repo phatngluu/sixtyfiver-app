@@ -8,7 +8,10 @@ import {
   ChangeDetectorRef,
   AfterViewChecked,
 } from '@angular/core';
+import { Router } from '@angular/router';
+import { FileModel } from './shared/models/file-model';
 import { FinderOffset } from './shared/models/finder-offset';
+import { WarehouseService } from './shared/services/warehouse.service';
 
 @Component({
   selector: 'sf-warehouse',
@@ -19,11 +22,12 @@ import { FinderOffset } from './shared/models/finder-offset';
   },
 })
 export class WarehouseComponent implements OnInit, AfterViewInit, AfterViewChecked {
-
+  public fetchedFiles: FileModel[];
   public finderOffset: FinderOffset;
+  public showUploader: boolean = false;
+  public setOfCheckedId: Set<string>;
 
-  @ViewChild('warehouseFinder', { read: ElementRef, static: false }) warehouseFinder: ElementRef;
-
+  @ViewChild('warehouseContainer', { read: ElementRef, static: false }) warehouseFinder: ElementRef;
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     let innerContentElement = this.warehouseFinder.nativeElement.parentNode.parentNode;
@@ -35,8 +39,17 @@ export class WarehouseComponent implements OnInit, AfterViewInit, AfterViewCheck
     }
   }
 
+  constructor(
+    private warehouseService: WarehouseService,
+    private cdref : ChangeDetectorRef,
+  ) {}
 
-  constructor(private cdref: ChangeDetectorRef) {}
+  ngOnInit(): void {
+    this.warehouseService.getAllFiles().subscribe((data) => {
+      this.fetchedFiles = data;
+    })
+  }
+
   ngAfterViewChecked(): void {
     this.cdref.detectChanges();
     let innerContentElement = this.warehouseFinder.nativeElement.parentNode.parentNode;
@@ -58,7 +71,15 @@ export class WarehouseComponent implements OnInit, AfterViewInit, AfterViewCheck
     }
   }
 
-  ngOnInit(): void {}
-
   ngOnDestroy() {}
+
+  updateSetOfCheckedId(setOfCheckedId) {
+    this.setOfCheckedId = setOfCheckedId;
+  }
+
+  refetchFiles() {
+    this.warehouseService.getAllFiles().subscribe((data) => {
+      this.fetchedFiles = data;
+    })
+  }
 }

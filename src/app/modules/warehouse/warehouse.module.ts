@@ -5,11 +5,13 @@ import { WarehouseRoutingModule } from './warehouse-routing.module';
 
 // Directives
 import { UploaderDirective } from './shared/directives/uploader/uploader.directive';
+import { FinderDirective } from './shared/directives/finder/finder.directive';
 
 // Components
 import { WarehouseComponent } from './warehouse.component';
 import { WarehouseUploaderComponent } from './shared/components/warehouse-uploader/warehouse-uploader.component';
 import { WarehouseFinderComponent } from './shared/components/warehouse-finder/warehouse-finder.component';
+import { WarehouseFinderToolbarComponent } from './shared/components/warehouse-finder-toolbar/warehouse-finder-toolbar.component';
 
 // Pipes
 import { BeautifySizePipe } from './shared/pipes/beautify-size/beautify-size.pipe';
@@ -30,6 +32,8 @@ import { NzUploadModule } from 'ng-zorro-antd/upload';
 @NgModule({
   declarations: [
     // Directives
+    UploaderDirective,
+    FinderDirective,
 
     // Components
     WarehouseComponent,
@@ -38,7 +42,7 @@ import { NzUploadModule } from 'ng-zorro-antd/upload';
 
     // Pipes
     BeautifySizePipe,
-    UploaderDirective,
+    WarehouseFinderToolbarComponent,
   ],
   imports: [
     CommonModule,

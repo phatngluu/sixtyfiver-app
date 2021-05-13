@@ -1,0 +1,11 @@
+<nz-space [nzSplit]="spaceSplit">
+  <ng-template #spaceSplit>
+    <nz-divider nzType="vertical"></nz-divider>
+  </ng-template>
+
+  <button *nzSpaceItem nz-button nzShape="square" [disabled]="numberOfCheckedItems === 0"
+    (click)="onDownloadFiles()"><i nz-icon nzType="download" nzTheme="outline"></i></button>
+
+  <button *nzSpaceItem nz-button nzDanger nzShape="square" [disabled]="numberOfCheckedItems === 0"
+    (click)="showDeleteConfirm()"><i nz-icon nzType="delete"></i></button>
+</nz-space>
