@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { FileModel } from '../models/file-model'
+import { FileModel } from '../models/file-model';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -24,11 +24,13 @@ export class WarehouseService {
   }
 
   getSelectedFileNames(selectedFileIds: Set<string>, fileInfos: FileModel[]): string {
-    let selectedFileNames = fileInfos.filter(fileInfo => selectedFileIds.has(fileInfo.fileid)).map(fileInfo => `<li>${fileInfo.name}</li>`).join('');
+    const selectedFileNames = fileInfos
+      .filter(fileInfo => selectedFileIds.has(fileInfo.fileid))
+      .map(fileInfo => `<li>${fileInfo.name}</li>`).join('');
     return `<ul>${selectedFileNames}</ul>`;
   }
 
-  downloadFile(fileid: string): Observable<Blob>{
-    return this.http.get(environment.downloadFileUrl + fileid, {responseType: 'blob'});
+  downloadFile(fileid: string): Observable<Blob> {
+    return this.http.get(environment.downloadFileUrl + fileid, { responseType: 'blob' });
   }
 }

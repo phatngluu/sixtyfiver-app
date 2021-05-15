@@ -1,7 +1,5 @@
-import { Component, OnInit, HostListener, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FileModel } from '../../models/file-model';
-import { WarehouseService } from '../../services/warehouse.service';
-import { NzUploadChangeParam } from 'ng-zorro-antd/upload';
 
 @Component({
   selector: 'sf-warehouse-finder',
@@ -10,51 +8,49 @@ import { NzUploadChangeParam } from 'ng-zorro-antd/upload';
 })
 export class WarehouseFinderComponent implements OnInit {
   @Input() fetchedFiles: FileModel[];
-  checked = false;
-  indeterminate = false;
-  listOfData: ReadonlyArray<FileModel> = [];
-  listOfCurrentPageData: ReadonlyArray<FileModel> = [];
-  setOfCheckedId = new Set<string>();
-  @Output() setOfCheckedIdSender = new EventEmitter();
+  @Input() checked = false;
+  @Input() indeterminate = false;
+  @Input() setOfCheckedId: Set<string>;
 
-  constructor(
-    private warehouseService: WarehouseService,
-  ) { }
+  @Output() listOfCurrentPageDataChanges = new EventEmitter();
+  @Output() itemCheckedChanges = new EventEmitter();
+  @Output() allItemCheckedChanges = new EventEmitter();
 
-  ngOnInit(): void {
-    this.warehouseService.getAllFiles().subscribe((data) => {
-      this.fetchedFiles = data;
-    })
-  }
+  constructor() { }
 
-  updateCheckedSet(fileid: string, checked: boolean): void {
-    if (checked) {
-      this.setOfCheckedId.add(fileid);
-    } else {
-      this.setOfCheckedId.delete(fileid);
-    }
-    this.setOfCheckedIdSender.emit(this.setOfCheckedId);
-  }
+  ngOnInit(): void {}
+
+  // updateCheckedSet(fileid: string, checked: boolean): void {
+  //   if (checked) {
+  //     this.setOfCheckedId.add(fileid);
+  //   } else {
+  //     this.setOfCheckedId.delete(fileid);
+  //   }
+  //   this.setOfCheckedIdChanges.emit(this.setOfCheckedId);
+  // }
 
   onCurrentPageDataChange(listOfCurrentPageData: ReadonlyArray<FileModel>): void {
-    this.listOfCurrentPageData = listOfCurrentPageData;
-    this.refreshCheckedStatus();
+    this.listOfCurrentPageDataChanges.emit(listOfCurrentPageData);
+    // this.listOfCurrentPageData = listOfCurrentPageData;
+    // this.refreshCheckedStatus();
   }
 
-  refreshCheckedStatus(): void {
-    this.checked = this.listOfCurrentPageData.every(({ fileid }) => this.setOfCheckedId.has(fileid));
-    this.indeterminate = this.listOfCurrentPageData.some(({ fileid }) => this.setOfCheckedId.has(fileid)) && !this.checked;
-  }
+  // refreshCheckedStatus(): void {
+  //   this.checked = this.listOfCurrentPageData.every(({ fileid }) => this.setOfCheckedId.has(fileid));
+  //   this.indeterminate = this.listOfCurrentPageData.some(({ fileid }) => this.setOfCheckedId.has(fileid)) && !this.checked;
+  // }
 
 
   onItemChecked(fileid: string, checked: boolean): void {
-    this.updateCheckedSet(fileid, checked);
-    this.refreshCheckedStatus();
+    this.itemCheckedChanges.emit({ fileid, checked });
+    // this.updateCheckedSet(fileid, checked);
+    // this.refreshCheckedStatus();
   }
 
   onAllChecked(checked: boolean): void {
-    this.listOfCurrentPageData.forEach(({ fileid }) => this.updateCheckedSet(fileid, checked));
-    this.refreshCheckedStatus();
+    this.allItemCheckedChanges.emit(checked);
+    // this.listOfCurrentPageData.forEach(({ fileid }) => this.updateCheckedSet(fileid, checked));
+    // this.refreshCheckedStatus();
   }
 
   // handleChange({ file, fileList }: NzUploadChangeParam): void {

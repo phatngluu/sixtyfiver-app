@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { WarehouseService } from '../../services/warehouse.service';
@@ -9,7 +9,7 @@ import { FileModel } from '../../models/file-model';
   templateUrl: './warehouse-finder-toolbar.component.html',
   styleUrls: ['./warehouse-finder-toolbar.component.css'],
 })
-export class WarehouseFinderToolbarComponent implements OnInit {
+export class WarehouseFinderToolbarComponent implements OnInit, OnChanges {
   @Input() fetchedFiles: FileModel[];
   @Input() setOfCheckedId: Set<string>;
   @Output() refetchFilesNeeded = new EventEmitter();
@@ -20,36 +20,36 @@ export class WarehouseFinderToolbarComponent implements OnInit {
     private message: NzMessageService,
   ) { }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.setOfCheckedId) {
+      console.log(changes.setOfCheckedId.currentValue);
+    }
+  }
+
   ngOnInit(): void {
   }
 
-  private
-
   private onDeleteFiles(): Promise<any> {
+    console.log(this.setOfCheckedId);
+
     return new Promise((resolve, reject) => {
-      if (this.setOfCheckedId.size > 0){
-        let selectedFileIds = Array.from(this.setOfCheckedId);
-        Promise.all(selectedFileIds.map(fileid => this.warehouseService.deleteFile(fileid).toPromise()))
-          .then(
-            () => {
-              // this.warehouseService.getAllFiles().subscribe((data) => {
-              //   this.fetchedFiles = data;
-              // });
-              this.refetchFilesNeeded.emit('');
-              resolve(1);
-              this.message.create('success', `Files deleted`);
-            },
-            () => {
-              this.message.create('error', `Failed to delete`);
-            }
-          )
-          .catch(() => {
-            reject(0)
-            console.log('error occurred!')
-          });
-        this.setOfCheckedId = new Set<string>();
-      }
-    })
+      const selectedFileIds = Array.from(this.setOfCheckedId);
+      Promise.all(selectedFileIds.map(fileid => this.warehouseService.deleteFile(fileid).toPromise()))
+        .then(
+          () => {
+            this.refetchFilesNeeded.emit('');
+            resolve(1);
+            this.message.create('success', `Files deleted`);
+          },
+          () => {
+            this.message.create('error', `Failed to delete`);
+          }
+        )
+        .catch(() => {
+          reject();
+          console.log('error occurred!');
+        });
+    });
   }
 
   showDeleteConfirm(): void {
@@ -65,16 +65,17 @@ export class WarehouseFinderToolbarComponent implements OnInit {
     });
   }
 
-  onDownloadFiles() {
-    if (this.setOfCheckedId.size > 0){
+  onDownloadFiles(): void {
+    if (this.setOfCheckedId.size > 0) {
       this.setOfCheckedId.forEach(fileid => {
-        let fileInfo = this.fetchedFiles.filter(file => file.fileid === fileid)[0];
+        const fileInfo = this.fetchedFiles.filter(file => file.fileid === fileid)[0];
         this.warehouseService.downloadFile(fileid).toPromise()
           .then(
             (fileBlob) => {
-              fileBlob = new Blob([fileBlob], {type: fileInfo.type});
+              fileBlob = new Blob([fileBlob], { type: fileInfo.type });
               const objectUrl = window.URL.createObjectURL(fileBlob);
-              let downloadLink = document.createElement('a');
+              const downloadLink = document.createElement('a');
+              downloadLink.id = 'href-download-' + fileid;
               downloadLink.href = objectUrl;
               downloadLink.download = fileInfo.name;
               downloadLink.click();
@@ -84,7 +85,7 @@ export class WarehouseFinderToolbarComponent implements OnInit {
             () => {
               this.message.create('error', `Failed to download ${fileInfo.name}`);
             }
-          )
+          );
       });
     }
   }
