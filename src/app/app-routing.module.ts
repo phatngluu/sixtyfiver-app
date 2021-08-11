@@ -13,9 +13,23 @@ const routes: Routes = [
           import('./modules/warehouse/warehouse.module').then(
             (m) => m.WarehouseModule
           ),
-      }
+        data: {
+          breadcrumb: 'Warehouse'
+        }
+      },
+      {
+        path: 'pethernet',
+        loadChildren: () =>
+          import('./modules/pethernet/pethernet.module').then(
+            (m) => m.PethernetModule
+          ),
+        data: {
+          breadcrumb: 'Pethernet'
+        }
+      },
     ]
   },
+  { path: 'pethernet', loadChildren: () => import('./modules/pethernet/pethernet.module').then(m => m.PethernetModule) },
 
 ];
 
