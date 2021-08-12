@@ -12,7 +12,7 @@ export class VaccinedosesService {
 
   constructor(private http: HttpClient) { }
 
-  addVaccineDose(vaccineDose: VaccineDose) : Observable<any> {
+  addVaccineDose(vaccineDose: VaccineDose): Observable<any> {
     return this.http.post(environment.addVaccineDose, vaccineDose);
   }
 
