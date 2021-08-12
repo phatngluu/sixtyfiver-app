@@ -28,7 +28,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Troubleshoot
 - Sometimes, some Antd components do not apply style, it is becausing missing corresponding module. For example, input component needs NzInputModules. Let's import in into our module.
-- Web3.js. In `tsconfig.json`
+- Web3.js. In `tsconfig.json` 
 ```
 {
   "compilerOptions": {
