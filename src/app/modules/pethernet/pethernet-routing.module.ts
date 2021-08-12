@@ -1,5 +1,5 @@
-import { VaccinedosesComponent } from './pages/vaccinedoses/vaccinedoses.component';
-import { MedicalunitsComponent } from './pages/medicalunits/medicalunits.component';
+import { VaccinedosesComponent } from './pages/vaccine-doses/vaccine-doses.component';
+import { MedicalunitsComponent } from './pages/medical-units/medical-units.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PethernetComponent } from './pethernet.component';

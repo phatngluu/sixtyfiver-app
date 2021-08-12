@@ -7,14 +7,18 @@ import { PethernetRoutingModule } from './pethernet-routing.module';
 
 // Components
 import { PethernetComponent } from './pethernet.component';
-import { MedicalunitsComponent } from './pages/medicalunits/medicalunits.component';
-import { VaccinedosesComponent } from './pages/vaccinedoses/vaccinedoses.component';
+import { MedicalunitsComponent } from './pages/medical-units/medical-units.component';
+import { VaccinedosesComponent } from './pages/vaccine-doses/vaccine-doses.component';
 import { AddVaccineDoseComponent } from './shared/components/add-vaccine-dose/add-vaccine-dose.component';
 
 // Pipes
 
 // UI Modules
 import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NewMedicalUnitFormComponent } from './pages/medical-units/registration/new-medical-unit-form/new-medical-unit-form.component';
+import { MedicalUnitRegistrationComponent } from './pages/medical-units/registration/medical-unit-registration/medical-unit-registration.component';
+
 
 @NgModule({
   declarations: [
@@ -25,7 +29,9 @@ import { NzFormModule } from 'ng-zorro-antd/form';
     PethernetComponent,
     MedicalunitsComponent,
     VaccinedosesComponent,
-    AddVaccineDoseComponent
+    AddVaccineDoseComponent,
+    NewMedicalUnitFormComponent,
+    MedicalUnitRegistrationComponent
 
     // Pipes
 
@@ -41,7 +47,7 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 
     // UI Modules
     NzFormModule,
-
+    NzInputModule,
 
   ]
 })

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  templateUrl: './medicalunits.component.html',
-  styleUrls: ['./medicalunits.component.css']
+  templateUrl: './medical-units.component.html',
+  styleUrls: ['./medical-units.component.css']
 })
 export class MedicalunitsComponent implements OnInit {
 

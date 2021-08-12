@@ -25,3 +25,6 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Troubleshoot
+Sometimes, some Antd components do not apply style, it is becausing missing corresponding module. For example, input component needs NzInputModules. Let's import in into our module.
