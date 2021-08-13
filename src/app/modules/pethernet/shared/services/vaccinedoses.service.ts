@@ -1,3 +1,4 @@
+import { Web3Service } from './web3.service';
 import { VaccineDose } from './../models/vaccine-dose';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -10,7 +11,11 @@ import { environment } from 'src/environments/environment';
 })
 export class VaccinedosesService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private web3Service: Web3Service) {
+
+  }
 
   addVaccineDose(vaccineDose: VaccineDose): Observable<any> {
     return this.http.post(environment.addVaccineDose, vaccineDose);

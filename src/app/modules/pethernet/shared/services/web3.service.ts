@@ -2,14 +2,10 @@ import { EthereumProviderExtension } from './../models/ethereum-provider-extensi
 import { AbstractResponse } from './../models/abstract-response';
 import { environment } from './../../../../../environments/environment.prod';
 import { HttpClient } from '@angular/common/http';
-import { Observable, from } from 'rxjs';
 import { Injectable, EventEmitter } from '@angular/core';
 import Web3 from 'web3';
-import { Account } from 'web3-core';
 import { Contract } from 'web3-eth-contract';
-import { Accounts } from 'web3-eth-accounts';
 import { AbiItem } from 'web3-utils';
-import { HttpProviderBase } from 'web3-core-helpers';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 import detectEthereumProvider from '@metamask/detect-provider'
@@ -24,11 +20,11 @@ export class Web3Service {
     throw new Error('Method not implemented.');
 
   }
-  private contractABI: AbiItem[] = null;
-  private contractAddress: string;
-  public contract: Contract;
   public web3: Web3;
   public ethereumProvider: EthereumProviderExtension;
+  public contract: Contract;
+  public contractABI: AbiItem[] = null;
+  public contractAddress: string;
   public connectedAccounts: string[];
   public initializedEvent = new EventEmitter(true);
 
