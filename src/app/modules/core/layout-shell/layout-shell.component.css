@@ -3,15 +3,20 @@
   src: local("Teko"), url(../../../../assets/fonts/Teko/Teko-Regular.ttf) format("truetype");
 }
 
-.logo-img {
+#logo-img {
   height: 45px;
 }
 
+.logo-text {
+  font-size: 1.7em;
+  background: linear-gradient(to bottom, #4b81e6 20%, #b952ce 85%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
 .logo {
-  /* background: rgb(255, 255, 255); */
   margin: 4px;
   font-family: 'Teko';
-  font-size: x-large;
   color: #ffffff;
   text-align: center;
 }
