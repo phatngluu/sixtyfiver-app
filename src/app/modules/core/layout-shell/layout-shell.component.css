@@ -1,7 +1,19 @@
+@font-face {
+  font-family: "Teko";
+  src: local("Teko"), url(../../../../assets/fonts/Teko/Teko-Regular.ttf) format("truetype");
+}
+
+.logo-img {
+  height: 45px;
+}
+
 .logo {
-  height: 32px;
-  background: rgba(255, 255, 255, 0.2);
-  margin: 16px;
+  /* background: rgb(255, 255, 255); */
+  margin: 4px;
+  font-family: 'Teko';
+  font-size: x-large;
+  color: #ffffff;
+  text-align: center;
 }
 
 nz-header {
@@ -11,7 +23,7 @@ nz-header {
 
 nz-content {
   margin: 0 16px;
-  min-height: 85vh;
+  min-height: 92vh;
 }
 
 nz-breadcrumb {
