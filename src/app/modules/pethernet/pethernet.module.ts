@@ -18,7 +18,7 @@ import { VaccinedosesComponent } from './pages/vaccine-doses/vaccine-doses.compo
 import { AddVaccineDoseComponent } from './shared/components/add-vaccine-dose/add-vaccine-dose.component';
 import { NewMedicalUnitFormComponent } from './pages/medical-units/registration/new-medical-unit-form/new-medical-unit-form.component';
 import { MedicalUnitRegistrationComponent } from './pages/medical-units/registration/medical-unit-registration/medical-unit-registration.component';
-import { VaccineDosesListComponent } from './shared/components/vaccine-doses-list/vaccine-doses-list.component';
+import { ListVaccineDosesComponent } from './shared/components/list-vaccine-doses/list-vaccine-doses.component';
 
 // Pipes
 
@@ -35,7 +35,7 @@ import { VaccineDosesListComponent } from './shared/components/vaccine-doses-lis
     AddVaccineDoseComponent,
     NewMedicalUnitFormComponent,
     MedicalUnitRegistrationComponent,
-    VaccineDosesListComponent,
+    ListVaccineDosesComponent,
 
     // Pipes
 
