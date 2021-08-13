@@ -26,15 +26,29 @@ export class Web3Service {
   public contractABI: AbiItem[] = null;
   public contractAddress: string;
   public connectedAccounts: string[];
-  public initializedEvent = new EventEmitter(true);
+  public initializedEvent = new EventEmitter<string>();
 
   constructor(
     private http: HttpClient,
     private messageService: NzMessageService) {
+    // Connect metamask
+    this.connectMetaMask();
+
     // Load & initialize contract
     this.loadContract();
+  }
 
-    this.connectMetaMask();
+  public async initialize() : Promise<void> {
+    if (this.web3 === undefined || this.ethereumProvider === undefined) {
+      await this.connectMetaMask();
+    }
+
+    if (this.contract === undefined) {
+      await this.loadContract();
+    }
+
+    console.log('initialized')
+    this.initializedEvent.emit("initialized");
   }
 
   private async connectMetaMask(): Promise<void> {
@@ -58,7 +72,6 @@ export class Web3Service {
     // If Metamask has been installed and configured. Then, Web3.givenProvider === window.ethereum
     // Initialize Web3 instance
     this.web3 = new Web3(Web3.givenProvider);
-    this.initializedEvent.emit('nothing');
 
     // Get connected account
     this.connectedAccounts = await this.web3.eth.getAccounts();

@@ -1,7 +1,8 @@
 export interface VaccineDose {
-  DoseId: string;
-  LotNo: string;
-  VaccineName: string;
-  ImportedDate: Date;
-  ExpiredDate: Date;
+  doseId: string;
+  lotNo: string;
+  vaccineName: string;
+  importedDate: Date;
+  expiredDate: Date;
+  hash: string;
 }

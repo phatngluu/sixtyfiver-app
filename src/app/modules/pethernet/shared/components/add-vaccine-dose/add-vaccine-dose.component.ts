@@ -1,8 +1,15 @@
+import { RespondHandlerService } from './../../services/respond-handler.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { Observable } from 'rxjs';
+import { Web3Service } from './../../services/web3.service';
 import { VaccineDose } from './../../models/vaccine-dose';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { Observable, Observer } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { VaccinedosesService } from '../../services/vaccinedoses.service';
+import { ChangeDetectorRef } from '@angular/core';
+import { environment } from 'src/environments/environment';
+import { AbstractResponse } from '../../models/abstract-response';
+
 
 @Component({
   selector: 'sf-add-vaccine-dose',
@@ -13,9 +20,12 @@ import { VaccinedosesService } from '../../services/vaccinedoses.service';
 export class AddVaccineDoseComponent implements OnInit {
 
   validateForm: FormGroup;
+  isSubmitting: boolean;
 
   constructor(
     private fb: FormBuilder,
+    private ref: ChangeDetectorRef,
+    private web3Service: Web3Service,
     private vaccineDoseService: VaccinedosesService) {
     this.validateForm = this.fb.group({
       doseId: ['', [Validators.required]],
@@ -29,7 +39,9 @@ export class AddVaccineDoseComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  submitForm(value: VaccineDose): void {
+  submitForm(vaccineDose: VaccineDose): void {
+    this.isSubmitting = true;
+
     for (const key in this.validateForm.controls) {
       if (this.validateForm.controls.hasOwnProperty(key)) {
         this.validateForm.controls[key].markAsDirty();
@@ -37,10 +49,12 @@ export class AddVaccineDoseComponent implements OnInit {
       }
     }
 
-    console.log(789);
+    console.log(vaccineDose)
 
-
-    this.vaccineDoseService.addVaccineDose(value);
+    this.vaccineDoseService.addVaccineDose(vaccineDose, () => {
+      this.isSubmitting = false;
+      this.ref.markForCheck();
+    });
   }
 
   // resetForm(e: MouseEvent): void {

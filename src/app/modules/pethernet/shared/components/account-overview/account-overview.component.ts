@@ -23,11 +23,11 @@ export class AccountOverviewComponent implements OnInit {
   }
 
   async ngOnInit() {
+    await this.web3Service.initialize();
     this.connectedAccounts = await this.web3Service.getConnectedAccounts();
     this.ref.markForCheck();
 
     this.web3Service.ethereumProvider.on('accountsChanged', (accounts) => {
-      console.log(accounts)
       this.connectedAccounts = accounts;
       this.messageService.warning('Your acccount has been changed');
       this.ref.detectChanges();

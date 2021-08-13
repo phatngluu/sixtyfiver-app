@@ -1,4 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Web3Service } from './../../services/web3.service';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { VaccinedosesService } from '../../services/vaccinedoses.service';
 
 @Component({
   selector: 'sf-list-vaccine-doses',
@@ -8,9 +10,21 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 })
 export class ListVaccineDosesComponent implements OnInit {
 
-  constructor() { }
+  public vaccineDosesList: string[];
 
-  ngOnInit(): void {
+  constructor(
+    private ref: ChangeDetectorRef,
+    private vaccineDosesService: VaccinedosesService) {
+    this.vaccineDosesService;
+  }
+
+  async ngOnInit(): Promise<void> {
+    const callback = (result: string[]) => {
+      this.vaccineDosesList = result;
+      this.ref.markForCheck();
+    };
+
+    await this.vaccineDosesService.getVaccineDoses(callback);
   }
 
 }
