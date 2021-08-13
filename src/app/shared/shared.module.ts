@@ -1,12 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NzMessageModule } from 'ng-zorro-antd/message';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+
+  ],
   imports: [
-    CommonModule
+    // Global module
+    CommonModule,
+    NzMessageModule,
   ]
 })
 export class SharedModule { }

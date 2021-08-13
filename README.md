@@ -43,3 +43,6 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
   }
 }
 ```
+- Web3.js and Angular problem
+  - https://github.com/ChainSafe/web3.js/issues/2260
+  - https://github.com/ChainSafe/web3.js/issues/4070

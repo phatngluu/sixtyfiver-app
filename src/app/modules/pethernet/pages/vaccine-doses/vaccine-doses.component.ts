@@ -14,6 +14,6 @@ export class VaccinedosesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.web3Service.connectMetaMask().subscribe(console.log);
+    this.web3Service;
   }
 }
