@@ -66,7 +66,6 @@ export class Web3Service {
 
     // Get connected account
     this.connectedAccounts = await this.web3.eth.getAccounts();
-    console.log(this.connectedAccounts);
     window.ethereum.on('accountsChanged', (accounts) => {
       this.connectedAccounts = accounts;
     });
