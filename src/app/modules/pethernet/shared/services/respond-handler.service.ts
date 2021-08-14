@@ -24,7 +24,9 @@ export class RespondHandlerService {
     }
 
     if (responseHandling.response?.success) {
-      this.messageService.success(successMessage);
+      if (responseHandling.prioritizePerformance === false) {
+        this.messageService.success(successMessage)
+      };
       if (responseHandling.event) {
         if (responseHandling.event.emptyValue === true) {
           responseHandling.event.eventEmitter.emit();

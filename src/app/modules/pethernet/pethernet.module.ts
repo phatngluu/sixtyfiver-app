@@ -10,6 +10,9 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzCollapseModule } from 'ng-zorro-antd/collapse';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
 
 
 // Directives
@@ -73,6 +76,9 @@ import { ListMedicalUnitsComponent } from './shared/components/list-medical-unit
     NzButtonModule,
     NzSpinModule,
     NzAlertModule,
+    NzCardModule,
+    NzCollapseModule,
+    NzTabsModule
   ]
 })
 export class PethernetModule { }

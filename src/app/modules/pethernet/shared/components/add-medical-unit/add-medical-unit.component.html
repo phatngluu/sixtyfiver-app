@@ -1,15 +1,13 @@
-<p>add-medical-unit works!</p>
-<i nz-icon nzType="loading"></i>
-<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm(validateForm.value)">
+<form nz-form>
   <nz-form-item>
     <nz-form-label [nzSpan]="7" nzTooltipTitle="This account is used to verify transactions.">Metamask Account</nz-form-label>
     <nz-alert *ngIf="metamaskAccount" nzType="info" [nzMessage]="metamaskAccount"></nz-alert>
     <button *ngIf="!metamaskAccount" nz-button nzType="primary" (click)="connectWithMetaMask()">Add account via Metamask</button>
-
-    <!-- <nz-form-text>
-      {{metamaskAccount}}
-    </nz-form-text> -->
   </nz-form-item>
+</form>
+
+
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm(validateForm.value)">
   <nz-form-item>
     <nz-form-label [nzSpan]="7" nzRequired>Medical Unit Code</nz-form-label>
     <nz-form-control [nzSpan]="9" nzErrorTip="Please input your med code!">

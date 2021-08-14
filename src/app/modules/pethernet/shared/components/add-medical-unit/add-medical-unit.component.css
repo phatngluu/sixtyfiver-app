@@ -1,6 +1,9 @@
 [nz-form] {
   max-width: 600px;
 }
+[nz-form-item]  {
+  max-width: 600px;
+}
 i {
   font-size: 24px;
 }

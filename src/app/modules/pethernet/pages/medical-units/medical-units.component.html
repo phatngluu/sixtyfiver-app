@@ -1,3 +1,17 @@
-<p>medicalunits works!</p>
-<sf-add-medical-unit></sf-add-medical-unit>
-<sf-list-medical-units></sf-list-medical-units>
+<div class="card-container">
+  <nz-tabset nzType="card">
+    <nz-tab nzTitle="Register Medical Unit">
+      <sf-add-medical-unit></sf-add-medical-unit>
+    </nz-tab>
+    <nz-tab nzTitle="Unverified Medical Unit">
+      <ng-template nz-tab>
+        <sf-list-medical-units [viewType]="'Unverified'"></sf-list-medical-units>
+      </ng-template>
+    </nz-tab>
+    <nz-tab nzTitle="Verified Medical Unit">
+      <ng-template nz-tab>
+        <sf-list-medical-units [viewType]="'Verified'"></sf-list-medical-units>
+      </ng-template>
+    </nz-tab>
+  </nz-tabset>
+</div>
