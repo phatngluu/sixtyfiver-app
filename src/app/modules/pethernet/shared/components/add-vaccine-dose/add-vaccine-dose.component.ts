@@ -1,14 +1,10 @@
-import { RespondHandlerService } from './../../services/respond-handler.service';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { Observable } from 'rxjs';
+import { AbstractResponseHandling } from './../../models/abstract-response';
 import { Web3Service } from './../../services/web3.service';
 import { VaccineDose } from './../../models/vaccine-dose';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { VaccinedosesService } from '../../services/vaccinedoses.service';
 import { ChangeDetectorRef } from '@angular/core';
-import { environment } from 'src/environments/environment';
-import { AbstractResponse } from '../../models/abstract-response';
 
 
 @Component({
@@ -39,7 +35,7 @@ export class AddVaccineDoseComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  submitForm(vaccineDose: VaccineDose): void {
+  async submitForm(vaccineDose: VaccineDose): Promise<void> {
     this.isSubmitting = true;
 
     for (const key in this.validateForm.controls) {
@@ -49,12 +45,14 @@ export class AddVaccineDoseComponent implements OnInit {
       }
     }
 
-    console.log(vaccineDose)
+    const responseHandling: AbstractResponseHandling<Object> = {
+      callback: () => {
+        this.isSubmitting = false;
+        this.ref.markForCheck();
+      }
+    }
 
-    this.vaccineDoseService.addVaccineDose(vaccineDose, () => {
-      this.isSubmitting = false;
-      this.ref.markForCheck();
-    });
+    await this.vaccineDoseService.addVaccineDose(vaccineDose, responseHandling);
   }
 
   // resetForm(e: MouseEvent): void {

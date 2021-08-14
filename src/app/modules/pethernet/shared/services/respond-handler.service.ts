@@ -1,4 +1,4 @@
-import { AbstractResponse } from './../models/abstract-response';
+import { AbstractResponseHandling } from './../models/abstract-response';
 import { Injectable } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
@@ -9,27 +9,41 @@ export class RespondHandlerService {
 
   constructor(private messageService: NzMessageService) { }
 
-  public handle(response: AbstractResponse<any>, successMessage?: string, failMessage?: string) {
-    successMessage = successMessage ? successMessage : "Operation succeeded.";
-    failMessage = failMessage ? failMessage : "Operation failed.";
+  public handle(responseHandling: AbstractResponseHandling<any>) {
+    if (responseHandling.callback) {
+      responseHandling.callback(responseHandling.response);
+    }
 
-    if (response.success) {
+    const successMessage = responseHandling.successMessage ? responseHandling.successMessage : "Operation succeeded.";
+    const failMessage = responseHandling.failMessage ? responseHandling.failMessage : "Operation failed.";
+
+    if (responseHandling.err) {
+      this.messageService.error(failMessage);
+      console.error(responseHandling.err);
+      return;
+    }
+
+    if (responseHandling.response?.success) {
       this.messageService.success(successMessage);
+      if (responseHandling.event) {
+        if (responseHandling.event.emptyValue === true) {
+          responseHandling.event.eventEmitter.emit();
+        } else {
+          responseHandling.event.eventEmitter.emit(responseHandling.response.message);
+        }
+      }
     } else {
       this.messageService.error(failMessage);
     }
+
+    this.contractReceiptHandling(responseHandling.reciept);
   }
 
-  public contractHandle(receipt: any, err?: any, successMessage?: string, failMessage?: string) {
-    successMessage = successMessage ? successMessage : "Operation succeeded.";
-    failMessage = failMessage ? failMessage : "Operation failed.";
-
-    if (err) {
-      this.messageService.error(failMessage);
-      console.error(err);
-    } else {
-      this.messageService.success(successMessage);
+  private contractReceiptHandling(receipt: any) {
+    if (receipt) {
+      console.info('---- Contract Reciept ----')
+      console.info(receipt);
+      console.info('---- Contract Reciept ----')
     }
-    // console.log(receipt);
   }
 }

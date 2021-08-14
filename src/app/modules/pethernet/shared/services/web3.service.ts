@@ -26,16 +26,16 @@ export class Web3Service {
   public contractABI: AbiItem[] = null;
   public contractAddress: string;
   public connectedAccounts: string[];
-  public initializedEvent = new EventEmitter<string>();
+  public initializedEvent = new EventEmitter();
 
   constructor(
     private http: HttpClient,
     private messageService: NzMessageService) {
     // Connect metamask
-    this.connectMetaMask();
+    // this.connectMetaMask();
 
     // Load & initialize contract
-    this.loadContract();
+    // this.loadContract();
   }
 
   public async initialize() : Promise<void> {
@@ -47,8 +47,7 @@ export class Web3Service {
       await this.loadContract();
     }
 
-    console.log('initialized')
-    this.initializedEvent.emit("initialized");
+    this.initializedEvent.emit();
   }
 
   private async connectMetaMask(): Promise<void> {

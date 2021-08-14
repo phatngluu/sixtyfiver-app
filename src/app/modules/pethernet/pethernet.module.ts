@@ -22,6 +22,9 @@ import { ListVaccineDosesComponent } from './shared/components/list-vaccine-dose
 import { AccountOverviewComponent } from './shared/components/account-overview/account-overview.component';
 import { DoctorsComponent } from './pages/doctors/doctors.component';
 import { InjectorsComponent } from './pages/injectors/injectors.component';
+import { AddDoctorComponent } from './shared/components/add-doctor/add-doctor.component';
+import { AddInjectorComponent } from './shared/components/add-injector/add-injector.component';
+import { ListDoctorsComponent } from './shared/components/list-doctors/list-doctors.component';
 
 // Pipes
 
@@ -42,6 +45,9 @@ import { InjectorsComponent } from './pages/injectors/injectors.component';
     AccountOverviewComponent,
     DoctorsComponent,
     InjectorsComponent,
+    AddDoctorComponent,
+    AddInjectorComponent,
+    ListDoctorsComponent,
 
     // Pipes
 

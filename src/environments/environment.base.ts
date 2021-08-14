@@ -19,4 +19,7 @@ export const environment = {
   addVaccineDose: 'api/vaccinedose/add',
 
   // Medical units
+
+  // Doctor
+  addDoctor: 'api/doctor/add',
 };
