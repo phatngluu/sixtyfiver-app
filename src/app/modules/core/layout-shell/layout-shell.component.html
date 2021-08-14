@@ -2,12 +2,14 @@
   <nz-sider nzCollapsible nzWidth="200px" nzHeight="100%" [nzCollapsed]="false">
     <div class="logo">
       <a class="logo-text" href="/">
-        <img id="logo-img" src="https://img.icons8.com/nolan/64/mangosteen.png"/>
+        <img id="logo-img" src="https://img.icons8.com/nolan/64/mangosteen.png" />
         Sixtyfiver
       </a>
     </div>
     <ul nz-menu nzTheme="dark" nzMode="inline">
-      <li nz-submenu nzTitle="Pethernet" [(nzOpen)]="rla.isActive || rla1.isActive || rla2.isActive || rla3.isActive || rla4.isActive" nzIcon="file-done">
+      <li nz-submenu nzTitle="Pethernet"
+        [(nzOpen)]="rla.isActive || rla1.isActive || rla2.isActive || rla3.isActive || rla4.isActive"
+        nzIcon="file-done">
         <ul>
           <li nz-menu-item routerLinkActive="active" #rla="routerLinkActive" [routerLink]="'pethernet/overview'"
             [nzMatchRouter]="true">
@@ -26,12 +28,12 @@
           </li>
           <li nz-menu-item routerLinkActive="active" #rla3="routerLinkActive" [routerLink]="'pethernet/doctors'"
             [nzMatchRouter]="true">
-            <i nz-icon nzType="experiment" nzTheme="outline"></i>
+            <i nz-icon nzType="usergroup-add" nzTheme="outline"></i>
             <span>Doctors</span>
           </li>
           <li nz-menu-item routerLinkActive="active" #rla4="routerLinkActive" [routerLink]="'pethernet/injectors'"
             [nzMatchRouter]="true">
-            <i nz-icon nzType="experiment" nzTheme="outline"></i>
+            <i nz-icon nzType="user" nzTheme="outline"></i>
             <span>Injectors</span>
           </li>
         </ul>
