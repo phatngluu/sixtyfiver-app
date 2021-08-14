@@ -9,7 +9,7 @@
 
 .logo-text {
   font-size: 1.7em;
-  background: linear-gradient(to bottom, #4b81e6 20%, #b952ce 85%);
+  background: linear-gradient(to bottom, #993699 10%, #6293f0 90%);
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 }
@@ -19,6 +19,10 @@
   font-family: 'Teko';
   color: #ffffff;
   text-align: center;
+}
+
+.logo:hover  #logo-img, .logo.hover #logo-img {
+    transform: scale(1.2);
 }
 
 nz-header {
