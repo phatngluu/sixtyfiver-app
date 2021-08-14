@@ -20,6 +20,8 @@ import { NewMedicalUnitFormComponent } from './pages/medical-units/registration/
 import { MedicalUnitRegistrationComponent } from './pages/medical-units/registration/medical-unit-registration/medical-unit-registration.component';
 import { ListVaccineDosesComponent } from './shared/components/list-vaccine-doses/list-vaccine-doses.component';
 import { AccountOverviewComponent } from './shared/components/account-overview/account-overview.component';
+import { DoctorsComponent } from './pages/doctors/doctors.component';
+import { InjectorsComponent } from './pages/injectors/injectors.component';
 
 // Pipes
 
@@ -38,6 +40,8 @@ import { AccountOverviewComponent } from './shared/components/account-overview/a
     MedicalUnitRegistrationComponent,
     ListVaccineDosesComponent,
     AccountOverviewComponent,
+    DoctorsComponent,
+    InjectorsComponent,
 
     // Pipes
 

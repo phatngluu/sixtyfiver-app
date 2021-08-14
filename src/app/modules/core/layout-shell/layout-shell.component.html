@@ -7,7 +7,7 @@
       </a>
     </div>
     <ul nz-menu nzTheme="dark" nzMode="inline">
-      <li nz-submenu nzTitle="Pethernet" [(nzOpen)]="rla.isActive || rla1.isActive || rla2.isActive" nzIcon="file-done">
+      <li nz-submenu nzTitle="Pethernet" [(nzOpen)]="rla.isActive || rla1.isActive || rla2.isActive || rla3.isActive || rla4.isActive" nzIcon="file-done">
         <ul>
           <li nz-menu-item routerLinkActive="active" #rla="routerLinkActive" [routerLink]="'pethernet/overview'"
             [nzMatchRouter]="true">
@@ -24,6 +24,16 @@
             [nzMatchRouter]="true">
             <i nz-icon nzType="experiment" nzTheme="outline"></i>
             <span>Vaccine Doses</span>
+          </li>
+          <li nz-menu-item routerLinkActive="active" #rla3="routerLinkActive" [routerLink]="'pethernet/doctors'"
+            [nzMatchRouter]="true">
+            <i nz-icon nzType="experiment" nzTheme="outline"></i>
+            <span>Doctors</span>
+          </li>
+          <li nz-menu-item routerLinkActive="active" #rla4="routerLinkActive" [routerLink]="'pethernet/injectors'"
+            [nzMatchRouter]="true">
+            <i nz-icon nzType="experiment" nzTheme="outline"></i>
+            <span>Injectors</span>
           </li>
         </ul>
       </li>

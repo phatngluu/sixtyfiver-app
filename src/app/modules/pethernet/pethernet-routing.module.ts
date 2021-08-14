@@ -1,3 +1,5 @@
+import { InjectorsComponent } from './pages/injectors/injectors.component';
+import { DoctorsComponent } from './pages/doctors/doctors.component';
 import { VaccinedosesComponent } from './pages/vaccine-doses/vaccine-doses.component';
 import { MedicalunitsComponent } from './pages/medical-units/medical-units.component';
 import { NgModule } from '@angular/core';
@@ -31,6 +33,20 @@ const routes: Routes = [
     component: VaccinedosesComponent,
     data: {
       breadcrumb: 'Vaccine Doses'
+    }
+  },
+  {
+    path: 'doctors',
+    component: DoctorsComponent,
+    data: {
+      breadcrumb: 'Doctors'
+    }
+  },
+  {
+    path: 'injectors',
+    component: InjectorsComponent,
+    data: {
+      breadcrumb: 'Injectors'
     }
   },
 ];
