@@ -26,7 +26,10 @@ export class Web3Service {
   public contractABI: AbiItem[] = null;
   public contractAddress: string;
   public connectedAccounts: string[];
+
+  /** Events */
   public initializedEvent = new EventEmitter();
+  public accountChangedEvent = new EventEmitter();
 
   constructor(
     private http: HttpClient,
@@ -76,6 +79,8 @@ export class Web3Service {
     this.connectedAccounts = await this.web3.eth.getAccounts();
     window.ethereum.on('accountsChanged', (accounts) => {
       this.connectedAccounts = accounts;
+      this.accountChangedEvent.emit();
+      this.messageService.warning('Your acccount has been changed');
     });
   }
 
@@ -91,5 +96,9 @@ export class Web3Service {
 
   public async getConnectedAccounts(): Promise<string[]> {
     return await this.web3.eth.getAccounts();
+  }
+
+  public connectMetamask(): void {
+    this.ethereumProvider.request({ method: 'eth_requestAccounts' });
   }
 }

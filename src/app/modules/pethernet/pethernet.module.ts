@@ -8,6 +8,9 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { NzAlertModule } from 'ng-zorro-antd/alert';
+
 
 // Directives
 
@@ -16,8 +19,6 @@ import { PethernetComponent } from './pethernet.component';
 import { MedicalunitsComponent } from './pages/medical-units/medical-units.component';
 import { VaccinedosesComponent } from './pages/vaccine-doses/vaccine-doses.component';
 import { AddVaccineDoseComponent } from './shared/components/add-vaccine-dose/add-vaccine-dose.component';
-import { NewMedicalUnitFormComponent } from './pages/medical-units/registration/new-medical-unit-form/new-medical-unit-form.component';
-import { MedicalUnitRegistrationComponent } from './pages/medical-units/registration/medical-unit-registration/medical-unit-registration.component';
 import { ListVaccineDosesComponent } from './shared/components/list-vaccine-doses/list-vaccine-doses.component';
 import { AccountOverviewComponent } from './shared/components/account-overview/account-overview.component';
 import { DoctorsComponent } from './pages/doctors/doctors.component';
@@ -26,6 +27,8 @@ import { AddDoctorComponent } from './shared/components/add-doctor/add-doctor.co
 import { AddInjectorComponent } from './shared/components/add-injector/add-injector.component';
 import { ListDoctorsComponent } from './shared/components/list-doctors/list-doctors.component';
 import { ListInjectorComponent } from './shared/components/list-injector/list-injector.component';
+import { AddMedicalUnitComponent } from './shared/components/add-medical-unit/add-medical-unit.component';
+import { ListMedicalUnitsComponent } from './shared/components/list-medical-units/list-medical-units.component';
 
 // Pipes
 
@@ -40,8 +43,6 @@ import { ListInjectorComponent } from './shared/components/list-injector/list-in
     MedicalunitsComponent,
     VaccinedosesComponent,
     AddVaccineDoseComponent,
-    NewMedicalUnitFormComponent,
-    MedicalUnitRegistrationComponent,
     ListVaccineDosesComponent,
     AccountOverviewComponent,
     DoctorsComponent,
@@ -50,6 +51,8 @@ import { ListInjectorComponent } from './shared/components/list-injector/list-in
     AddInjectorComponent,
     ListDoctorsComponent,
     ListInjectorComponent,
+    AddMedicalUnitComponent,
+    ListMedicalUnitsComponent,
 
     // Pipes
 
@@ -68,7 +71,8 @@ import { ListInjectorComponent } from './shared/components/list-injector/list-in
     NzInputModule,
     NzDatePickerModule,
     NzButtonModule,
-
+    NzSpinModule,
+    NzAlertModule,
   ]
 })
 export class PethernetModule { }
