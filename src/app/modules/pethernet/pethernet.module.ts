@@ -25,6 +25,7 @@ import { InjectorsComponent } from './pages/injectors/injectors.component';
 import { AddDoctorComponent } from './shared/components/add-doctor/add-doctor.component';
 import { AddInjectorComponent } from './shared/components/add-injector/add-injector.component';
 import { ListDoctorsComponent } from './shared/components/list-doctors/list-doctors.component';
+import { ListInjectorComponent } from './shared/components/list-injector/list-injector.component';
 
 // Pipes
 
@@ -48,6 +49,7 @@ import { ListDoctorsComponent } from './shared/components/list-doctors/list-doct
     AddDoctorComponent,
     AddInjectorComponent,
     ListDoctorsComponent,
+    ListInjectorComponent,
 
     // Pipes
 

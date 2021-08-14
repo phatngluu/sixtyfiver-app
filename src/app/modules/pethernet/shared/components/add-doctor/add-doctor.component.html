@@ -8,12 +8,22 @@
       </nz-input-group>
     </nz-form-control>
   </nz-form-item>
-  <nz-form-item>
+  <!-- <nz-form-item>
     <nz-form-label [nzSpan]="7" nzRequired>Citizen Id</nz-form-label>
     <nz-form-control [nzSpan]="9" nzErrorTip="Please input citizen identity!">
       <nz-input-group>
         <input formControlName="citizenId" nz-input placeholder="B12334213" />
       </nz-input-group>
+    </nz-form-control>
+  </nz-form-item> -->
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>Citizen Id</nz-form-label>
+    <nz-form-control [nzSpan]="9" nzHasFeedback nzValidatingTip="Checking..." [nzErrorTip]="userErrorTpl">
+      <input nz-input formControlName="citizenId" placeholder="B12334213" />
+      <ng-template #userErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">Please input your citizen identity!</ng-container>
+        <ng-container *ngIf="control.hasError('duplicated')">The citizen identity is redundant!</ng-container>
+      </ng-template>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>

@@ -1,3 +1,4 @@
+import hash from 'object-hash';
 import { Web3Service } from './web3.service';
 import { environment } from 'src/environments/environment';
 import { AbstractResponse, AbstractResponseHandling } from './../models/abstract-response';
@@ -37,5 +38,13 @@ export class DoctorService {
 
     this.web3Service.contract.methods.doctorsListGetter().call()
       .then(result => callback(result));
+  }
+
+  public async checkDoctorExisted(citizenId: string): Promise<boolean> {
+    const injectorHash = hash(citizenId);
+    const url = `${environment.checkDoctor}?hash=${injectorHash}`;
+
+    const abstractRes = await this.http.get<AbstractResponse<boolean>>(url).toPromise();
+    return abstractRes.message;
   }
 }

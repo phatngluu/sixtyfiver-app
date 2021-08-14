@@ -1,16 +1,10 @@
+import { ValidationService } from './../../services/validation.service';
 import { DoctorService } from './../../services/doctor.service';
 import { Doctor } from './../../models/doctor';
-import { RespondHandlerService } from './../../services/respond-handler.service';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { Observable } from 'rxjs';
-import { Web3Service } from './../../services/web3.service';
-import { VaccineDose } from './../../models/vaccine-dose';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { VaccinedosesService } from '../../services/vaccinedoses.service';
 import { ChangeDetectorRef } from '@angular/core';
-import { environment } from 'src/environments/environment';
-import { AbstractEvent, AbstractResponse, AbstractResponseHandling } from '../../models/abstract-response';
+import { AbstractEvent, AbstractResponseHandling } from '../../models/abstract-response';
 
 @Component({
   selector: 'sf-add-doctor',
@@ -26,11 +20,10 @@ export class AddDoctorComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private ref: ChangeDetectorRef,
-    private doctorService: DoctorService,
-    private responseHandler: RespondHandlerService) {
+    private doctorService: DoctorService) {
     this.validateForm = this.fb.group({
       fullName: ['', [Validators.required]],
-      citizenId: ['', [Validators.required]],
+      citizenId: ['', [Validators.required], [ValidationService.doctorCitizenIdValidator(doctorService)]],
     });
   }
 

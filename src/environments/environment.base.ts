@@ -22,4 +22,9 @@ export const environment = {
 
   // Doctor
   addDoctor: 'api/doctor/add',
+  checkDoctor: 'api/doctor/check',
+
+  // Injector
+  addInjector: 'api/injector/add',
+  checkInjector: 'api/injector/check',
 };
