@@ -1,17 +1,5 @@
-<p>issue-certificate works!</p>
-<!--
-  Step1 : fill in
-Select doctor
-Select injector => enter citi id => calculate hash
-Select vaccine
-Step 2: check validity -> Submit
-doctor, injector, vaccine: check on blockchain
+<p>issue-certificate works! [Med Unit]</p>
 
-MedicalUnitHash: req.body.MedicalUnitHash,
-InjectorHash: req.body.InjectorHash,
-DoctorHash: req.body.DoctorHash,
-VaccineDoseHash: req.body.VaccineDoseHash,
--->
 <nz-alert [nzSpan]="7" *ngIf="warnNoConnectedAccount" nzType="warning" nzMessage="You don't have any connected Metamask accounts."></nz-alert>
 
 <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm(validateForm.value)">
