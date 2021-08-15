@@ -6,10 +6,10 @@ import { RouterModule } from '@angular/router';
 import { LayoutShellComponent } from './layout-shell/layout-shell.component';
 
 // UI Modules
+import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 
 
@@ -27,6 +27,7 @@ import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
     NzMenuModule,
     NzIconModule,
     NzBreadCrumbModule,
+    NzButtonModule,
   ]
 })
 export class CoreModule { }

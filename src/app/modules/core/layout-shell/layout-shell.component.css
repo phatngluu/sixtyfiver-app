@@ -28,6 +28,7 @@
 nz-header {
   background: #fff;
   padding: 0;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 9px 0 rgba(0, 0, 0, 0.05);
 }
 
 nz-content {
@@ -39,11 +40,38 @@ nz-breadcrumb {
   margin: 16px 0;
 }
 
-.inner-content {
-  background: #fff;
-  min-height: 360px;
-}
-
 nz-footer {
   text-align: center;
+}
+
+.app-header {
+  margin: 16px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.page-content {
+  border-width: 10px;
+  border-radius: 10px;
+  border-color: #000000;
+  padding: 16px;
+  background: #ffffff;
+  min-height: 360px;
+  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.11), 0 3px 15px 0 rgba(0, 0, 0, 0.11);
+  /* padding: 20px; */
+}
+
+.app-user-span {
+  flex-basis: auto;
+  height: 50px;
+  width: 50px;
+  margin: 7px 7px 7px 7px;
+  background-color: #bbb;
+  border-radius: 50%;
+}
+
+.app-user-span:hover {
+  cursor: pointer;
+  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.11), 0 3px 15px 0 rgba(0, 0, 0, 0.11);
 }

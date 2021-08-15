@@ -1,19 +1,20 @@
-import { AbstractResponse } from './../../models/abstract-response';
-import { MedicalUnitService } from './../../services/medical-unit.service';
+import { AbstractResponse } from '../../models/abstract-response';
+import { MedicalUnitService } from '../../services/medical-unit.service';
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, Input } from '@angular/core';
 import { AbstractResponseHandling } from '../../models/abstract-response';
 import { MedicalUnit } from '../../models/medical-unit';
 
 @Component({
-  selector: 'sf-list-medical-units',
-  templateUrl: './list-medical-units.component.html',
-  styleUrls: ['./list-medical-units.component.css'],
+  selector: 'sf-manage-medical-units',
+  templateUrl: './manage-medical-units.component.html',
+  styleUrls: ['./manage-medical-units.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ListMedicalUnitsComponent implements OnInit {
+export class ManageMedicalUnitsComponent implements OnInit {
 
   public verifiedMedUnits: MedicalUnit[];
   public unverifiedMedUnits: MedicalUnit[];
+  public isLoading = true;
   @Input() viewType: string;
 
   panels = [
@@ -32,14 +33,14 @@ export class ListMedicalUnitsComponent implements OnInit {
 
   constructor(
     private ref: ChangeDetectorRef,
-    private medicalUnitService: MedicalUnitService) { }
+    private medicalUnitService: MedicalUnitService) {
+  }
 
   async ngOnInit(): Promise<void> {
-    if (this.viewType === 'Verified') {
-      await this.getVerifiedMedicalUnits();
-    } else {
-      await this.getUnverifiedMedicalUnits();
-    }
+    await this.getVerifiedMedicalUnits();
+    await this.getUnverifiedMedicalUnits();
+    this.isLoading = false;
+    this.ref.markForCheck();
   }
 
   private async getVerifiedMedicalUnits() {
@@ -50,7 +51,6 @@ export class ListMedicalUnitsComponent implements OnInit {
         this.verifiedMedUnits = response.message;
         this.ref.markForCheck();
       },
-      prioritizePerformance: true
     };
 
     await this.medicalUnitService.getVerifiedMedicalUnits(responseHandling);
@@ -64,7 +64,6 @@ export class ListMedicalUnitsComponent implements OnInit {
         this.unverifiedMedUnits = response.message;
         this.ref.markForCheck();
       },
-      prioritizePerformance: true
     };
 
     await this.medicalUnitService.getUnverifiedMedicalUnits(responseHandling);

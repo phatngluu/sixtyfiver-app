@@ -30,7 +30,6 @@ const routes: Routes = [
     ]
   },
   { path: 'pethernet', loadChildren: () => import('./modules/pethernet/pethernet.module').then(m => m.PethernetModule) },
-
 ];
 
 @NgModule({

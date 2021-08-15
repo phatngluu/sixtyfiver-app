@@ -24,7 +24,7 @@ export class RespondHandlerService {
     }
 
     if (responseHandling.response?.success) {
-      if (responseHandling.prioritizePerformance === false) {
+      if (responseHandling.turnOnMessage === true) {
         this.messageService.success(successMessage)
       };
       if (responseHandling.event) {

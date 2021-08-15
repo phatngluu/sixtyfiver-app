@@ -98,5 +98,5 @@ export interface AbstractResponseHandling<T> {
    * @type {boolean}
    * @memberof AbstractResponseHandling
    */
-  prioritizePerformance?: boolean
+  turnOnMessage?: boolean
 }

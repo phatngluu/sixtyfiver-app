@@ -13,6 +13,7 @@ import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { NzResultModule } from 'ng-zorro-antd/result';
 
 
 // Directives
@@ -30,8 +31,9 @@ import { AddDoctorComponent } from './shared/components/add-doctor/add-doctor.co
 import { AddInjectorComponent } from './shared/components/add-injector/add-injector.component';
 import { ListDoctorsComponent } from './shared/components/list-doctors/list-doctors.component';
 import { ListInjectorComponent } from './shared/components/list-injector/list-injector.component';
-import { AddMedicalUnitComponent } from './shared/components/add-medical-unit/add-medical-unit.component';
-import { ListMedicalUnitsComponent } from './shared/components/list-medical-units/list-medical-units.component';
+import { AddMedicalUnitComponent } from './shared/components/register-medical-unit/register-medical-unit.component';
+import { ManageMedicalUnitsComponent } from './shared/components/manage-medical-units/manage-medical-units.component';
+import { MedicalUnitComponent } from './pages/medical-unit/medical-unit.component';
 
 // Pipes
 
@@ -55,7 +57,8 @@ import { ListMedicalUnitsComponent } from './shared/components/list-medical-unit
     ListDoctorsComponent,
     ListInjectorComponent,
     AddMedicalUnitComponent,
-    ListMedicalUnitsComponent,
+    ManageMedicalUnitsComponent,
+    MedicalUnitComponent,
 
     // Pipes
 
@@ -78,7 +81,9 @@ import { ListMedicalUnitsComponent } from './shared/components/list-medical-unit
     NzAlertModule,
     NzCardModule,
     NzCollapseModule,
-    NzTabsModule
+    NzTabsModule,
+    NzResultModule,
+
   ]
 })
 export class PethernetModule { }

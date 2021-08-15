@@ -8,13 +8,33 @@
     </div>
     <ul nz-menu nzTheme="dark" nzMode="inline">
       <li nz-submenu nzTitle="Pethernet"
-        [(nzOpen)]="rla.isActive || rla1.isActive || rla2.isActive || rla3.isActive || rla4.isActive"
+        [(nzOpen)]="rla.isActive || rla1.isActive || rla2.isActive || rla3.isActive || rla4.isActive || medUnit.isActive"
         nzIcon="file-done">
         <ul>
           <li nz-menu-item routerLinkActive="active" #rla="routerLinkActive" [routerLink]="'pethernet/overview'"
             [nzMatchRouter]="true">
             <i nz-icon nzType="eye" nzTheme="outline"></i>
             <span>Overview</span>
+          </li>
+          <li nz-submenu nzTitle="Medical Units" routerLinkActive="active" #medUnit="routerLinkActive"
+            [(nzOpen)]="medUnitRegister.isActive || medUnitOverview.isActive || medUnitManage.isActive" nzIcon="bank">
+            <ul>
+              <li nz-menu-item routerLinkActive="active" #medUnitOverview="routerLinkActive"
+                [routerLink]="'pethernet/medicalunit/overview'" [nzMatchRouter]="true">
+                <i nz-icon nzType="eye" nzTheme="outline"></i>
+                <span>Overview</span>
+              </li>
+              <li nz-menu-item routerLinkActive="active" #medUnitRegister="routerLinkActive"
+                [routerLink]="'pethernet/medicalunit/register'" [nzMatchRouter]="true">
+                <i nz-icon nzType="edit" nzTheme="outline"></i>
+                <span>Register</span>
+              </li>
+              <li nz-menu-item routerLinkActive="active" #medUnitManage="routerLinkActive"
+                [routerLink]="'pethernet/medicalunit/manage'" [nzMatchRouter]="true">
+                <i nz-icon nzType="edit" nzTheme="outline"></i>
+                <span>Manage</span>
+              </li>
+            </ul>
           </li>
           <li nz-menu-item routerLinkActive="active" #rla1="routerLinkActive" [routerLink]="'pethernet/medicalunits'"
             [nzMatchRouter]="true">
@@ -45,12 +65,18 @@
     </ul>
   </nz-sider>
   <nz-layout>
-    <nz-header>This is header</nz-header>
+    <nz-header class="app-header">
+      <span class="app-user-span"></span>
+    </nz-header>
     <nz-content>
       <nz-breadcrumb [nzAutoGenerate]="true">
       </nz-breadcrumb>
-      <div class="inner-content">
+      <div class="page-content">
+
+        <!-- main content here -->
         <router-outlet></router-outlet>
+        <!-- main content here -->
+
       </div>
     </nz-content>
     <nz-footer>Sixtyfiver ©2021</nz-footer>

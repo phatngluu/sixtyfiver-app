@@ -1,3 +1,6 @@
+import { ManageMedicalUnitsComponent } from './shared/components/manage-medical-units/manage-medical-units.component';
+import { AddMedicalUnitComponent } from './shared/components/register-medical-unit/register-medical-unit.component';
+import { MedicalUnitComponent } from './pages/medical-unit/medical-unit.component';
 import { InjectorsComponent } from './pages/injectors/injectors.component';
 import { DoctorsComponent } from './pages/doctors/doctors.component';
 import { VaccinedosesComponent } from './pages/vaccine-doses/vaccine-doses.component';
@@ -19,6 +22,43 @@ const routes: Routes = [
     component: PethernetComponent,
     data: {
       breadcrumb: 'Overview'
+    }
+  },
+  {
+    path: 'medicalunit',
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'overview'
+      },
+      {
+        path: 'overview',
+        pathMatch: 'full',
+        component: MedicalUnitComponent,
+        data: {
+          breadcrumb: 'Overview'
+        }
+      },
+      {
+        path: 'register',
+        pathMatch: 'full',
+        component: AddMedicalUnitComponent,
+        data: {
+          breadcrumb: 'Register'
+        }
+      },
+      {
+        path: 'manage',
+        pathMatch: 'full',
+        component: ManageMedicalUnitsComponent,
+        data: {
+          breadcrumb: 'Manage'
+        }
+      },
+    ],
+    data: {
+      breadcrumb: 'Medical Unit'
     }
   },
   {

@@ -1,0 +1,35 @@
+[nz-form-text] {
+  height: inherit;
+  align-content: center;
+}
+[nz-tab] {
+  padding: 5px;
+}
+
+.loadingDiv {
+  text-align: center;
+  border-radius: 4px;
+}
+
+.card-container ::ng-deep p {
+  margin: 0px;
+}
+.card-container ::ng-deep > .ant-tabs-card .ant-tabs-content {
+  height: fit-content;
+  margin-top: -16px;
+}
+.card-container ::ng-deep > .ant-tabs-card .ant-tabs-content > .ant-tabs-tabpane {
+  background: #fff;
+  padding: 16px;
+}
+.card-container ::ng-deep > .ant-tabs-card > .ant-tabs-nav::before {
+  display: none;
+}
+.card-container ::ng-deep > .ant-tabs-card .ant-tabs-tab {
+  border-color: transparent;
+  background: transparent;
+}
+.card-container ::ng-deep > .ant-tabs-card .ant-tabs-tab-active {
+  border-color: #fff;
+  background: #fff;
+}
