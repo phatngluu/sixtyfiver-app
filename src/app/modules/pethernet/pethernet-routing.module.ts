@@ -4,7 +4,6 @@ import { MedicalUnitComponent } from './pages/medical-unit/medical-unit.componen
 import { InjectorsComponent } from './pages/injectors/injectors.component';
 import { DoctorsComponent } from './pages/doctors/doctors.component';
 import { VaccinedosesComponent } from './pages/vaccine-doses/vaccine-doses.component';
-import { MedicalunitsComponent } from './pages/medical-units/medical-units.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PethernetComponent } from './pethernet.component';
@@ -59,13 +58,6 @@ const routes: Routes = [
     ],
     data: {
       breadcrumb: 'Medical Unit'
-    }
-  },
-  {
-    path: 'medicalunits',
-    component: MedicalunitsComponent,
-    data: {
-      breadcrumb: 'Medical Units'
     }
   },
   {

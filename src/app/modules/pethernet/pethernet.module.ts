@@ -20,7 +20,6 @@ import { NzResultModule } from 'ng-zorro-antd/result';
 
 // Components
 import { PethernetComponent } from './pethernet.component';
-import { MedicalunitsComponent } from './pages/medical-units/medical-units.component';
 import { VaccinedosesComponent } from './pages/vaccine-doses/vaccine-doses.component';
 import { AddVaccineDoseComponent } from './shared/components/add-vaccine-dose/add-vaccine-dose.component';
 import { ListVaccineDosesComponent } from './shared/components/list-vaccine-doses/list-vaccine-doses.component';
@@ -45,7 +44,6 @@ import { MedicalUnitComponent } from './pages/medical-unit/medical-unit.componen
 
     // Components
     PethernetComponent,
-    MedicalunitsComponent,
     VaccinedosesComponent,
     AddVaccineDoseComponent,
     ListVaccineDosesComponent,

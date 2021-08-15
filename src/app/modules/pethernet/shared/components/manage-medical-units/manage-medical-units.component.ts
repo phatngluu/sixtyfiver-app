@@ -68,4 +68,24 @@ export class ManageMedicalUnitsComponent implements OnInit {
 
     await this.medicalUnitService.getUnverifiedMedicalUnits(responseHandling);
   }
+
+  public async approveMedUnit(medUnit: MedicalUnit) {
+    const responseHandling: AbstractResponseHandling<MedicalUnit[]> = {
+      successMessage: 'Approved medical unit.',
+      failMessage: 'Cannot approve medical unit.',
+      turnOnMessage: true,
+    };
+
+    await this.medicalUnitService.verifyMedicalUnit(medUnit, responseHandling);
+  }
+
+  public async rejectMedUnit(medUnit: MedicalUnit) {
+    const responseHandling: AbstractResponseHandling<MedicalUnit[]> = {
+      successMessage: 'Rejected medical unit.',
+      failMessage: 'Cannot reject medical unit.',
+      turnOnMessage: true,
+    };
+
+    await this.medicalUnitService.rejectMedicalUnit(medUnit, responseHandling);
+  }
 }

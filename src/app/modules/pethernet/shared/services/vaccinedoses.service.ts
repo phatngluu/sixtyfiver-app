@@ -54,4 +54,19 @@ export class VaccinedosesService {
       .then((result) => {
         callback(result)});
   }
+
+  public async distributeVaccineDose(vaccineDoseHash: string, medicalUnitHash: string, responseHandling: AbstractResponseHandling<any>) {
+    const req = {
+      vaccineDoseHash,
+      medicalUnitHash,
+    };
+
+    try {
+      const res = await this.http.post<AbstractResponse<Object>>(environment.distributeVaccineDose, req).toPromise();
+      responseHandling.response = res;
+    } catch (error) {
+      responseHandling.err = error;
+    }
+    this.responseHandler.handle(responseHandling);
+  }
 }

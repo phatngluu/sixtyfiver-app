@@ -52,7 +52,8 @@ export class AddDoctorComponent implements OnInit {
       callback: () => {
         this.isSubmitting = false;
         this.ref.markForCheck();
-      }
+      },
+      turnOnMessage: true
     }
 
     await this.doctorService.addDoctor(doctor, responseHandling);

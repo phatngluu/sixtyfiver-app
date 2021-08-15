@@ -46,10 +46,13 @@ export class AddVaccineDoseComponent implements OnInit {
     }
 
     const responseHandling: AbstractResponseHandling<Object> = {
+      successMessage: 'Vaccine dose is add.',
+      failMessage: 'Vaccine dose is add.',
       callback: () => {
         this.isSubmitting = false;
         this.ref.markForCheck();
-      }
+      },
+      turnOnMessage: true
     }
 
     await this.vaccineDoseService.addVaccineDose(vaccineDose, responseHandling);

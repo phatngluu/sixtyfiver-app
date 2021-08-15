@@ -76,6 +76,12 @@
                   <nz-form-text><code>{{medUnit.hash}}</code></nz-form-text>
                 </nz-form-control>
               </nz-form-item>
+              <nz-form-item>
+                <nz-form-control [nzOffset]="7">
+                  <button class="approve-btn" nzSize="large" nz-button (click)="approveMedUnit(medUnit)">Approve</button>
+                  <button class="reject-btn" nzSize="large" nzDanger nz-button (click)="rejectMedUnit(medUnit)">Reject</button>
+                </nz-form-control>
+              </nz-form-item>
             </form>
           </nz-collapse-panel>
         </nz-collapse>

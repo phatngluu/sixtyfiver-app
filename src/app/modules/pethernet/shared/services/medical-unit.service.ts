@@ -1,8 +1,8 @@
+import { MedicalUnit } from './../models/medical-unit';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.base';
 import { AbstractResponseHandling, AbstractResponse } from '../models/abstract-response';
-import { MedicalUnit } from '../models/medical-unit';
 import { RespondHandlerService } from './respond-handler.service';
 import { Web3Service } from './web3.service';
 
@@ -52,4 +52,21 @@ export class MedicalUnitService {
 
     this.responseHandler.handle(responseHandling);
   }
+
+  public async verifyMedicalUnit(medUnit: MedicalUnit, responseHandling: AbstractResponseHandling<Object>) {
+    try {
+      const req = { medicalUnitHash: medUnit.hash };
+      const res = await this.http.post<AbstractResponse<Object>>(environment.verifyMedicalUnit, req, this.genericOptions).toPromise();
+      responseHandling.response = res;
+    } catch (err) {
+      responseHandling.err = err;
+    }
+
+    this.responseHandler.handle(responseHandling);
+  }
+
+  public async rejectMedicalUnit(medUnit: MedicalUnit, responseHandling: AbstractResponseHandling<Object>) {
+    // throw new NotImplementedException();
+    console.log('rejectMedicalUnit is not implemented.')
+  };
 }

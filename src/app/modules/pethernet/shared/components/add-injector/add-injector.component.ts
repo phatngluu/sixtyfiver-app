@@ -58,7 +58,8 @@ export class AddInjectorComponent implements OnInit {
       callback: () => {
         this.isSubmitting = false;
         this.ref.markForCheck();
-      }
+      },
+      turnOnMessage: true
     }
 
     await this.injectorService.addInjector(injector, responseHandling);

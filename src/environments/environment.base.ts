@@ -17,6 +17,7 @@ export const environment = {
 
   // Vaccine doses
   addVaccineDose: 'api/vaccinedose/add',
+  distributeVaccineDose: 'api/vaccinedose/distribute',
 
   // Medical units
   addMedicalUnit: 'api/medicalunit/add',
