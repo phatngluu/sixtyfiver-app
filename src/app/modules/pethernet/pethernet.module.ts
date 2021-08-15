@@ -18,6 +18,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzSliderModule } from 'ng-zorro-antd/slider';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzProgressModule } from 'ng-zorro-antd/progress';
+import { NzStepsModule } from 'ng-zorro-antd/steps';
 
 
 // Directives
@@ -37,6 +38,7 @@ import { AddMedicalUnitComponent } from './shared/components/register-medical-un
 import { ManageMedicalUnitsComponent } from './shared/components/manage-medical-units/manage-medical-units.component';
 import { MedicalUnitComponent } from './pages/medical-unit/medical-unit.component';
 import { DistributeVaccineDoseComponent } from './shared/components/distribute-vaccine-dose/distribute-vaccine-dose.component';
+import { IssueCertificateComponent } from './shared/components/issue-certificate/issue-certificate.component';
 
 // Pipes
 
@@ -61,6 +63,7 @@ import { DistributeVaccineDoseComponent } from './shared/components/distribute-v
     ManageMedicalUnitsComponent,
     MedicalUnitComponent,
     DistributeVaccineDoseComponent,
+    IssueCertificateComponent,
 
     // Pipes
 
@@ -89,7 +92,7 @@ import { DistributeVaccineDoseComponent } from './shared/components/distribute-v
     NzSliderModule,
     NzInputNumberModule,
     NzProgressModule,
-
+    NzStepsModule,
   ]
 })
 export class PethernetModule { }

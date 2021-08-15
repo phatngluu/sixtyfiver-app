@@ -1,3 +1,4 @@
+import { IssueCertificateComponent } from './shared/components/issue-certificate/issue-certificate.component';
 import { ManageMedicalUnitsComponent } from './shared/components/manage-medical-units/manage-medical-units.component';
 import { AddMedicalUnitComponent } from './shared/components/register-medical-unit/register-medical-unit.component';
 import { MedicalUnitComponent } from './pages/medical-unit/medical-unit.component';
@@ -54,6 +55,14 @@ const routes: Routes = [
         component: ManageMedicalUnitsComponent,
         data: {
           breadcrumb: 'Manage'
+        }
+      },
+      {
+        path: 'issueCertificate',
+        pathMatch: 'full',
+        component: IssueCertificateComponent,
+        data: {
+          breadcrumb: 'Issue Certificate'
         }
       },
     ],

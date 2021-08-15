@@ -48,7 +48,7 @@ export class AddVaccineDoseComponent implements OnInit {
         this.warnNoConnectedAccount = false;
       }
       this.ref.markForCheck();
-    })
+    });
   }
 
   async submitForm(vaccineDose: VaccineDose): Promise<void> {
