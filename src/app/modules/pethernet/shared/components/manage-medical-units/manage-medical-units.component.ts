@@ -3,6 +3,7 @@ import { MedicalUnitService } from '../../services/medical-unit.service';
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, Input } from '@angular/core';
 import { AbstractResponseHandling } from '../../models/abstract-response';
 import { MedicalUnit } from '../../models/medical-unit';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'sf-manage-medical-units',
@@ -33,6 +34,7 @@ export class ManageMedicalUnitsComponent implements OnInit {
 
   constructor(
     private ref: ChangeDetectorRef,
+    private router: Router,
     private medicalUnitService: MedicalUnitService) {
   }
 
@@ -87,5 +89,9 @@ export class ManageMedicalUnitsComponent implements OnInit {
     };
 
     await this.medicalUnitService.rejectMedicalUnit(medUnit, responseHandling);
+  }
+
+  public distributeVaccine(medUnit: MedicalUnit) {
+    this.router.navigateByUrl('/pethernet/vaccinedoses/distribute/' + medUnit.hash);
   }
 }

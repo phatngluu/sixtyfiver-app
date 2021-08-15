@@ -1,0 +1,89 @@
+<p>distribute-vaccine-dose works!</p>
+<div id="app-dist-vacccine-med-unit">
+  <form nz-form layout="horizontal">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7">Medical Unit</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select medical unit" [(ngModel)]="medicalUnitHash"
+          (ngModelChange)="onSelectedMedicalUnitChanged()" [ngModelOptions]="{standalone: true}">
+          <nz-option *ngFor="let medUnit of medicalUnits" [nzLabel]="medUnit.medName" [nzValue]="medUnit.hash">
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
+
+    <nz-form-item *ngIf="medUnit">
+      <nz-form-label [nzSpan]="7">Account</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <nz-alert nzType="info" [nzMessage]="medUnit.accountAddress"></nz-alert>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="medUnit">
+      <nz-form-label [nzSpan]="7">Address</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <nz-form-text>{{medUnit.physicalAddress}}</nz-form-text>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="medUnit">
+      <nz-form-label [nzSpan]="7">Registered on</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <nz-form-text>{{medUnit.registeredOn | date: 'dd/MM/yyyy'}}</nz-form-text>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="medUnit">
+      <nz-form-label [nzSpan]="7">Verified on</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <nz-form-text>{{medUnit.verifiedOn | date: 'dd/MM/yyyy'}}</nz-form-text>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="medUnit">
+      <nz-form-label [nzSpan]="7">Hash</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <nz-form-text><code>{{medUnit.hash}}</code></nz-form-text>
+      </nz-form-control>
+    </nz-form-item>
+
+
+    <nz-form-item *ngIf="medUnit">
+      <nz-form-label [nzSpan]="7">Vaccine Name</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select vaccine name" [(ngModel)]="selectedVaccineName"
+          (ngModelChange)="onSelectedVaccineNameChanged()" [ngModelOptions]="{standalone: true}">
+          <nz-option *ngFor="let vaccineName of vaccineNames" [nzLabel]="vaccineName" [nzValue]="vaccineName">
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="medUnit">
+      <nz-form-label [nzSpan]="7">Lot No</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <nz-select [nzDisabled]="!selectedVaccineName" nzShowSearch nzAllowClear nzPlaceHolder="Select lot no"
+          [(ngModel)]="selectedLotNo" (ngModelChange)="onLotNoChanged()" [ngModelOptions]="{standalone: true}">
+          <nz-option *ngFor="let lotNo of lotCategory" [nzLabel]="lotNo" [nzValue]="lotNo"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="medUnit">
+      <nz-form-label [nzSpan]="7">Vaccine Doses Amount</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <nz-select [nzDisabled]="!selectedLotNo || !filteredVaccineDoses" nzShowSearch nzAllowClear
+          nzPlaceHolder="Select number of vaccine doses" [(ngModel)]="numberOfSelectedVaccines"
+          [ngModelOptions]="{standalone: true}">
+          <nz-option *ngFor="let lotNo of filteredVaccineDoses; let i=index" [nzLabel]="i + 1" [nzValue]="i + 1">
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="medUnit">
+      <nz-form-control [nzOffset]="7">
+        <button nz-button nzType="primary"
+          [disabled]="!selectedVaccineName || !selectedLotNo || !filteredVaccineDoses || filteredVaccineDoses.length === 0 || !numberOfSelectedVaccines"
+          [nzLoading]="isSubmitting" (click)="distributeVaccine()">Submit</button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>
+<div *ngIf="isSubmitting">
+  <nz-progress [nzPercent]="30"></nz-progress>
+</div>

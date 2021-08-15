@@ -14,6 +14,10 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzResultModule } from 'ng-zorro-antd/result';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzSliderModule } from 'ng-zorro-antd/slider';
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { NzProgressModule } from 'ng-zorro-antd/progress';
 
 
 // Directives
@@ -22,7 +26,6 @@ import { NzResultModule } from 'ng-zorro-antd/result';
 import { PethernetComponent } from './pethernet.component';
 import { VaccinedosesComponent } from './pages/vaccine-doses/vaccine-doses.component';
 import { AddVaccineDoseComponent } from './shared/components/add-vaccine-dose/add-vaccine-dose.component';
-import { ListVaccineDosesComponent } from './shared/components/list-vaccine-doses/list-vaccine-doses.component';
 import { AccountOverviewComponent } from './shared/components/account-overview/account-overview.component';
 import { DoctorsComponent } from './pages/doctors/doctors.component';
 import { InjectorsComponent } from './pages/injectors/injectors.component';
@@ -33,6 +36,7 @@ import { ListInjectorComponent } from './shared/components/list-injector/list-in
 import { AddMedicalUnitComponent } from './shared/components/register-medical-unit/register-medical-unit.component';
 import { ManageMedicalUnitsComponent } from './shared/components/manage-medical-units/manage-medical-units.component';
 import { MedicalUnitComponent } from './pages/medical-unit/medical-unit.component';
+import { DistributeVaccineDoseComponent } from './shared/components/distribute-vaccine-dose/distribute-vaccine-dose.component';
 
 // Pipes
 
@@ -46,7 +50,6 @@ import { MedicalUnitComponent } from './pages/medical-unit/medical-unit.componen
     PethernetComponent,
     VaccinedosesComponent,
     AddVaccineDoseComponent,
-    ListVaccineDosesComponent,
     AccountOverviewComponent,
     DoctorsComponent,
     InjectorsComponent,
@@ -57,6 +60,7 @@ import { MedicalUnitComponent } from './pages/medical-unit/medical-unit.componen
     AddMedicalUnitComponent,
     ManageMedicalUnitsComponent,
     MedicalUnitComponent,
+    DistributeVaccineDoseComponent,
 
     // Pipes
 
@@ -81,6 +85,10 @@ import { MedicalUnitComponent } from './pages/medical-unit/medical-unit.componen
     NzCollapseModule,
     NzTabsModule,
     NzResultModule,
+    NzSelectModule,
+    NzSliderModule,
+    NzInputNumberModule,
+    NzProgressModule,
 
   ]
 })

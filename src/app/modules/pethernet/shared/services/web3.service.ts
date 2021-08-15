@@ -43,7 +43,7 @@ export class Web3Service {
 
   public async initialize() : Promise<void> {
     if (this.web3 === undefined || this.ethereumProvider === undefined) {
-      await this.connectMetaMask();
+      this.connectMetaMask();
     }
 
     if (this.contract === undefined) {

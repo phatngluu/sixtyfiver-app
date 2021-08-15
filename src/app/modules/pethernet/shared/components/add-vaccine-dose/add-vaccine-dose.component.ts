@@ -17,6 +17,7 @@ export class AddVaccineDoseComponent implements OnInit {
 
   validateForm: FormGroup;
   isSubmitting: boolean;
+  warnNoConnectedAccount: boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -32,7 +33,22 @@ export class AddVaccineDoseComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    await this.web3Service.initialize();
+    (await this.web3Service.getConnectedAccounts()).length
+    if ((await this.web3Service.getConnectedAccounts()).length === 0) {
+      this.warnNoConnectedAccount = true;
+      this.ref.markForCheck();
+    }
+
+    this.web3Service.accountChangedEvent.subscribe(x => {
+      if (this.web3Service.connectedAccounts.length === 0) {
+        this.warnNoConnectedAccount = true;
+      } else {
+        this.warnNoConnectedAccount = false;
+      }
+      this.ref.markForCheck();
+    })
   }
 
   async submitForm(vaccineDose: VaccineDose): Promise<void> {
@@ -47,7 +63,7 @@ export class AddVaccineDoseComponent implements OnInit {
 
     const responseHandling: AbstractResponseHandling<Object> = {
       successMessage: 'Vaccine dose is add.',
-      failMessage: 'Vaccine dose is add.',
+      failMessage: 'Vaccine dose is not add.',
       callback: () => {
         this.isSubmitting = false;
         this.ref.markForCheck();

@@ -4,5 +4,6 @@ export interface VaccineDose {
   vaccineName: string;
   importedDate: Date;
   expiredDate: Date;
+  medicalUnitHash: string;
   hash: string;
 }

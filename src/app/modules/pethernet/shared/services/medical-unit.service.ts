@@ -31,6 +31,18 @@ export class MedicalUnitService {
     this.responseHandler.handle(responseHandling);
   }
 
+  public async getMedicalUnitDetails(medicalUnit: string,  responseHandling: AbstractResponseHandling<MedicalUnit>) {
+    const url = `${environment.getMedicalUnitDetails}/${medicalUnit}`
+    try {
+      const res = await this.http.get<AbstractResponse<MedicalUnit>>(url, this.genericOptions).toPromise();
+      responseHandling.response = res;
+    } catch (error) {
+      responseHandling.err = error;
+    }
+
+    this.responseHandler.handle(responseHandling);
+  }
+
   public async getVerifiedMedicalUnits(responseHandling: AbstractResponseHandling<MedicalUnit[]>) {
     try {
       const res = await this.http.get<AbstractResponse<MedicalUnit[]>>(environment.getVerifiedMedicalUnits, this.genericOptions).toPromise();

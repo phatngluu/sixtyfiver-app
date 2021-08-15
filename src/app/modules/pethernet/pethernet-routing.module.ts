@@ -7,6 +7,7 @@ import { VaccinedosesComponent } from './pages/vaccine-doses/vaccine-doses.compo
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PethernetComponent } from './pethernet.component';
+import { DistributeVaccineDoseComponent } from './shared/components/distribute-vaccine-dose/distribute-vaccine-dose.component';
 
 const routes: Routes = [
   {
@@ -62,7 +63,36 @@ const routes: Routes = [
   },
   {
     path: 'vaccinedoses',
-    component: VaccinedosesComponent,
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'overview'
+      },
+      {
+        path: 'overview',
+        pathMatch: 'full',
+        component: VaccinedosesComponent,
+        data: {
+          breadcrumb: 'Overview'
+        }
+      },
+      {
+        path: 'distribute',
+        pathMatch: 'full',
+        component: DistributeVaccineDoseComponent,
+        data: {
+          breadcrumb: 'Distribute'
+        }
+      },
+      {
+        path: 'distribute/:medicalUnitHash',
+        component: DistributeVaccineDoseComponent,
+        data: {
+          breadcrumb: 'Distribute'
+        }
+      },
+    ],
     data: {
       breadcrumb: 'Vaccine Doses'
     }

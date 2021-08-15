@@ -47,12 +47,22 @@ export class VaccinedosesService {
       });
   }
 
-  public async getVaccineDoses(callback: (result: string[]) => void): Promise<void> {
-    await this.web3Service.initialize();
+  // public async getVaccineDoses(callback: (result: string[]) => void): Promise<void> {
+  //   await this.web3Service.initialize();
 
-    this.web3Service.contract.methods.vaccineDosesListGetter().call()
-      .then((result) => {
-        callback(result)});
+  //   this.web3Service.contract.methods.vaccineDosesListGetter().call()
+  //     .then((result) => {
+  //       callback(result)});
+  // }
+
+  public async getVaccineDoses(responseHandling: AbstractResponseHandling<any>) {
+    try {
+      const res = await this.http.get<AbstractResponse<Object>>(environment.getAllVaccineDoses).toPromise();
+      responseHandling.response = res;
+    } catch (error) {
+      responseHandling.err = error;
+    }
+    this.responseHandler.handle(responseHandling);
   }
 
   public async distributeVaccineDose(vaccineDoseHash: string, medicalUnitHash: string, responseHandling: AbstractResponseHandling<any>) {
