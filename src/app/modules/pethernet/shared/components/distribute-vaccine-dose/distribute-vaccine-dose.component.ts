@@ -27,6 +27,7 @@ export class DistributeVaccineDoseComponent implements OnInit {
   public filteredVaccineDoses: VaccineDose[];
   public numberOfSelectedVaccines: number;
   public isSubmitting: boolean;
+  public progressProzent: number = 0;
 
   constructor(
     private router: Router,
@@ -118,5 +119,23 @@ export class DistributeVaccineDoseComponent implements OnInit {
   async distributeVaccine() {
     this.isSubmitting = true;
     console.log(this.filteredVaccineDoses);
+
+    for (let index = 0; index < this.numberOfSelectedVaccines; index++) {
+      const vaccineDose = this.filteredVaccineDoses[index];
+
+      const responseHandling: AbstractResponseHandling<Object> = {
+        failMessage: `Cannot distribute vaccine with dose identity${vaccineDose.doseId}`,
+        callback: () => {
+          this.isSubmitting = false;
+          this.ref.markForCheck();
+        },
+        turnOnMessage: true
+      }
+
+      await this.vaccineDosesService.distributeVaccineDose(vaccineDose.hash, this.medicalUnitHash, responseHandling);
+
+      this.progressProzent = (index + 1) / this.numberOfSelectedVaccines * 100;
+      this.ref.markForCheck();
+    }
   }
 }
