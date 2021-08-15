@@ -129,7 +129,6 @@ export class DistributeVaccineDoseComponent implements OnInit {
           this.isSubmitting = false;
           this.ref.markForCheck();
         },
-        turnOnMessage: true
       }
 
       await this.vaccineDosesService.distributeVaccineDose(vaccineDose.hash, this.medicalUnitHash, responseHandling);
