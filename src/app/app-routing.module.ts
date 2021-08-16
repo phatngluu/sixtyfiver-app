@@ -1,14 +1,18 @@
+import { AuthGuard } from './auth.guard';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LayoutShellComponent } from './modules/core/layout-shell/layout-shell.component';
+import { LoginComponent } from './shared/components/login/login.component';
 
 const routes: Routes = [
   {
     path: '',
+    canActivate: [AuthGuard],
     component: LayoutShellComponent,
     children: [
       {
         path: 'warehouse',
+        canActivate: [AuthGuard],
         loadChildren: () =>
           import('./modules/warehouse/warehouse.module').then(
             (m) => m.WarehouseModule
@@ -19,6 +23,7 @@ const routes: Routes = [
       },
       {
         path: 'pethernet',
+        canActivate: [AuthGuard],
         loadChildren: () =>
           import('./modules/pethernet/pethernet.module').then(
             (m) => m.PethernetModule
@@ -29,7 +34,12 @@ const routes: Routes = [
       },
     ]
   },
-  { path: 'pethernet', loadChildren: () => import('./modules/pethernet/pethernet.module').then(m => m.PethernetModule) },
+  // { path: 'pethernet', loadChildren: () => import('./modules/pethernet/pethernet.module').then(m => m.PethernetModule) },
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

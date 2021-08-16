@@ -1,6 +1,11 @@
 export const environment = {
 
   /* * * * * * *
+    Auth
+  * * * * * * */
+  authenticate: '/authenticate',
+
+  /* * * * * * *
     Warehouse
   * * * * * * */
   allFilesUrl: 'api/warehouse/all',

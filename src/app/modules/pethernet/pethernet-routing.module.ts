@@ -1,3 +1,4 @@
+import { RoleGuard } from './../../shared/auth/role.guard';
 import { IssueCertificateComponent } from './shared/components/issue-certificate/issue-certificate.component';
 import { ManageMedicalUnitsComponent } from './shared/components/manage-medical-units/manage-medical-units.component';
 import { AddMedicalUnitComponent } from './shared/components/register-medical-unit/register-medical-unit.component';
@@ -9,11 +10,14 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PethernetComponent } from './pethernet.component';
 import { DistributeVaccineDoseComponent } from './shared/components/distribute-vaccine-dose/distribute-vaccine-dose.component';
+import { Role } from 'src/app/shared/models/auth-credential';
+import { AuthGuard } from 'src/app/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: PethernetComponent,
+    canActivate: [AuthGuard, RoleGuard],
     data: {
       breadcrumb: 'Overview'
     }
@@ -21,6 +25,7 @@ const routes: Routes = [
   {
     path: 'overview',
     component: PethernetComponent,
+    canActivate: [AuthGuard, RoleGuard],
     data: {
       breadcrumb: 'Overview'
     }
@@ -37,7 +42,9 @@ const routes: Routes = [
         path: 'overview',
         pathMatch: 'full',
         component: MedicalUnitComponent,
+        canActivate: [AuthGuard, RoleGuard],
         data: {
+          roles: [Role.MinistryOfHealth, Role.MedicalUnit],
           breadcrumb: 'Overview'
         }
       },
@@ -45,7 +52,9 @@ const routes: Routes = [
         path: 'register',
         pathMatch: 'full',
         component: AddMedicalUnitComponent,
+        canActivate: [AuthGuard, RoleGuard],
         data: {
+          roles: [Role.MedicalUnit],
           breadcrumb: 'Register'
         }
       },
@@ -53,7 +62,9 @@ const routes: Routes = [
         path: 'manage',
         pathMatch: 'full',
         component: ManageMedicalUnitsComponent,
+        canActivate: [AuthGuard, RoleGuard],
         data: {
+          roles: [Role.MinistryOfHealth],
           breadcrumb: 'Manage'
         }
       },
@@ -61,7 +72,9 @@ const routes: Routes = [
         path: 'issueCertificate',
         pathMatch: 'full',
         component: IssueCertificateComponent,
+        canActivate: [AuthGuard, RoleGuard],
         data: {
+          roles: [Role.MedicalUnit],
           breadcrumb: 'Issue Certificate'
         }
       },
@@ -72,17 +85,24 @@ const routes: Routes = [
   },
   {
     path: 'vaccinedoses',
+    canActivate: [AuthGuard],
     children: [
       {
         path: '',
+        canActivate: [AuthGuard, RoleGuard],
         pathMatch: 'full',
-        redirectTo: 'overview'
+        redirectTo: 'overview',
+        data: {
+          roles: [Role.MinistryOfHealth],
+        }
       },
       {
         path: 'overview',
         pathMatch: 'full',
         component: VaccinedosesComponent,
+        canActivate: [AuthGuard, RoleGuard],
         data: {
+          roles: [Role.MinistryOfHealth],
           breadcrumb: 'Overview'
         }
       },
@@ -90,14 +110,18 @@ const routes: Routes = [
         path: 'distribute',
         pathMatch: 'full',
         component: DistributeVaccineDoseComponent,
+        canActivate: [AuthGuard, RoleGuard],
         data: {
+          roles: [Role.MinistryOfHealth],
           breadcrumb: 'Distribute'
         }
       },
       {
         path: 'distribute/:medicalUnitHash',
         component: DistributeVaccineDoseComponent,
+        canActivate: [AuthGuard, RoleGuard],
         data: {
+          roles: [Role.MinistryOfHealth],
           breadcrumb: 'Distribute'
         }
       },
@@ -109,14 +133,18 @@ const routes: Routes = [
   {
     path: 'doctors',
     component: DoctorsComponent,
+    canActivate: [AuthGuard, RoleGuard],
     data: {
+      roles: [Role.Doctor],
       breadcrumb: 'Doctors'
     }
   },
   {
     path: 'injectors',
     component: InjectorsComponent,
+    canActivate: [AuthGuard, RoleGuard],
     data: {
+      roles: [Role.Injector],
       breadcrumb: 'Injectors'
     }
   },

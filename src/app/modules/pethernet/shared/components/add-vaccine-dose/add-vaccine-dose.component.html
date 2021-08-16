@@ -1,4 +1,3 @@
-<p>add-vaccine-dose works! [Ministry of Health]</p>
 <nz-alert [nzSpan]="7" *ngIf="warnNoConnectedAccount" nzType="warning" nzMessage="You don't have any connected Metamask accounts."></nz-alert>
 <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm(validateForm.value)">
   <nz-form-item>

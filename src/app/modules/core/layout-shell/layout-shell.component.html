@@ -16,32 +16,32 @@
             <i nz-icon nzType="eye" nzTheme="outline"></i>
             <span>Overview</span>
           </li>
-          <li nz-submenu nzTitle="Medical Units" routerLinkActive="active" #medUnit="routerLinkActive"
+          <li [hidden]="notRole(role.MedicalUnit) && notRole(role.MinistryOfHealth)" nz-submenu nzTitle="Medical Units" routerLinkActive="active" #medUnit="routerLinkActive"
             [(nzOpen)]="medUnitRegister.isActive || medUnitOverview.isActive || medUnitManage.isActive || medUnitIssueCert.isActive" nzIcon="bank">
             <ul>
-              <li nz-menu-item routerLinkActive="active" #medUnitOverview="routerLinkActive"
+              <li [hidden]="notRole(role.MedicalUnit) && notRole(role.MinistryOfHealth)" nz-menu-item routerLinkActive="active" #medUnitOverview="routerLinkActive"
                 [routerLink]="'pethernet/medicalunit/overview'" [nzMatchRouter]="true">
                 <i nz-icon nzType="eye" nzTheme="outline"></i>
                 <span>Overview</span>
               </li>
-              <li nz-menu-item routerLinkActive="active" #medUnitRegister="routerLinkActive"
+              <li [hidden]="notRole(role.MedicalUnit)" nz-menu-item routerLinkActive="active" #medUnitRegister="routerLinkActive"
                 [routerLink]="'pethernet/medicalunit/register'" [nzMatchRouter]="true">
                 <i nz-icon nzType="edit" nzTheme="outline"></i>
                 <span>Register</span>
               </li>
-              <li nz-menu-item routerLinkActive="active" #medUnitManage="routerLinkActive"
+              <li [hidden]="notRole(role.MinistryOfHealth)" nz-menu-item routerLinkActive="active" #medUnitManage="routerLinkActive"
                 [routerLink]="'pethernet/medicalunit/manage'" [nzMatchRouter]="true">
                 <i nz-icon nzType="edit" nzTheme="outline"></i>
                 <span>Manage</span>
               </li>
-              <li nz-menu-item routerLinkActive="active" #medUnitIssueCert="routerLinkActive"
+              <li [hidden]="notRole(role.MedicalUnit)" nz-menu-item routerLinkActive="active" #medUnitIssueCert="routerLinkActive"
                 [routerLink]="'pethernet/medicalunit/issueCertificate'" [nzMatchRouter]="true">
                 <i nz-icon nzType="edit" nzTheme="outline"></i>
                 <span>Issue Cert</span>
               </li>
             </ul>
           </li>
-          <li nz-submenu nzTitle="Vaccine Doses" routerLinkActive="active" #vaccineDose="routerLinkActive"
+          <li [hidden]="notRole(role.MinistryOfHealth)" nz-submenu nzTitle="Vaccine Doses" routerLinkActive="active" #vaccineDose="routerLinkActive"
             [(nzOpen)]="vaccineDoseDistribute.isActive || vaccineDoseOverview.isActive" nzIcon="experiment">
             <ul>
               <li nz-menu-item routerLinkActive="active" #vaccineDoseOverview="routerLinkActive"
@@ -56,12 +56,12 @@
               </li>
             </ul>
           </li>
-          <li nz-menu-item routerLinkActive="active" #rla3="routerLinkActive" [routerLink]="'pethernet/doctors'"
+          <li [hidden]="notRole(role.Doctor)" nz-menu-item routerLinkActive="active" #rla3="routerLinkActive" [routerLink]="'pethernet/doctors'"
             [nzMatchRouter]="true">
             <i nz-icon nzType="usergroup-add" nzTheme="outline"></i>
             <span>Doctors</span>
           </li>
-          <li nz-menu-item routerLinkActive="active" #rla4="routerLinkActive" [routerLink]="'pethernet/injectors'"
+          <li [hidden]="notRole(role.Injector)" nz-menu-item routerLinkActive="active" #rla4="routerLinkActive" [routerLink]="'pethernet/injectors'"
             [nzMatchRouter]="true">
             <i nz-icon nzType="user" nzTheme="outline"></i>
             <span>Injectors</span>
@@ -76,7 +76,7 @@
   </nz-sider>
   <nz-layout>
     <nz-header class="app-header">
-      <span class="app-user-span"></span>
+      <span class="app-user-span" (click)="onLogout()"></span>
     </nz-header>
     <nz-content>
       <nz-breadcrumb [nzAutoGenerate]="true">
