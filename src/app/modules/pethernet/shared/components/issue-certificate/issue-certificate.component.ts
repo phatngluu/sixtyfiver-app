@@ -1,3 +1,4 @@
+import { MedicalUnit } from './../../models/medical-unit';
 import { Web3Service } from './../../services/web3.service';
 import hash from 'object-hash';
 import { Certificate } from './../../models/certificate';
@@ -17,7 +18,8 @@ export class IssueCertificateComponent implements OnInit {
 
   public validateForm: FormGroup;
 
-  public medicalUnitHash: string = '3a9d774225ea78433a5b7d0ab0b04e6081d64cf4';
+  public medicalUnitHash: string;
+  public medicalUnit: MedicalUnit;
   public doctorHash: string = '6931764dbffb80a816c84d35362f38143f6c1961';
   public availableVaccineDoses: VaccineDose[];
   isSubmitting: boolean;
@@ -60,6 +62,16 @@ export class IssueCertificateComponent implements OnInit {
         this.ref.markForCheck();
       }
     }
+
+    const responseHandling2: AbstractResponseHandling<MedicalUnit> = {
+      callback: (result: AbstractResponse<MedicalUnit>) => {
+        this.medicalUnit = result.message;
+        this.medicalUnitHash = this.medicalUnit.hash;
+        this.ref.markForCheck();
+      }
+    }
+
+    await this.medicalUnitService.getAuthorizedMedicalUnit(responseHandling2);
 
     await this.medicalUnitService.getAvailableVaccineDoses(this.medicalUnitHash, responseHandling);
   }

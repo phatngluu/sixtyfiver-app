@@ -1,6 +1,21 @@
-<nz-alert [nzSpan]="7" *ngIf="warnNoConnectedAccount" nzType="warning" nzMessage="You don't have any connected Metamask accounts."></nz-alert>
+<div>
+  <nz-alert [nzSpan]="7" *ngIf="warnNoConnectedAccount" nzType="warning" nzMessage="You don't have any connected Metamask accounts."></nz-alert>
+</div>
+<div *ngIf="!medicalUnit">
+  <nz-alert [nzSpan]="7" nzType="warning" nzMessage="You haven't register medical unit."></nz-alert>
+  <span nz-typography>
+    <a href="/pethernet/medicalunit/register">
+      Register here
+      <Link />
+    </a>
+  </span>
+</div>
+<div>
+  <nz-alert [nzSpan]="7" *ngIf="medicalUnit && medicalUnit.verifiedOn === null" nzType="warning" nzMessage="Your medical unit is not verified."></nz-alert>
+</div>
 
-<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm(validateForm.value)">
+
+<form *ngIf="medicalUnit && medicalUnit.verifiedOn !== null" nz-form [formGroup]="validateForm" (ngSubmit)="submitForm(validateForm.value)">
   <nz-form-item>
     <nz-form-label [nzSpan]="7" nzRequired>Medical Unit Hash</nz-form-label>
     <nz-form-control [nzSpan]="9">

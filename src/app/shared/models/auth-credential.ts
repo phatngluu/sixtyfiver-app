@@ -1,5 +1,5 @@
 export interface AuthCredential {
-  sub: string,
+  sub: number,
   role: Role
 }
 

@@ -1,4 +1,5 @@
 export interface MedicalUnit {
+  userId: number,
   medCode: string,
   medName: string,
   accountAddress: string,

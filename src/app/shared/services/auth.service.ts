@@ -11,6 +11,7 @@ import { Injectable } from '@angular/core';
 export class AuthService {
   public isAuthorized = false;
   public userCredential: AuthCredential;
+  public ACCESS_TOKEN: string;
 
   constructor(
     private http: HttpClient) {
@@ -23,6 +24,7 @@ export class AuthService {
       try {
         this.userCredential = jwt_decode<AuthCredential>(accessToken);
         this.isAuthorized = true;
+        this.ACCESS_TOKEN = accessToken;
       } catch (error) {
         console.error(error);
         this.isAuthorized = false;
@@ -41,6 +43,7 @@ export class AuthService {
       const result = await this.http.post<any>(environment.authenticate, credential).toPromise();
       this.isAuthorized = true;
       window.localStorage.setItem('ACCESS_TOKEN', result.token);
+      this.ACCESS_TOKEN = result.token;
     } catch (error) {
       console.error(error);
       this.isAuthorized = false;
@@ -51,6 +54,7 @@ export class AuthService {
 
   logout() {
     this.isAuthorized = false;
+    this.ACCESS_TOKEN = undefined;
     window.localStorage.removeItem('ACCESS_TOKEN');
   }
 }

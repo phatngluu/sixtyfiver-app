@@ -1,7 +1,9 @@
+import { GenericOptions } from './../../../../shared/models/generic-options';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import hash from 'object-hash';
 import { Certificate } from './../models/certificate';
 import { MedicalUnit } from './../models/medical-unit';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.base';
 import { AbstractResponseHandling, AbstractResponse } from '../models/abstract-response';
@@ -14,18 +16,36 @@ import { VaccineDose } from '../models/vaccine-dose';
 })
 export class MedicalUnitService {
 
-  private genericOptions: object = { responseType: "json" };
+  private genericOptions: object;
 
   constructor(
     private http: HttpClient,
+    private authService: AuthService,
     private web3Service: Web3Service,
     private responseHandler: RespondHandlerService) {
-
+    this.genericOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authService.ACCESS_TOKEN}`
+      }),
+      responseType: "json"
+    }
   }
 
   public async addMedicalUnit(medicalUnit: MedicalUnit, responseHandling: AbstractResponseHandling<Object>) {
     try {
       const res = await this.http.post<AbstractResponse<Object>>(environment.addMedicalUnit, medicalUnit, this.genericOptions).toPromise();
+      responseHandling.response = res;
+    } catch (error) {
+      responseHandling.err = error;
+    }
+
+    this.responseHandler.handle(responseHandling);
+  }
+
+  public async getAuthorizedMedicalUnit(responseHandling: AbstractResponseHandling<MedicalUnit>) {
+    try {
+      const res = await this.http.get<AbstractResponse<MedicalUnit>>(environment.getAuthorizedMedicalUnit, this.genericOptions).toPromise();
       responseHandling.response = res;
     } catch (error) {
       responseHandling.err = error;

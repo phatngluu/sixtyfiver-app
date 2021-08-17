@@ -1,4 +1,5 @@
-import { AbstractResponseHandling } from '../../models/abstract-response';
+import { AuthService } from './../../../../../shared/services/auth.service';
+import { AbstractResponse, AbstractResponseHandling } from '../../models/abstract-response';
 import { MedicalUnitService } from '../../services/medical-unit.service';
 import { Web3Service } from '../../services/web3.service';
 import { MedicalUnit } from '../../models/medical-unit';
@@ -17,9 +18,11 @@ export class AddMedicalUnitComponent implements OnInit {
   isSubmitting: boolean;
   public metamaskAccount: string;
   public registeredSuccessfuly: boolean = false;
+  public medicalUnit: MedicalUnit;
 
   constructor(
     private fb: FormBuilder,
+    private authService: AuthService,
     private ref: ChangeDetectorRef,
     private web3Service: Web3Service,
     private medicalUnitService: MedicalUnitService) {
@@ -33,9 +36,19 @@ export class AddMedicalUnitComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     await this.web3Service.initialize();
-    this.metamaskAccount = this.web3Service.connectedAccounts[0];
+    const accounts = await this.web3Service.getConnectedAccounts();
+    this.metamaskAccount = accounts[0];
     this.validateForm.get('accountAddress').setValue(this.metamaskAccount);
     this.ref.markForCheck();
+
+    const responseHandling2: AbstractResponseHandling<MedicalUnit> = {
+      callback: (result: AbstractResponse<MedicalUnit>) => {
+        this.medicalUnit = result.message;
+        this.ref.markForCheck();
+      }
+    }
+
+    await this.medicalUnitService.getAuthorizedMedicalUnit(responseHandling2);
 
     this.web3Service.accountChangedEvent.subscribe(() => {
       this.metamaskAccount = this.web3Service.connectedAccounts[0];
@@ -49,6 +62,8 @@ export class AddMedicalUnitComponent implements OnInit {
   }
 
   public async submitForm(medicalUnit: MedicalUnit): Promise<void> {
+    medicalUnit.userId = this.authService.userCredential.sub;
+
     const responseHandling: AbstractResponseHandling<Object> = {
       successMessage: 'Medical unit registration has been sent.',
       failMessage: 'Medical unit registration has not been sent.',

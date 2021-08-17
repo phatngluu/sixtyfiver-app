@@ -1,3 +1,31 @@
 <div class="card-container">
   <router-outlet></router-outlet>
 </div>
+<div [hidden]="notRole(role.MedicalUnit)">
+  <form nz-form layout="horizontal">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7">Account</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <nz-alert nzType="info" [nzMessage]="medicalUnit.accountAddress"></nz-alert>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7">Address</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <nz-form-text>{{medicalUnit.physicalAddress}}</nz-form-text>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7">Registered on</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <nz-form-text>{{medicalUnit.registeredOn | date: 'dd/MM/yyyy'}}</nz-form-text>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7">Hash</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <nz-form-text><code>{{medicalUnit.hash}}</code></nz-form-text>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>
