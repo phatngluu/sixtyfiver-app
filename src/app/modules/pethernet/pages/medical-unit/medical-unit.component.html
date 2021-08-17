@@ -1,8 +1,27 @@
-<div class="card-container">
-  <router-outlet></router-outlet>
+<div *ngIf="!medicalUnit">
+  <nz-alert [nzSpan]="7" nzType="warning" nzMessage="You haven't register medical unit."></nz-alert>
+  <span nz-typography>
+    <a href="pethernet/medicalunit/register">
+      Register here
+      <Link />
+    </a>
+  </span>
 </div>
-<div [hidden]="notRole(role.MedicalUnit)">
+
+<div [hidden]="notRole(role.MedicalUnit)" *ngIf="medicalUnit">
   <form nz-form layout="horizontal">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7">Account</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <nz-form-text>{{medicalUnit.medName}}</nz-form-text>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7">Account</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <nz-form-text>{{medicalUnit.medCode}}</nz-form-text>
+      </nz-form-control>
+    </nz-form-item>
     <nz-form-item>
       <nz-form-label [nzSpan]="7">Account</nz-form-label>
       <nz-form-control [nzSpan]="12">
@@ -25,6 +44,18 @@
       <nz-form-label [nzSpan]="7">Hash</nz-form-label>
       <nz-form-control [nzSpan]="12">
         <nz-form-text><code>{{medicalUnit.hash}}</code></nz-form-text>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7">Verified Status</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <nz-form-text>{{medicalUnit.verifiedOn ? 'Verified' : 'Unverified'}}</nz-form-text>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="medicalUnit.verifiedOn !== null">
+      <nz-form-label [nzSpan]="7">Verified On</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <nz-form-text>{{medicalUnit.verifiedOn | date: 'dd/MM/yyyy' }}</nz-form-text>
       </nz-form-control>
     </nz-form-item>
   </form>
