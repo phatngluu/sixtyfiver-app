@@ -18,6 +18,8 @@ export class AddVaccineDoseComponent implements OnInit {
   validateForm: FormGroup;
   isSubmitting: boolean;
   warnNoConnectedAccount: boolean;
+  connectedMetamaskAccount: string;
+  ministryOfHealthAccountAddress: string;
 
   constructor(
     private fb: FormBuilder,
@@ -35,17 +37,25 @@ export class AddVaccineDoseComponent implements OnInit {
 
   async ngOnInit() {
     await this.web3Service.initialize();
-    (await this.web3Service.getConnectedAccounts()).length
-    if ((await this.web3Service.getConnectedAccounts()).length === 0) {
-      this.warnNoConnectedAccount = true;
-      this.ref.markForCheck();
-    }
 
-    this.web3Service.accountChangedEvent.subscribe(x => {
-      if (this.web3Service.connectedAccounts.length === 0) {
+    this.ministryOfHealthAccountAddress = this.web3Service.MINISTRY_OF_HEALTH_ADDRESS;
+
+    let connectedAccounts = await this.web3Service.getConnectedAccounts();
+    if (connectedAccounts.length === 0) {
+      this.warnNoConnectedAccount = true;
+    } else {
+      this.connectedMetamaskAccount = connectedAccounts[0];
+    }
+    this.ref.markForCheck();
+
+    this.web3Service.accountChangedEvent.subscribe(async x => {
+      let connectedAccounts = await this.web3Service.getConnectedAccounts();
+
+      if (connectedAccounts.length === 0) {
         this.warnNoConnectedAccount = true;
       } else {
         this.warnNoConnectedAccount = false;
+        this.connectedMetamaskAccount = connectedAccounts[0];
       }
       this.ref.markForCheck();
     });

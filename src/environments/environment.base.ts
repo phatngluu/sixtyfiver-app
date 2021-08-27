@@ -16,6 +16,9 @@ export const environment = {
     Pethernet
   * * * * * * */
 
+  // MinistryOfHealth
+  getMinistryOfHealthAccountAddress: "api/ministryOfHealthAccountAddress",
+
   // Contract
   getContractAddress: 'api/contractAddress',
   getContractABI: 'api/contractABI',
@@ -35,10 +38,6 @@ export const environment = {
   issueCertificate: 'api/medicalunit/issueCertificate',
   // getIssuedCertificates: 'api/medicalunit/getIssuedCertificates',
   getAvailableVaccineDoses: '/api/medicalunit/getAvailableVaccineDoses',
-
-  // Doctor
-  addDoctor: 'api/doctor/add',
-  checkDoctor: 'api/doctor/check',
 
   // Injector
   addInjector: 'api/injector/add',

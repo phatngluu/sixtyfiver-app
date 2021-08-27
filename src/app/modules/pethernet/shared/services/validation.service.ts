@@ -1,4 +1,3 @@
-import { DoctorService } from './doctor.service';
 import { InjectorService } from './injector.service';
 import { AsyncValidatorFn, AbstractControl, ValidationErrors, FormControl } from "@angular/forms";
 import { Observer } from "rxjs";
@@ -43,25 +42,6 @@ export class ValidationService {
     } else {
       return { 'invalidPassword': true };
     }
-  }
-
-  static doctorCitizenIdValidator(doctorService: DoctorService): AsyncValidatorFn {
-    return (control: FormControl) => new Observable((observer: Observer<ValidationErrors | null>) => {
-      const citizenId = control.value;
-      doctorService.checkDoctorExisted(citizenId).then((isExisted) => {
-        console.log(isExisted)
-        if (isExisted === true) {
-          observer.next({ error: true, duplicated: true });
-        } else {
-          observer.next(null);
-        }
-        observer.complete();
-      }).catch((err) => {
-        console.error(err);
-        observer.next({ error: true, notchecked: true })
-        observer.complete();
-      });
-    });
   }
 
   static injectorCitizenIdValidator(injectorService: InjectorService): AsyncValidatorFn {

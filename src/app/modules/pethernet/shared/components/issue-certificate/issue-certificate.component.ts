@@ -46,10 +46,10 @@ export class IssueCertificateComponent implements OnInit {
     let connectedAccounts = await this.web3Service.getConnectedAccounts();
     if (connectedAccounts.length === 0) {
       this.warnNoConnectedAccount = true;
-      this.ref.markForCheck();
     } else {
       this.connectedMetamaskAccount = connectedAccounts[0];
     }
+    this.ref.markForCheck();
 
     this.web3Service.accountChangedEvent.subscribe(async x => {
       let connectedAccounts = await this.web3Service.getConnectedAccounts();

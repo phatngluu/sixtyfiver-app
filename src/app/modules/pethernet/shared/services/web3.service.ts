@@ -1,7 +1,7 @@
 import { EthereumProviderExtension } from './../models/ethereum-provider-extension';
 import { AbstractResponse } from './../models/abstract-response';
 import { environment } from './../../../../../environments/environment.prod';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, EventEmitter } from '@angular/core';
 import Web3 from 'web3';
 import { Contract } from 'web3-eth-contract';
@@ -9,6 +9,7 @@ import { AbiItem } from 'web3-utils';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 import detectEthereumProvider from '@metamask/detect-provider'
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 declare let window: any;
 
@@ -26,6 +27,7 @@ export class Web3Service {
   public contractABI: AbiItem[] = null;
   public contractAddress: string;
   public connectedAccounts: string[];
+  public MINISTRY_OF_HEALTH_ADDRESS: string;
 
   /** Events */
   public initializedEvent = new EventEmitter();
@@ -33,6 +35,7 @@ export class Web3Service {
 
   constructor(
     private http: HttpClient,
+    private authService: AuthService,
     private messageService: NzMessageService) {
     // Connect metamask
     // this.connectMetaMask();
@@ -48,6 +51,10 @@ export class Web3Service {
 
     if (this.contract === undefined) {
       await this.loadContract();
+    }
+
+    if (this.MINISTRY_OF_HEALTH_ADDRESS === undefined) {
+      await this.loadMinistryOfHealthAccountAddress();
     }
 
     this.initializedEvent.emit();
@@ -92,6 +99,18 @@ export class Web3Service {
     this.contractAddress = contractInfo[0].message;
     this.contractABI = contractInfo[1].message;
     this.contract = new this.web3.eth.Contract(this.contractABI, this.contractAddress);
+  }
+
+  private async loadMinistryOfHealthAccountAddress(): Promise<void> {
+    const genericOptions: object = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authService.getAccessToken()}`
+      }),
+      responseType: "json"
+    }
+    const res = await this.http.get<AbstractResponse<string>>(environment.getMinistryOfHealthAccountAddress, genericOptions).toPromise();
+    this.MINISTRY_OF_HEALTH_ADDRESS = res.message;
   }
 
   public async getConnectedAccounts(): Promise<string[]> {

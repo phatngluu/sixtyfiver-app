@@ -30,7 +30,6 @@ import { AddVaccineDoseComponent } from './shared/components/add-vaccine-dose/ad
 import { AccountOverviewComponent } from './shared/components/account-overview/account-overview.component';
 import { InjectorsComponent } from './pages/injectors/injectors.component';
 import { AddInjectorComponent } from './shared/components/add-injector/add-injector.component';
-import { ListDoctorsComponent } from './shared/components/list-doctors/list-doctors.component';
 import { ListInjectorComponent } from './shared/components/list-injector/list-injector.component';
 import { AddMedicalUnitComponent } from './shared/components/register-medical-unit/register-medical-unit.component';
 import { ManageMedicalUnitsComponent } from './shared/components/manage-medical-units/manage-medical-units.component';
@@ -55,7 +54,6 @@ import { CertificateDetailComponent } from './shared/components/certificate-deta
     AccountOverviewComponent,
     InjectorsComponent,
     AddInjectorComponent,
-    ListDoctorsComponent,
     ListInjectorComponent,
     AddMedicalUnitComponent,
     ManageMedicalUnitsComponent,
