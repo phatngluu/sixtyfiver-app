@@ -43,6 +43,7 @@ export class MedicalUnitService {
   }
 
   public async addMedicalUnit(medicalUnit: MedicalUnit, responseHandling: AbstractResponseHandling<Object>) {
+    console.log(medicalUnit)
     try {
       const res = await this.http.post<AbstractResponse<Object>>(environment.addMedicalUnit, medicalUnit, this.genericOptions).toPromise();
       responseHandling.response = res;
@@ -130,14 +131,14 @@ export class MedicalUnitService {
   public async issueCertificate(cert: Certificate, responseHandling: AbstractResponseHandling<Certificate>) {
     await this.web3Service.initialize();
 
-    cert.hash = hash(`${cert.medicalUnitHash}${cert.injectorHash}${cert.doctorHash}${cert.vaccineDoseHash}`);
+    cert.hash = hash(`${cert.medicalUnitHash}${cert.injectorHash}${cert.vaccineDoseHash}`);
+    console.log(cert)
 
     this.web3Service.contract.methods.issueCertificate(
       cert.medicalUnitHash,
       cert.injectorHash,
-      cert.doctorHash,
       cert.vaccineDoseHash,
-      cert.medicalUnitHash,
+      cert.hash,
     ).send({
       from: this.web3Service.connectedAccounts[0],
       gas: 400000,

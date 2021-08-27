@@ -1,52 +1,65 @@
-<nz-alert *ngIf="medicalUnit" nzType="warning" nzMessage="You have registered medical unit."></nz-alert>
+<ng-container *ngIf="medicalUnit">
+  <nz-alert nzType="warning" nzMessage="You have registered medical unit."></nz-alert>
+</ng-container>
 
-<div *ngIf="!medicalUnit">
-  <nz-alert *ngIf="metamaskAccount === undefined" nzType="warning"
-    nzMessage="You must connect Metamask account to proceed."></nz-alert>
-  <form nz-form *ngIf="!registeredSuccessfuly">
-    <nz-form-item>
-      <nz-form-label [nzSpan]="7" nzTooltipTitle="This account is used to verify transactions.">Metamask Account
-      </nz-form-label>
-      <nz-alert *ngIf="metamaskAccount" nzType="info" [nzMessage]="metamaskAccount"></nz-alert>
-      <button *ngIf="!metamaskAccount" nz-button nzType="primary" (click)="connectWithMetaMask()">Add account via
-        Metamask</button>
-    </nz-form-item>
-  </form>
+<ng-container *ngIf="!medicalUnit">
+  <ng-container *ngIf="metamaskAccount === undefined">
+    <nz-alert nzType="warning" nzMessage="You must connect Metamask account to proceed."></nz-alert>
+  </ng-container>
 
-  <form *ngIf="!registeredSuccessfuly" nz-form [formGroup]="validateForm" (ngSubmit)="submitForm(validateForm.value)">
-    <nz-form-item>
-      <nz-form-label [nzSpan]="7" nzRequired>Medical Unit Code</nz-form-label>
-      <nz-form-control [nzSpan]="9" nzErrorTip="Please input your med code!">
-        <nz-input-group>
-          <input formControlName="medCode" nz-input placeholder="HCM_BVUB" />
-        </nz-input-group>
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-      <nz-form-label [nzSpan]="7" nzRequired>Medical Unit Name</nz-form-label>
-      <nz-form-control [nzSpan]="9" nzErrorTip="Please input your med name!">
-        <nz-input-group>
-          <input formControlName="medName" nz-input placeholder="Benh Vien Ung Buou" />
-        </nz-input-group>
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-      <nz-form-label [nzSpan]="7" nzRequired>Contact Address</nz-form-label>
-      <nz-form-control [nzSpan]="9" nzErrorTip="Please input address!">
-        <nz-input-group>
-          <input formControlName="physicalAddress" nz-input placeholder="26 Ung Van Khiem, Binh Thanh District, HCMC" />
-        </nz-input-group>
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-      <nz-form-control [nzOffset]="7">
-        <button nz-button nzType="primary" [disabled]="!validateForm.valid" [nzLoading]="isSubmitting">Submit</button>
-        <!-- <button nz-button (click)="resetForm($event)">Reset</button> -->
-      </nz-form-control>
-    </nz-form-item>
-  </form>
-  <nz-result *ngIf="registeredSuccessfuly" nzStatus="success" nzTitle="Successfully registered medical unit!"
-    nzSubTitle="Medical unit will be reviewed and approved by Ministry of Health.">
-  </nz-result>
+  <ng-container *ngIf="metamaskAccount !== undefined">
+    <ng-container *ngIf="!registeredSuccessfuly">
 
-</div>
+      <form nz-form>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="7" nzTooltipTitle="This account is used to verify transactions.">Metamask Account
+          </nz-form-label>
+          <nz-alert *ngIf="metamaskAccount" nzType="info" [nzMessage]="metamaskAccount"></nz-alert>
+          <button *ngIf="!metamaskAccount" nz-button nzType="primary" (click)="connectWithMetaMask()">Add account via
+            Metamask</button>
+        </nz-form-item>
+      </form>
+
+      <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm(validateForm.value)">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="7" nzRequired>Medical Unit Code</nz-form-label>
+          <nz-form-control [nzSpan]="9" nzErrorTip="Please input your med code!">
+            <nz-input-group>
+              <input formControlName="medCode" nz-input placeholder="HCM_BVUB" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="7" nzRequired>Medical Unit Name</nz-form-label>
+          <nz-form-control [nzSpan]="9" nzErrorTip="Please input your med name!">
+            <nz-input-group>
+              <input formControlName="medName" nz-input placeholder="Benh Vien Ung Buou" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="7" nzRequired>Contact Address</nz-form-label>
+          <nz-form-control [nzSpan]="9" nzErrorTip="Please input address!">
+            <nz-input-group>
+              <input formControlName="physicalAddress" nz-input
+                placeholder="26 Ung Van Khiem, Binh Thanh District, HCMC" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control [nzOffset]="7">
+            <button nz-button nzType="primary" [disabled]="!validateForm.valid"
+              [nzLoading]="isSubmitting">Submit</button>
+            <!-- <button nz-button (click)="resetForm($event)">Reset</button> -->
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </ng-container>
+
+    <ng-container *ngIf="registeredSuccessfuly">
+      <nz-result nzStatus="success" nzTitle="Successfully registered medical unit!"
+      nzSubTitle="Medical unit will be reviewed and approved by Ministry of Health.">
+    </nz-result>
+    </ng-container>
+  </ng-container>
+</ng-container>

@@ -28,9 +28,7 @@ import { PethernetComponent } from './pethernet.component';
 import { VaccinedosesComponent } from './pages/vaccine-doses/vaccine-doses.component';
 import { AddVaccineDoseComponent } from './shared/components/add-vaccine-dose/add-vaccine-dose.component';
 import { AccountOverviewComponent } from './shared/components/account-overview/account-overview.component';
-import { DoctorsComponent } from './pages/doctors/doctors.component';
 import { InjectorsComponent } from './pages/injectors/injectors.component';
-import { AddDoctorComponent } from './shared/components/add-doctor/add-doctor.component';
 import { AddInjectorComponent } from './shared/components/add-injector/add-injector.component';
 import { ListDoctorsComponent } from './shared/components/list-doctors/list-doctors.component';
 import { ListInjectorComponent } from './shared/components/list-injector/list-injector.component';
@@ -39,6 +37,8 @@ import { ManageMedicalUnitsComponent } from './shared/components/manage-medical-
 import { MedicalUnitComponent } from './pages/medical-unit/medical-unit.component';
 import { DistributeVaccineDoseComponent } from './shared/components/distribute-vaccine-dose/distribute-vaccine-dose.component';
 import { IssueCertificateComponent } from './shared/components/issue-certificate/issue-certificate.component';
+import { InjectorDetailComponent } from './shared/components/injector-detail/injector-detail.component';
+import { CertificateDetailComponent } from './shared/components/certificate-detail/certificate-detail.component';
 
 // Pipes
 
@@ -53,9 +53,7 @@ import { IssueCertificateComponent } from './shared/components/issue-certificate
     VaccinedosesComponent,
     AddVaccineDoseComponent,
     AccountOverviewComponent,
-    DoctorsComponent,
     InjectorsComponent,
-    AddDoctorComponent,
     AddInjectorComponent,
     ListDoctorsComponent,
     ListInjectorComponent,
@@ -64,6 +62,8 @@ import { IssueCertificateComponent } from './shared/components/issue-certificate
     MedicalUnitComponent,
     DistributeVaccineDoseComponent,
     IssueCertificateComponent,
+    InjectorDetailComponent,
+    CertificateDetailComponent,
 
     // Pipes
 

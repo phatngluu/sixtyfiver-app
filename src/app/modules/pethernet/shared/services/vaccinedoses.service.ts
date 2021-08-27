@@ -1,24 +1,44 @@
 import { AbstractResponse, AbstractResponseHandling } from './../models/abstract-response';
 import { Web3Service } from './web3.service';
 import { VaccineDose } from './../models/vaccine-dose';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import hash from 'object-hash';
 import { RespondHandlerService } from './respond-handler.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VaccinedosesService {
 
-  private genericOptions: object = { responseType: "json" };
+  private genericOptions: object;
 
   constructor(
     private http: HttpClient,
     private web3Service: Web3Service,
+    private authService: AuthService,
     private responseHandler: RespondHandlerService) {
       this.web3Service.initialize();
+
+      this.genericOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.authService.getAccessToken()}`
+        }),
+        responseType: "json"
+      }
+
+      this.authService.accessTokenChangedEvent.subscribe(data => {
+        this.genericOptions = {
+          headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.authService.getAccessToken()}`
+          }),
+          responseType: "json"
+        }
+      })
   }
 
   public async addVaccineDose(vaccineDose: VaccineDose, responseHandling: AbstractResponseHandling<any>): Promise<void> {

@@ -4,7 +4,6 @@ import { ManageMedicalUnitsComponent } from './shared/components/manage-medical-
 import { AddMedicalUnitComponent } from './shared/components/register-medical-unit/register-medical-unit.component';
 import { MedicalUnitComponent } from './pages/medical-unit/medical-unit.component';
 import { InjectorsComponent } from './pages/injectors/injectors.component';
-import { DoctorsComponent } from './pages/doctors/doctors.component';
 import { VaccinedosesComponent } from './pages/vaccine-doses/vaccine-doses.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -44,7 +43,7 @@ const routes: Routes = [
         component: MedicalUnitComponent,
         canActivate: [AuthGuard, RoleGuard],
         data: {
-          roles: [Role.MinistryOfHealth, Role.MedicalUnit],
+          roles: [Role.MedicalUnit],
           breadcrumb: 'Overview'
         }
       },
@@ -91,19 +90,19 @@ const routes: Routes = [
         path: '',
         canActivate: [AuthGuard, RoleGuard],
         pathMatch: 'full',
-        redirectTo: 'overview',
+        redirectTo: 'add',
         data: {
           roles: [Role.MinistryOfHealth],
         }
       },
       {
-        path: 'overview',
+        path: 'add',
         pathMatch: 'full',
         component: VaccinedosesComponent,
         canActivate: [AuthGuard, RoleGuard],
         data: {
           roles: [Role.MinistryOfHealth],
-          breadcrumb: 'Overview'
+          breadcrumb: 'Add'
         }
       },
       {
@@ -128,15 +127,6 @@ const routes: Routes = [
     ],
     data: {
       breadcrumb: 'Vaccine Doses'
-    }
-  },
-  {
-    path: 'doctors',
-    component: DoctorsComponent,
-    canActivate: [AuthGuard, RoleGuard],
-    data: {
-      roles: [Role.Doctor],
-      breadcrumb: 'Doctors'
     }
   },
   {

@@ -1,4 +1,4 @@
-<div *ngIf="!medicalUnit">
+<ng-container *ngIf="!medicalUnit">
   <nz-alert [nzSpan]="7" nzType="warning" nzMessage="You haven't register medical unit."></nz-alert>
   <span nz-typography>
     <a href="pethernet/medicalunit/register">
@@ -6,9 +6,9 @@
       <Link />
     </a>
   </span>
-</div>
+</ng-container>
 
-<div [hidden]="notRole(role.MedicalUnit)" *ngIf="medicalUnit">
+<ng-container *ngIf="medicalUnit">
   <form nz-form layout="horizontal">
     <nz-form-item>
       <nz-form-label [nzSpan]="7">Account</nz-form-label>
@@ -59,4 +59,4 @@
       </nz-form-control>
     </nz-form-item>
   </form>
-</div>
+</ng-container>

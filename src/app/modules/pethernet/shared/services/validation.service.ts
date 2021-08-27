@@ -83,6 +83,24 @@ export class ValidationService {
     });
   }
 
+  static injectorCitizenIdExistenceValidator(injectorService: InjectorService): AsyncValidatorFn {
+    return (control: FormControl) => new Observable((observer: Observer<ValidationErrors | null>) => {
+      const citizenId = control.value;
+      injectorService.checkInjectorExisted(citizenId).then((isExisted) => {
+        if (isExisted === false) {
+          observer.next({ error: true, unexisted: true });
+        } else {
+          observer.next(null);
+        }
+        observer.complete();
+      }).catch((err) => {
+        console.error(err);
+        observer.next({ error: true, notchecked: true })
+        observer.complete();
+      });
+    });
+  }
+
 
   // static citizenIdValidator = (control: FormControl) =>
   //   new Observable((observer: Observer<ValidationErrors | null>) => {

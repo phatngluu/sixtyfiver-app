@@ -8,7 +8,7 @@
     </div>
     <ul nz-menu nzTheme="dark" nzMode="inline">
       <li nz-submenu nzTitle="Pethernet"
-        [(nzOpen)]="rla.isActive || rla3.isActive || rla4.isActive || medUnit.isActive || vaccineDose.isActive"
+        [(nzOpen)]="rla.isActive || rla4.isActive || medUnit.isActive || vaccineDose.isActive"
         nzIcon="file-done">
         <ul>
           <li nz-menu-item routerLinkActive="active" #rla="routerLinkActive" [routerLink]="'pethernet/overview'"
@@ -19,7 +19,7 @@
           <li [hidden]="notRole(role.MedicalUnit) && notRole(role.MinistryOfHealth)" nz-submenu nzTitle="Medical Units" routerLinkActive="active" #medUnit="routerLinkActive"
             [(nzOpen)]="medUnitRegister.isActive || medUnitOverview.isActive || medUnitManage.isActive || medUnitIssueCert.isActive" nzIcon="bank">
             <ul>
-              <li [hidden]="notRole(role.MedicalUnit) && notRole(role.MinistryOfHealth)" nz-menu-item routerLinkActive="active" #medUnitOverview="routerLinkActive"
+              <li [hidden]="notRole(role.MedicalUnit)" nz-menu-item routerLinkActive="active" #medUnitOverview="routerLinkActive"
                 [routerLink]="'pethernet/medicalunit/overview'" [nzMatchRouter]="true">
                 <i nz-icon nzType="eye" nzTheme="outline"></i>
                 <span>Overview</span>
@@ -45,9 +45,9 @@
             [(nzOpen)]="vaccineDoseDistribute.isActive || vaccineDoseOverview.isActive" nzIcon="experiment">
             <ul>
               <li nz-menu-item routerLinkActive="active" #vaccineDoseOverview="routerLinkActive"
-                [routerLink]="'pethernet/vaccinedoses/overview'" [nzMatchRouter]="true">
-                <i nz-icon nzType="eye" nzTheme="outline"></i>
-                <span>Overview</span>
+                [routerLink]="'pethernet/vaccinedoses/add'" [nzMatchRouter]="true">
+                <i nz-icon nzType="plus-square" nzTheme="outline"></i>
+                <span>Add</span>
               </li>
               <li nz-menu-item routerLinkActive="active" #vaccineDoseDistribute="routerLinkActive"
                 [routerLink]="'pethernet/vaccinedoses/distribute'" [nzMatchRouter]="true">
@@ -55,11 +55,6 @@
                 <span>Distribute</span>
               </li>
             </ul>
-          </li>
-          <li [hidden]="notRole(role.Doctor)" nz-menu-item routerLinkActive="active" #rla3="routerLinkActive" [routerLink]="'pethernet/doctors'"
-            [nzMatchRouter]="true">
-            <i nz-icon nzType="usergroup-add" nzTheme="outline"></i>
-            <span>Doctors</span>
           </li>
           <li [hidden]="notRole(role.Injector)" nz-menu-item routerLinkActive="active" #rla4="routerLinkActive" [routerLink]="'pethernet/injectors'"
             [nzMatchRouter]="true">
@@ -76,6 +71,7 @@
   </nz-sider>
   <nz-layout>
     <nz-header class="app-header">
+      <h3>Welcome, {{userName}}</h3>
       <span class="app-user-span" (click)="onLogout()"></span>
     </nz-header>
     <nz-content>

@@ -1,55 +1,66 @@
-<div>
-  <nz-alert [nzSpan]="7" *ngIf="warnNoConnectedAccount" nzType="warning" nzMessage="You don't have any connected Metamask accounts."></nz-alert>
-</div>
-<div *ngIf="!medicalUnit">
+<ng-container *ngIf="!medicalUnit">
   <nz-alert [nzSpan]="7" nzType="warning" nzMessage="You haven't register medical unit."></nz-alert>
   <span nz-typography>
-    <a href="/pethernet/medicalunit/register">
+    <a routerLinkActive="active" routerLink="/pethernet/medicalunit/register">
       Register here
       <Link />
     </a>
   </span>
-</div>
-<div>
-  <nz-alert [nzSpan]="7" *ngIf="medicalUnit && medicalUnit.verifiedOn === null" nzType="warning" nzMessage="Your medical unit is not verified."></nz-alert>
-</div>
+</ng-container>
 
+<ng-container *ngIf="medicalUnit">
+  <ng-container *ngIf="medicalUnit.verifiedOn === null">
+    <nz-alert [nzSpan]="7" nzType="warning" nzMessage="Your medical unit is not verified."></nz-alert>
+  </ng-container>
 
-<form *ngIf="medicalUnit && medicalUnit.verifiedOn !== null" nz-form [formGroup]="validateForm" (ngSubmit)="submitForm(validateForm.value)">
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>Medical Unit Hash</nz-form-label>
-    <nz-form-control [nzSpan]="9">
-      <nz-form-text>{{medicalUnitHash}}</nz-form-text>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>Injector Citizen Id</nz-form-label>
-    <nz-form-control [nzSpan]="9" nzErrorTip="Please input injector's citizen identity!">
-      <nz-input-group>
-        <input formControlName="injectorCitizenId" nz-input placeholder="B23445657" />
-      </nz-input-group>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>Doctor Hash</nz-form-label>
-    <nz-form-control [nzSpan]="9">
-      <nz-form-text>{{doctorHash}}</nz-form-text>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7">Vaccine Dose</nz-form-label>
-    <nz-form-control [nzSpan]="9">
-      <nz-select formControlName="vaccineDoseHash" nzShowSearch nzAllowClear nzPlaceHolder="Select vaccine dose">
-        <nz-option *ngFor="let vaccineDose of availableVaccineDoses" [nzLabel]="vaccineDose.doseId"
-          [nzValue]="vaccineDose.hash">
-        </nz-option>
-      </nz-select>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-control [nzOffset]="7">
-      <button nz-button nzType="primary" [disabled]="!validateForm.valid" [nzLoading]="isSubmitting">Submit</button>
-      <!-- <button nz-button (click)="resetForm($event)">Reset</button> -->
-    </nz-form-control>
-  </nz-form-item>
-</form>
+  <ng-container *ngIf="medicalUnit.verifiedOn !== null">
+    <nz-alert [nzSpan]="7" *ngIf="warnNoConnectedAccount" nzType="warning"
+      nzMessage="You don't have any connected Metamask accounts."></nz-alert>
+
+    <nz-alert [nzSpan]="7" *ngIf="!warnNoConnectedAccount && connectedMetamaskAccount !== medicalUnit.accountAddress" nzType="warning"
+      nzMessage="Your connected Metamask account isn't matched with the registered one: {{medicalUnit.accountAddress}}"></nz-alert>
+
+    <form *ngIf="!warnNoConnectedAccount && connectedMetamaskAccount === medicalUnit.accountAddress" nz-form [formGroup]="validateForm"
+      (ngSubmit)="submitForm(validateForm.value)">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired>Medical Unit</nz-form-label>
+        <nz-form-control [nzSpan]="9">
+          <nz-form-text>{{medicalUnit.medName}}</nz-form-text>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired>Medical Unit Hash</nz-form-label>
+        <nz-form-control [nzSpan]="9">
+          <nz-form-text>{{medicalUnitHash}}</nz-form-text>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired>Patient Citizen Id</nz-form-label>
+        <nz-form-control [nzSpan]="9" nzHasFeedback nzValidatingTip="Checking..." [nzErrorTip]="userErrorTpl">
+          <input nz-input formControlName="injectorCitizenId" placeholder="B12334213" />
+          <ng-template #userErrorTpl let-control>
+            <ng-container *ngIf="control.hasError('required')">Please input patient's citizen identity!</ng-container>
+            <ng-container *ngIf="control.hasError('unexisted')">The citizen identity is not existed on the system!
+            </ng-container>
+            <ng-container *ngIf="control.hasError('notchecked')">The citizen identity is not checked.</ng-container>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7">Vaccine Dose</nz-form-label>
+        <nz-form-control [nzSpan]="9">
+          <nz-select formControlName="vaccineDoseHash" nzShowSearch nzAllowClear nzPlaceHolder="Select vaccine dose">
+            <nz-option *ngFor="let vaccineDose of availableVaccineDoses" [nzLabel]="vaccineDose.doseId"
+              [nzValue]="vaccineDose.hash">
+            </nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control [nzOffset]="7">
+          <button nz-button nzType="primary" [disabled]="!validateForm.valid" [nzLoading]="isSubmitting">Submit</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-container>
+</ng-container>

@@ -1,1 +1,14 @@
-<sf-add-injector></sf-add-injector>
+<ng-container *ngIf="!injector">
+  <h3>Please register: </h3>
+  <sf-add-injector></sf-add-injector>
+</ng-container>
+
+<ng-container *ngIf="injector">
+  <h3>Your information: </h3>
+  <sf-injector-detail [injector]="injector"></sf-injector-detail>
+
+  <ng-container *ngIf="certificates">
+    <h3>Your certificate: </h3>
+    <sf-certificate-detail *ngFor="let certificate of certificates" [certificate]="certificate"></sf-certificate-detail>
+  </ng-container>
+</ng-container>

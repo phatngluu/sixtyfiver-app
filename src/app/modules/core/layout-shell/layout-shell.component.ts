@@ -20,12 +20,15 @@ export class LayoutShellComponent implements OnInit {
     Injector: 'Injector',
   };
 
+  public userName: string;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.userName = this.authService.userCredential.firstName;
   }
 
   onLogout() {

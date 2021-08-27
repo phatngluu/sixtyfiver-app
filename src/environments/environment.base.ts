@@ -33,6 +33,7 @@ export const environment = {
   getUnverifiedMedicalUnits: 'api/medicalunit/getUnverified',
   verifyMedicalUnit: 'api/medicalunit/verify',
   issueCertificate: 'api/medicalunit/issueCertificate',
+  // getIssuedCertificates: 'api/medicalunit/getIssuedCertificates',
   getAvailableVaccineDoses: '/api/medicalunit/getAvailableVaccineDoses',
 
   // Doctor
@@ -41,5 +42,7 @@ export const environment = {
 
   // Injector
   addInjector: 'api/injector/add',
+  getAuthorizedInjector: 'api/injector/getAuthorizedInjector',
+  getAuthorizedCertificate: 'api/injector/getAuthorizedCert',
   checkInjector: 'api/injector/check',
 };

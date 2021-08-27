@@ -1,45 +1,50 @@
-<nz-alert [nzSpan]="7" *ngIf="warnNoConnectedAccount" nzType="warning" nzMessage="You don't have any connected Metamask accounts."></nz-alert>
-<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm(validateForm.value)">
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>Dose Id</nz-form-label>
-    <nz-form-control [nzSpan]="9" nzErrorTip="Please input dose identity!">
-      <nz-input-group>
-        <input formControlName="doseId" nz-input placeholder="A123" />
-      </nz-input-group>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>Lot No</nz-form-label>
-    <nz-form-control [nzSpan]="9" nzErrorTip="Please input lot number!">
-      <nz-input-group>
-        <input formControlName="lotNo" nz-input placeholder="B123" />
-      </nz-input-group>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>Vaccine Name</nz-form-label>
-    <nz-form-control [nzSpan]="9" nzErrorTip="Please input vaccine name!">
-      <nz-input-group>
-        <input formControlName="vaccineName" nz-input placeholder="Covid-19" />
-      </nz-input-group>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>Imported Date</nz-form-label>
-    <nz-form-control [nzSpan]="9">
-      <nz-date-picker formControlName="importedDate"></nz-date-picker>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>Expired Date</nz-form-label>
-    <nz-form-control [nzSpan]="9">
-      <nz-date-picker formControlName="expiredDate"></nz-date-picker>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-control [nzOffset]="7">
-      <button nz-button nzType="primary" [disabled]="!validateForm.valid" [nzLoading]="isSubmitting">Submit</button>
-      <!-- <button nz-button (click)="resetForm($event)">Reset</button> -->
-    </nz-form-control>
-  </nz-form-item>
-</form>
+<ng-container *ngIf="warnNoConnectedAccount">
+  <nz-alert [nzSpan]="7" nzType="warning" nzMessage="You don't have any connected Metamask accounts."></nz-alert>
+</ng-container>
+
+<ng-container *ngIf="!warnNoConnectedAccount">
+  <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm(validateForm.value)">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>Dose Id</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzErrorTip="Please input dose identity!">
+        <nz-input-group>
+          <input formControlName="doseId" nz-input placeholder="A123" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>Lot No</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzErrorTip="Please input lot number!">
+        <nz-input-group>
+          <input formControlName="lotNo" nz-input placeholder="B123" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>Vaccine Name</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzErrorTip="Please input vaccine name!">
+        <nz-input-group>
+          <input formControlName="vaccineName" nz-input placeholder="Covid-19" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>Imported Date</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <nz-date-picker formControlName="importedDate"></nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>Expired Date</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <nz-date-picker formControlName="expiredDate"></nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control [nzOffset]="7">
+        <button nz-button nzType="primary" [disabled]="!validateForm.valid" [nzLoading]="isSubmitting">Submit</button>
+        <!-- <button nz-button (click)="resetForm($event)">Reset</button> -->
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</ng-container>

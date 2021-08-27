@@ -1,5 +1,6 @@
 export interface AuthCredential {
   sub: number,
+  firstName: string,
   role: Role
 }
 

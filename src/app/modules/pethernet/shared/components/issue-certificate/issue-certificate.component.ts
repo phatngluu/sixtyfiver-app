@@ -1,3 +1,4 @@
+import { ValidationService } from './../../services/validation.service';
 import { MedicalUnit } from './../../models/medical-unit';
 import { Web3Service } from './../../services/web3.service';
 import hash from 'object-hash';
@@ -7,6 +8,7 @@ import { AbstractResponse, AbstractResponseHandling } from './../../models/abstr
 import { MedicalUnitService } from './../../services/medical-unit.service';
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { VaccineDose } from '../../models/vaccine-dose';
+import { InjectorService } from '../../services/injector.service';
 
 @Component({
   selector: 'sf-issue-certificate',
@@ -20,38 +22,43 @@ export class IssueCertificateComponent implements OnInit {
 
   public medicalUnitHash: string;
   public medicalUnit: MedicalUnit;
-  public doctorHash: string = '6931764dbffb80a816c84d35362f38143f6c1961';
   public availableVaccineDoses: VaccineDose[];
   isSubmitting: boolean;
+  public connectedMetamaskAccount: string;
   warnNoConnectedAccount: boolean;
 
   constructor(
     private ref: ChangeDetectorRef,
     private fb: FormBuilder,
     private web3Service: Web3Service,
+    private injectorService: InjectorService,
     private medicalUnitService: MedicalUnitService,
   ) {
     this.validateForm = this.fb.group({
-      medicalUnitHash: [this.medicalUnitHash, [Validators.required]],
-      injectorCitizenId: ['', [Validators.required]],
-      doctorHash: [this.doctorHash, [Validators.required]],
-      vaccineDoseHash: ['', [Validators.required]],
+      medicalUnitHash: [null, [Validators.required]],
+      injectorCitizenId: [null, [Validators.required], [ValidationService.injectorCitizenIdExistenceValidator(this.injectorService)]],
+      vaccineDoseHash: [null, [Validators.required]],
     });
   }
 
   async ngOnInit(){
     await this.web3Service.initialize();
-    (await this.web3Service.getConnectedAccounts()).length
-    if ((await this.web3Service.getConnectedAccounts()).length === 0) {
+    let connectedAccounts = await this.web3Service.getConnectedAccounts();
+    if (connectedAccounts.length === 0) {
       this.warnNoConnectedAccount = true;
       this.ref.markForCheck();
+    } else {
+      this.connectedMetamaskAccount = connectedAccounts[0];
     }
 
-    this.web3Service.accountChangedEvent.subscribe(x => {
-      if (this.web3Service.connectedAccounts.length === 0) {
+    this.web3Service.accountChangedEvent.subscribe(async x => {
+      let connectedAccounts = await this.web3Service.getConnectedAccounts();
+
+      if (connectedAccounts.length === 0) {
         this.warnNoConnectedAccount = true;
       } else {
         this.warnNoConnectedAccount = false;
+        this.connectedMetamaskAccount = connectedAccounts[0];
       }
       this.ref.markForCheck();
     });
@@ -67,6 +74,7 @@ export class IssueCertificateComponent implements OnInit {
       callback: (result: AbstractResponse<MedicalUnit>) => {
         this.medicalUnit = result.message;
         this.medicalUnitHash = this.medicalUnit.hash;
+        this.validateForm.get('medicalUnitHash').setValue(this.medicalUnitHash);
         this.ref.markForCheck();
       }
     }
