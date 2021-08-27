@@ -73,11 +73,13 @@ import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzResizableModule } from 'ng-zorro-antd/resizable';
 import { NzPipesModule } from 'ng-zorro-antd/pipes';
 import { OnlyRoleDirective } from './directives/only-role.directive';
+import { LogoutComponent } from './components/logout/logout.component';
 
 @NgModule({
   declarations: [
     LoginComponent,
-    OnlyRoleDirective
+    OnlyRoleDirective,
+    LogoutComponent
   ],
   imports: [
     // Global module

@@ -30,7 +30,7 @@ export class LayoutShellComponent implements OnInit {
 
   onLogout() {
     this.authService.logout();
-    this.router.navigateByUrl('login');
+    this.router.navigateByUrl('logout');
   }
 
   notRole(role: string) {

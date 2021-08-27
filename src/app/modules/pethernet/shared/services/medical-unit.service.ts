@@ -26,10 +26,20 @@ export class MedicalUnitService {
     this.genericOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.authService.ACCESS_TOKEN}`
+        'Authorization': `Bearer ${this.authService.getAccessToken()}`
       }),
       responseType: "json"
     }
+
+    this.authService.accessTokenChangedEvent.subscribe(data => {
+      this.genericOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.authService.getAccessToken()}`
+        }),
+        responseType: "json"
+      }
+    })
   }
 
   public async addMedicalUnit(medicalUnit: MedicalUnit, responseHandling: AbstractResponseHandling<Object>) {

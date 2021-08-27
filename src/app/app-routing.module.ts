@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LayoutShellComponent } from './modules/core/layout-shell/layout-shell.component';
 import { LoginComponent } from './shared/components/login/login.component';
+import { LogoutComponent } from './shared/components/logout/logout.component';
 
 const routes: Routes = [
   {
@@ -38,6 +39,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'logout',
+    component: LogoutComponent
   },
   { path: '**', redirectTo: '' }
 ];
