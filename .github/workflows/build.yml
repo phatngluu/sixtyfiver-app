@@ -17,7 +17,11 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '16.x'
-      - name: Install dependencies
+      - name: Install npm@@6.14.14
         run: npm install -g npm@6.14.14
-      - run: npm run build --if-present
-      - run: npm test
+      - name: Install dependencies
+        run: npm install
+      - name: Build validation
+        run: npm run build --if-present
+      - name: Run tests
+        run: npm test
