@@ -18,8 +18,8 @@ COPY --from=build /usr/local/app/nginx/default.conf.template /etc/nginx/conf.d/d
 EXPOSE 80
 
 # Fill in Nginx config
-RUN ["set", "-eu"] \
-    && envsubst '${PETHERNET_HOST} ${PETHERNET_PORT}' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf \
+RUN set -eu \
+    && envsubst '${NGINX_PORT} ${PETHERNET_HOST} ${PETHERNET_PORT}' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf \
     && exec "$@"
 
 CMD ["nginx", "-g", "daemon off;"]
