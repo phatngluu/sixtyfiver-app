@@ -12,6 +12,10 @@ FROM nginx:latest
 # Copy the build output to replace the default nginx contents.
 COPY --from=build /usr/local/app/dist/sixtyfiver-app /usr/share/nginx/html
 # Override default.conf
-COPY --from=build /usr/local/app/nginx /etc/nginx/conf.d
+COPY --from=build /usr/local/app/nginx/default.conf.template /etc/nginx/conf.d/default.conf.template
 
 EXPOSE 80
+
+COPY docker-entrypoint.sh /
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["nginx", "-g", "daemon off;"]

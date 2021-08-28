@@ -1,0 +1,44 @@
+version: "3.3"
+services:
+  pethernet:
+    build: ${PETHERNET_REPO_PATH}
+    ports:
+      - "5000:${PETHERNET_PORT}"
+    environment:
+      - DB_CONNECTION_STRING=${DB_CONNECTION_STRING}
+      - SERVER_PORT=${SERVER_PORT}
+      - SESSION_SECRET=${SESSION_SECRET}
+      - PETHERNET_URI=${PETHERNET_URI}
+      - PETHERNET_CONTRACT_ADDRESS=${PETHERNET_CONTRACT_ADDRESS}
+      - MINISTRY_OF_HEALTH_ADDRESS=${MINISTRY_OF_HEALTH_ADDRESS}
+      - PETHERNET_SYSTEM_ADDRESS=${PETHERNET_SYSTEM_ADDRESS}
+      - MEDICAL_UNIT_1=${MEDICAL_UNIT_1}
+    volumes:
+      - public:/tmp/public
+
+  sixtyfiver-app:
+    build: ${SIXTYFIVER_APP_REPO_PATH}
+    ports:
+      - "8080:${SIXTYFIVER_PORT}"
+    environment:
+      - SIXTYFIVER_APP_REPO_PATH=${SIXTYFIVER_APP_REPO_PATH}
+      - SIXTYFIVER_PORT=${SIXTYFIVER_PORT}
+    volumes:
+      - public:/tmp/public
+
+  # socketio-server:
+  #   build: ./services/socketio-server
+  #   ports:
+  #     - "5050:5000"
+  #   environment:
+  #     - NODE_ENV=test
+  #     - DB_USERNAME=postgres
+  #     - DB_PASSWORD=admin1234
+  #     - DB_NAME=tests
+  #     - DB_HOST=timescaledb
+  #     - DB_PORT=5432
+  #   volumes:
+  #     - public:/tmp/public
+volumes:
+  public:
+  data:
