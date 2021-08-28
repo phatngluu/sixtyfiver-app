@@ -15,11 +15,6 @@ COPY --from=build /usr/local/app/dist/sixtyfiver-app /usr/share/nginx/html
 # Override default.conf
 COPY --from=build /usr/local/app/nginx/default.conf.template /etc/nginx/conf.d/default.conf.template
 
-EXPOSE 80
-
-# Fill in Nginx config
-RUN set -eu \
-    && envsubst '${NGINX_PORT} ${PETHERNET_HOST} ${PETHERNET_PORT}' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf \
-    && exec "$@"
-
+COPY docker-entrypoint.sh /
+ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["nginx", "-g", "daemon off;"]

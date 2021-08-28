@@ -23,6 +23,9 @@ services:
     environment:
       - SIXTYFIVER_APP_REPO_PATH=${SIXTYFIVER_APP_REPO_PATH}
       - SIXTYFIVER_PORT=${SIXTYFIVER_PORT}
+      - NGINX_PORT=${NGINX_PORT}
+      - PETHERNET_HOST=${PETHERNET_HOST}
+      - PETHERNET_PORT=${PETHERNET_PORT}
     volumes:
       - public:/tmp/public
 
