@@ -23,5 +23,3 @@ jobs:
         run: npm install
       - name: Build validation
         run: npm run build --if-present
-      - name: Run tests
-        run: npm test
