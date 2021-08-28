@@ -49,15 +49,17 @@ export class AuthService {
           this.router.navigate(['login']);
         });
 
+        this.isAuthorized = true;
         return true; // synchronously return authorized
       } catch (error) {
         console.error(error);
         this.isAuthorized = false;
         this.router.navigate(['login']);
-
-        return false; // synchronously return unauthorized;
       }
     }
+
+    this.isAuthorized = false;
+    return false;
   }
 
   async login(username: string, password: string): Promise<boolean> {
