@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   returnUrl: string;
 
   constructor(
+    private messageService: NzMessageService,
     private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
