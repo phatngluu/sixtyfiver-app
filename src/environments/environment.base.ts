@@ -3,7 +3,8 @@ export const environment = {
   /* * * * * * *
     Auth
   * * * * * * */
-  authenticate: '/authenticate',
+  authenticate: '/api/auth/authenticate',
+  getUser: '/api/auth/getUser/',
 
   /* * * * * * *
     Warehouse

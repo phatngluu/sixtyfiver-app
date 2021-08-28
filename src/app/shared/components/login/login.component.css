@@ -1,6 +1,5 @@
 .login-form {
   width: auto;
-  max-width: 400px;
 }
 
 .login-form-margin {
@@ -11,10 +10,22 @@
   width: 100%;
 }
 
+form {
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+#sixtyfiver-logo {
+  opacity: 0;
+  margin: 0 auto 50px auto;
+  width: 100px;
+}
+
 div {
   width:60vh;
+  max-width: 400px;
   height: 100%;
-  margin: 0 auto;
+  margin: auto;
   display: flex;
   flex: 1;
   flex-direction: column;

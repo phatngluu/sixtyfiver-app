@@ -2,7 +2,7 @@ import { ActivatedRoute, Router, RouterStateSnapshot } from '@angular/router';
 import { AuthService } from './../../services/auth.service';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Route } from '@angular/compiler/src/core';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'sf-login',
@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   returnUrl: string;
 
   constructor(
+    private messageService: NzMessageService,
     private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
@@ -39,6 +40,8 @@ export class LoginComponent implements OnInit {
     if (isAuthorized) {
       this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || ''
       this.router.navigateByUrl(this.returnUrl);
+    } else {
+      this.messageService.error("Login failed.")
     }
   }
 
