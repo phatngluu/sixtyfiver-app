@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from './../../../environments/environment.prod';
 import jwt_decode from "jwt-decode";
 import { EventEmitter, Injectable } from '@angular/core';
+import { AbstractResponse } from 'src/app/modules/pethernet/shared/models/abstract-response';
 
 @Injectable({
   providedIn: 'root'
@@ -40,9 +41,9 @@ export class AuthService {
       password,
     }
     try {
-      const result = await this.http.post<any>(environment.authenticate, credential).toPromise();
+      const result = await this.http.post<AbstractResponse<AuthCredential>>(environment.authenticate, credential).toPromise();
       this.isAuthorized = true;
-      window.localStorage.setItem('ACCESS_TOKEN', result.token);
+      window.localStorage.setItem('ACCESS_TOKEN', result.message.token);
       this.accessTokenChangedEvent.emit();
     } catch (error) {
       console.error(error);

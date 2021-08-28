@@ -1,8 +1,8 @@
-import { ActivatedRoute, Router, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from './../../services/auth.service';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Route } from '@angular/compiler/src/core';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'sf-login',
@@ -18,7 +18,8 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-    private authService: AuthService) {}
+    private messageService: NzMessageService,
+    private authService: AuthService) { }
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
@@ -27,7 +28,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  async submitForm({ username, password}): Promise<void> {
+  async submitForm({ username, password }): Promise<void> {
     for (const i in this.validateForm.controls) {
       if (this.validateForm.controls.hasOwnProperty(i)) {
         this.validateForm.controls[i].markAsDirty();
@@ -35,11 +36,16 @@ export class LoginComponent implements OnInit {
       }
     }
 
-    var isAuthorized = await this.authService.login(username, password);
-    if (isAuthorized) {
-      this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || ''
-      this.router.navigateByUrl(this.returnUrl);
+    try {
+      var isAuthorized = await this.authService.login(username, password);
+      if (isAuthorized) {
+        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || ''
+        this.router.navigateByUrl(this.returnUrl);
+        return;
+      }
+    } catch (err) {
+      console.error(err);
     }
+    this.messageService.error("Login failed.");
   }
-
 }

@@ -1,7 +1,8 @@
 export interface AuthCredential {
   sub: number,
   firstName: string,
-  role: Role
+  role: Role,
+  token: string,
 }
 
 export enum Role {
