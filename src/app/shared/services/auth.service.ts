@@ -33,29 +33,31 @@ export class AuthService {
     return await this.http.get<AbstractResponse<string>>(environment.getUser + userId, genericOptions).toPromise();
   }
 
-  public async isAuthenticated(): Promise<boolean> {
+  public isAuthenticated(): boolean {
     const accessToken = window.localStorage.getItem('ACCESS_TOKEN');
     if (accessToken) {
       try {
         this.userCredential = jwt_decode<AuthCredential>(accessToken);
-        const res = await this.getUserInfo(this.userCredential.sub, accessToken);
-        console.log(res);
-
-        if (res) {
-          this.isAuthorized = true;
-        } else {
+        this.getUserInfo(this.userCredential.sub, accessToken).then(res => {
+          if (res.success === false) {
+            this.isAuthorized = false;
+            this.router.navigate(['login']); // forces login again if not authorized
+          }
+        }).catch(error => {
+          console.error(error);
           this.isAuthorized = false;
           this.router.navigate(['login']);
-          console.log("navigate to login");
-        }
+        });
+
+        return true; // synchronously return authorized
       } catch (error) {
         console.error(error);
         this.isAuthorized = false;
         this.router.navigate(['login']);
+
+        return false; // synchronously return unauthorized;
       }
     }
-
-    return this.isAuthorized;
   }
 
   async login(username: string, password: string): Promise<boolean> {
@@ -64,9 +66,9 @@ export class AuthService {
       password,
     }
     try {
-      const res = await this.http.post<AbstractResponse<AuthCredential>>(environment.authenticate, credential).toPromise();
+      const result = await this.http.post<AbstractResponse<AuthCredential>>(environment.authenticate, credential).toPromise();
       this.isAuthorized = true;
-      window.localStorage.setItem('ACCESS_TOKEN', res.message.token);
+      window.localStorage.setItem('ACCESS_TOKEN', result.message.token);
       this.accessTokenChangedEvent.emit();
     } catch (error) {
       console.error(error);
