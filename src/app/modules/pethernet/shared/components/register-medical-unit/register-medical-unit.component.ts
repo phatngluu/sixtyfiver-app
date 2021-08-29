@@ -38,6 +38,8 @@ export class AddMedicalUnitComponent implements OnInit {
     await this.web3Service.initialize();
     const accounts = await this.web3Service.getConnectedAccounts();
     this.metamaskAccount = accounts[0];
+    console.log(this.metamaskAccount);
+
     this.validateForm.get('accountAddress').setValue(this.metamaskAccount);
     this.ref.markForCheck();
 

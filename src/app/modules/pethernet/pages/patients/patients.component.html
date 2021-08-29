@@ -1,11 +1,11 @@
-<ng-container *ngIf="!injector">
+<ng-container *ngIf="!patient">
   <h3>Please register: </h3>
-  <sf-add-injector></sf-add-injector>
+  <sf-add-patient></sf-add-patient>
 </ng-container>
 
-<ng-container *ngIf="injector">
+<ng-container *ngIf="patient">
   <h3>Your information: </h3>
-  <sf-injector-detail [injector]="injector"></sf-injector-detail>
+  <sf-patient-detail [patient]="patient"></sf-patient-detail>
 
   <ng-container *ngIf="certificates">
     <h3>Your certificate: </h3>

@@ -27,7 +27,6 @@ export class Web3Service {
   public contractABI: AbiItem[] = null;
   public contractAddress: string;
   public connectedAccounts: string[];
-  public MINISTRY_OF_HEALTH_ADDRESS: string;
 
   /** Events */
   public initializedEvent = new EventEmitter();
@@ -37,11 +36,6 @@ export class Web3Service {
     private http: HttpClient,
     private authService: AuthService,
     private messageService: NzMessageService) {
-    // Connect metamask
-    // this.connectMetaMask();
-
-    // Load & initialize contract
-    // this.loadContract();
   }
 
   public async initialize() : Promise<void> {
@@ -51,10 +45,6 @@ export class Web3Service {
 
     if (this.contract === undefined) {
       await this.loadContract();
-    }
-
-    if (this.MINISTRY_OF_HEALTH_ADDRESS === undefined) {
-      await this.loadMinistryOfHealthAccountAddress();
     }
 
     this.initializedEvent.emit();
@@ -101,7 +91,7 @@ export class Web3Service {
     this.contract = new this.web3.eth.Contract(this.contractABI, this.contractAddress);
   }
 
-  private async loadMinistryOfHealthAccountAddress(): Promise<void> {
+  public async loadMinistryOfHealthAccountAddress(): Promise<string> {
     const genericOptions: object = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -110,7 +100,8 @@ export class Web3Service {
       responseType: "json"
     }
     const res = await this.http.get<AbstractResponse<string>>(environment.getMinistryOfHealthAccountAddress, genericOptions).toPromise();
-    this.MINISTRY_OF_HEALTH_ADDRESS = res.message;
+
+    return res.message;
   }
 
   public async getConnectedAccounts(): Promise<string[]> {

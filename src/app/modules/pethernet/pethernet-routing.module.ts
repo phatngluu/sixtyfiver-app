@@ -3,7 +3,7 @@ import { IssueCertificateComponent } from './shared/components/issue-certificate
 import { ManageMedicalUnitsComponent } from './shared/components/manage-medical-units/manage-medical-units.component';
 import { AddMedicalUnitComponent } from './shared/components/register-medical-unit/register-medical-unit.component';
 import { MedicalUnitComponent } from './pages/medical-unit/medical-unit.component';
-import { InjectorsComponent } from './pages/injectors/injectors.component';
+import { PatientsComponent } from './pages/patients/patients.component';
 import { VaccinedosesComponent } from './pages/vaccine-doses/vaccine-doses.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -130,12 +130,12 @@ const routes: Routes = [
     }
   },
   {
-    path: 'injectors',
-    component: InjectorsComponent,
+    path: 'patients',
+    component: PatientsComponent,
     canActivate: [AuthGuard, RoleGuard],
     data: {
       roles: [Role.Injector],
-      breadcrumb: 'Injectors'
+      breadcrumb: 'Patients'
     }
   },
 ];
