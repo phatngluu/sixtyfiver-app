@@ -130,12 +130,12 @@ const routes: Routes = [
     }
   },
   {
-    path: 'injectors',
+    path: 'patients',
     component: InjectorsComponent,
     canActivate: [AuthGuard, RoleGuard],
     data: {
       roles: [Role.Injector],
-      breadcrumb: 'Injectors'
+      breadcrumb: 'Patients'
     }
   },
 ];
