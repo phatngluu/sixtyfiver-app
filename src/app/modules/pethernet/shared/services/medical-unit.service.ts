@@ -100,15 +100,29 @@ export class MedicalUnitService {
   }
 
   public async verifyMedicalUnit(medUnit: MedicalUnit, responseHandling: AbstractResponseHandling<Object>) {
-    try {
-      const req = { medicalUnitHash: medUnit.hash };
-      const res = await this.http.post<AbstractResponse<Object>>(environment.verifyMedicalUnit, req, this.genericOptions).toPromise();
-      responseHandling.response = res;
-    } catch (err) {
-      responseHandling.err = err;
-    }
+    await this.web3Service.initialize();
 
-    this.responseHandler.handle(responseHandling);
+    this.web3Service.contract.methods.addMedicalUnit(medUnit.hash, medUnit.accountAddress).send({
+      from: this.web3Service.connectedAccounts[0],
+      gas: 150000,
+    })
+      .on('receipt', async (receipt) => {
+        try {
+          const req = { medicalUnitHash: medUnit.hash };
+          const res = await this.http.post<AbstractResponse<Object>>(environment.verifyMedicalUnit, req, this.genericOptions).toPromise();
+          responseHandling.response = res;
+          responseHandling.reciept = receipt;
+        } catch (err) {
+          responseHandling.err = err;
+        }
+
+        this.responseHandler.handle(responseHandling);
+      })
+      .on('error', async (error, receipt) => { // If the transaction was rejected by the network with a receipt, the second parameter will be the receipt.
+        responseHandling.err = error;
+        responseHandling.reciept = receipt;
+        this.responseHandler.handle(responseHandling);
+      });
   }
 
   public async rejectMedicalUnit(medUnit: MedicalUnit, responseHandling: AbstractResponseHandling<Object>) {

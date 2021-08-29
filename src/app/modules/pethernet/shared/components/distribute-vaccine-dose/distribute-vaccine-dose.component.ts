@@ -118,23 +118,19 @@ export class DistributeVaccineDoseComponent implements OnInit {
 
   async distributeVaccine() {
     this.isSubmitting = true;
-    console.log(this.filteredVaccineDoses);
+    const selectedVaccineDoses = this.filteredVaccineDoses.slice(0, this.numberOfSelectedVaccines);
+    const vaccineDoseHashes = selectedVaccineDoses.map(x => x.hash);
 
-    for (let index = 0; index < this.numberOfSelectedVaccines; index++) {
-      const vaccineDose = this.filteredVaccineDoses[index];
-
-      const responseHandling: AbstractResponseHandling<Object> = {
-        failMessage: `Cannot distribute vaccine with dose identity${vaccineDose.doseId}`,
-        callback: () => {
-          this.isSubmitting = false;
-          this.ref.markForCheck();
-        },
-      }
-
-      await this.vaccineDosesService.distributeVaccineDose(vaccineDose.hash, this.medicalUnitHash, responseHandling);
-
-      this.progressProzent = (index + 1) / this.numberOfSelectedVaccines * 100;
-      this.ref.markForCheck();
+    const responseHandling: AbstractResponseHandling<Object> = {
+      failMessage: `Cannot distribute vaccines.`,
+      callback: () => {
+        this.isSubmitting = false;
+        this.ref.markForCheck();
+      },
     }
+    await this.vaccineDosesService.distributeVaccineDoses(this.medicalUnitHash, vaccineDoseHashes.length, vaccineDoseHashes, responseHandling);
+
+    this.progressProzent = 100;
+    this.ref.markForCheck();
   }
 }

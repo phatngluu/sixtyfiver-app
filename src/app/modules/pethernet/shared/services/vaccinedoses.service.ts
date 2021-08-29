@@ -20,8 +20,17 @@ export class VaccinedosesService {
     private web3Service: Web3Service,
     private authService: AuthService,
     private responseHandler: RespondHandlerService) {
-      this.web3Service.initialize();
+    this.web3Service.initialize();
 
+    this.genericOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authService.getAccessToken()}`
+      }),
+      responseType: "json"
+    }
+
+    this.authService.accessTokenChangedEvent.subscribe(data => {
       this.genericOptions = {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
@@ -29,22 +38,13 @@ export class VaccinedosesService {
         }),
         responseType: "json"
       }
-
-      this.authService.accessTokenChangedEvent.subscribe(data => {
-        this.genericOptions = {
-          headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${this.authService.getAccessToken()}`
-          }),
-          responseType: "json"
-        }
-      })
+    })
   }
 
   public async addVaccineDose(vaccineDose: VaccineDose, responseHandling: AbstractResponseHandling<any>): Promise<void> {
-    await this.web3Service.initialize();
-
     vaccineDose.hash = hash(`${vaccineDose.doseId}${vaccineDose.lotNo}${vaccineDose.vaccineName}${vaccineDose.expiredDate}`);
+
+    await this.web3Service.initialize();
 
     this.web3Service.contract.methods.addVaccineDose(vaccineDose.hash).send({
       from: this.web3Service.connectedAccounts[0],
@@ -67,14 +67,6 @@ export class VaccinedosesService {
       });
   }
 
-  // public async getVaccineDoses(callback: (result: string[]) => void): Promise<void> {
-  //   await this.web3Service.initialize();
-
-  //   this.web3Service.contract.methods.vaccineDosesListGetter().call()
-  //     .then((result) => {
-  //       callback(result)});
-  // }
-
   public async getVaccineDoses(responseHandling: AbstractResponseHandling<any>) {
     try {
       const res = await this.http.get<AbstractResponse<Object>>(environment.getAllVaccineDoses).toPromise();
@@ -85,18 +77,32 @@ export class VaccinedosesService {
     this.responseHandler.handle(responseHandling);
   }
 
-  public async distributeVaccineDose(vaccineDoseHash: string, medicalUnitHash: string, responseHandling: AbstractResponseHandling<any>) {
-    const req = {
-      vaccineDoseHash,
-      medicalUnitHash,
-    };
+  public async distributeVaccineDoses(medicalUnitHash: string, total: number, vaccineDoseHashes: string[], responseHandling: AbstractResponseHandling<any>) {
+    await this.web3Service.initialize();
 
-    try {
-      const res = await this.http.post<AbstractResponse<Object>>(environment.distributeVaccineDose, req).toPromise();
-      responseHandling.response = res;
-    } catch (error) {
-      responseHandling.err = error;
-    }
-    this.responseHandler.handle(responseHandling);
+    this.web3Service.contract.methods.distributeVaccineDoses(medicalUnitHash, total, vaccineDoseHashes).send({
+      from: this.web3Service.connectedAccounts[0],
+      gas: 150000,
+    })
+      .on('receipt', async (receipt) => {
+        const req = {
+          vaccineDoseHashes,
+          medicalUnitHash,
+        };
+
+        try {
+          const res = await this.http.post<AbstractResponse<Object>>(environment.distributeVaccineDose, req).toPromise();
+          responseHandling.response = res;
+          responseHandling.reciept = receipt;
+        } catch (error) {
+          responseHandling.err = error;
+        }
+        this.responseHandler.handle(responseHandling);
+      })
+      .on('error', async (error, receipt) => { // If the transaction was rejected by the network with a receipt, the second parameter will be the receipt.
+        responseHandling.err = error;
+        responseHandling.reciept = receipt;
+        this.responseHandler.handle(responseHandling);
+      });
   }
 }
