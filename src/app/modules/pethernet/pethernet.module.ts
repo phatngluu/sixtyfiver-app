@@ -28,7 +28,7 @@ import { PethernetComponent } from './pethernet.component';
 import { VaccinedosesComponent } from './pages/vaccine-doses/vaccine-doses.component';
 import { AddVaccineDoseComponent } from './shared/components/add-vaccine-dose/add-vaccine-dose.component';
 import { AccountOverviewComponent } from './shared/components/account-overview/account-overview.component';
-import { InjectorsComponent } from './pages/injectors/injectors.component';
+import { PatientsComponent } from './pages/patients/patients.component';
 import { AddPatientComponent } from './shared/components/add-patient/add-patient.component';
 import { AddMedicalUnitComponent } from './shared/components/register-medical-unit/register-medical-unit.component';
 import { ManageMedicalUnitsComponent } from './shared/components/manage-medical-units/manage-medical-units.component';
@@ -51,7 +51,7 @@ import { CertificateDetailComponent } from './shared/components/certificate-deta
     VaccinedosesComponent,
     AddVaccineDoseComponent,
     AccountOverviewComponent,
-    InjectorsComponent,
+    PatientsComponent,
     AddPatientComponent,
     AddMedicalUnitComponent,
     ManageMedicalUnitsComponent,

@@ -9,7 +9,7 @@ import { Injector } from '../../models/injector';
 })
 export class PatientDetailComponent implements OnInit {
 
-  @Input() injector: Injector;
+  @Input() patient: Injector;
 
   constructor() { }
 
