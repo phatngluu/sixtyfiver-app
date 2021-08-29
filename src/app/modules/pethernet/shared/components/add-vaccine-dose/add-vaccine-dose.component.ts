@@ -38,7 +38,7 @@ export class AddVaccineDoseComponent implements OnInit {
   async ngOnInit() {
     await this.web3Service.initialize();
 
-    this.ministryOfHealthAccountAddress = this.web3Service.MINISTRY_OF_HEALTH_ADDRESS;
+    this.ministryOfHealthAccountAddress = await this.web3Service.loadMinistryOfHealthAccountAddress();
 
     let connectedAccounts = await this.web3Service.getConnectedAccounts();
     if (connectedAccounts.length === 0) {
