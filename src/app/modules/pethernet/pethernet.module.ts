@@ -29,14 +29,13 @@ import { VaccinedosesComponent } from './pages/vaccine-doses/vaccine-doses.compo
 import { AddVaccineDoseComponent } from './shared/components/add-vaccine-dose/add-vaccine-dose.component';
 import { AccountOverviewComponent } from './shared/components/account-overview/account-overview.component';
 import { InjectorsComponent } from './pages/injectors/injectors.component';
-import { AddInjectorComponent } from './shared/components/add-injector/add-injector.component';
-import { ListInjectorComponent } from './shared/components/list-injector/list-injector.component';
+import { AddPatientComponent } from './shared/components/add-patient/add-patient.component';
 import { AddMedicalUnitComponent } from './shared/components/register-medical-unit/register-medical-unit.component';
 import { ManageMedicalUnitsComponent } from './shared/components/manage-medical-units/manage-medical-units.component';
 import { MedicalUnitComponent } from './pages/medical-unit/medical-unit.component';
 import { DistributeVaccineDoseComponent } from './shared/components/distribute-vaccine-dose/distribute-vaccine-dose.component';
 import { IssueCertificateComponent } from './shared/components/issue-certificate/issue-certificate.component';
-import { InjectorDetailComponent } from './shared/components/injector-detail/injector-detail.component';
+import { PatientDetailComponent } from './shared/components/patient-detail/patient-detail.component';
 import { CertificateDetailComponent } from './shared/components/certificate-detail/certificate-detail.component';
 
 // Pipes
@@ -53,14 +52,13 @@ import { CertificateDetailComponent } from './shared/components/certificate-deta
     AddVaccineDoseComponent,
     AccountOverviewComponent,
     InjectorsComponent,
-    AddInjectorComponent,
-    ListInjectorComponent,
+    AddPatientComponent,
     AddMedicalUnitComponent,
     ManageMedicalUnitsComponent,
     MedicalUnitComponent,
     DistributeVaccineDoseComponent,
     IssueCertificateComponent,
-    InjectorDetailComponent,
+    PatientDetailComponent,
     CertificateDetailComponent,
 
     // Pipes

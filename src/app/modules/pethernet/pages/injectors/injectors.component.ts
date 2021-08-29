@@ -27,14 +27,16 @@ export class InjectorsComponent implements OnInit {
         this.injector = result.message;
         this.ref.markForCheck();
 
-        const responseHandling2: AbstractResponseHandling<Certificate[]> = {
-          callback: (result: AbstractResponse<Certificate[]>) => {
-            this.certificates = result.message;
-            this.ref.markForCheck();
+        if (this.injector) {
+          const responseHandling2: AbstractResponseHandling<Certificate[]> = {
+            callback: (result: AbstractResponse<Certificate[]>) => {
+              this.certificates = result.message;
+              this.ref.markForCheck();
+            }
           }
-        }
 
-        this.injectorService.getAuthorizedCerts(responseHandling2)
+          this.injectorService.getAuthorizedCerts(responseHandling2)
+        }
       }
     }
 

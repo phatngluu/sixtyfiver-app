@@ -1,17 +1,17 @@
-import { ValidationService } from './../../services/validation.service';
-import { Injector } from './../../models/injector';
-import { InjectorService } from './../../services/injector.service';
+import { ValidationService } from '../../services/validation.service';
+import { Injector } from '../../models/injector';
+import { InjectorService } from '../../services/injector.service';
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AbstractEvent, AbstractResponseHandling } from '../../models/abstract-response';
 
 @Component({
-  selector: 'sf-add-injector',
-  templateUrl: './add-injector.component.html',
-  styleUrls: ['./add-injector.component.css'],
+  selector: 'sf-add-patient',
+  templateUrl: './add-patient.component.html',
+  styleUrls: ['./add-patient.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AddInjectorComponent implements OnInit {
+export class AddPatientComponent implements OnInit {
 
   validateForm: FormGroup;
   isSubmitting: boolean;
