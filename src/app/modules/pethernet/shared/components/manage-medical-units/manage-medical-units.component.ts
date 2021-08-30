@@ -4,6 +4,7 @@ import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, Input } 
 import { AbstractResponseHandling } from '../../models/abstract-response';
 import { MedicalUnit } from '../../models/medical-unit';
 import { Router } from '@angular/router';
+import { Web3Service } from '../../services/web3.service';
 
 @Component({
   selector: 'sf-manage-medical-units',
@@ -30,15 +31,43 @@ export class ManageMedicalUnitsComponent implements OnInit {
       key: 'Verified'
     }
   ];
+  warnNoConnectedAccount: boolean;
+  connectedMetamaskAccount: string;
+  ministryOfHealthAccountAddress: string;
 
 
   constructor(
-    private ref: ChangeDetectorRef,
     private router: Router,
+    private ref: ChangeDetectorRef,
+    private web3Service: Web3Service,
     private medicalUnitService: MedicalUnitService) {
   }
 
   async ngOnInit(): Promise<void> {
+    await this.web3Service.initialize();
+
+    const connectedAccounts = await this.web3Service.getConnectedAccounts();
+    if (connectedAccounts.length === 0) {
+      this.warnNoConnectedAccount = true;
+    } else {
+      this.warnNoConnectedAccount = false;
+      this.connectedMetamaskAccount = connectedAccounts[0];
+    }
+    this.ministryOfHealthAccountAddress = await this.web3Service.loadMinistryOfHealthAccountAddress();
+    this.ref.markForCheck();
+
+    this.web3Service.accountChangedEvent.subscribe(async x => {
+      const connectedAccounts = await this.web3Service.getConnectedAccounts();
+
+      if (connectedAccounts.length === 0) {
+        this.warnNoConnectedAccount = true;
+      } else {
+        this.warnNoConnectedAccount = false;
+        this.connectedMetamaskAccount = connectedAccounts[0];
+      }
+      this.ref.markForCheck();
+    });
+
     await this.getVerifiedMedicalUnits();
     await this.getUnverifiedMedicalUnits();
     this.isLoading = false;

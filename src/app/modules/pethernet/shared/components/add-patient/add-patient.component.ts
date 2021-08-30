@@ -16,6 +16,7 @@ export class AddPatientComponent implements OnInit {
   validateForm: FormGroup;
   isSubmitting: boolean;
   birthdayPlaceholder: Date;
+  registeredSuccessfuly: boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -23,6 +24,7 @@ export class AddPatientComponent implements OnInit {
     private injectorService: InjectorService) {
     const birthdayPlaceholder = new Date();
     birthdayPlaceholder.setFullYear(birthdayPlaceholder.getFullYear() - 18);
+    this.registeredSuccessfuly = false;
 
     this.validateForm = this.fb.group({
       fullName: [null, [Validators.required]],
@@ -58,6 +60,7 @@ export class AddPatientComponent implements OnInit {
       callback: () => {
         this.isSubmitting = false;
         this.ref.markForCheck();
+        this.registeredSuccessfuly = true;
       },
       turnOnMessage: true
     }

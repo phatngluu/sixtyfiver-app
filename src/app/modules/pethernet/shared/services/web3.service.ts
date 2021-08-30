@@ -10,6 +10,8 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 
 import detectEthereumProvider from '@metamask/detect-provider'
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { ConnectMetamaskAccountComponent } from '../components/connect-metamask-account/connect-metamask-account.component';
 
 declare let window: any;
 
@@ -27,6 +29,7 @@ export class Web3Service {
   public contractABI: AbiItem[] = null;
   public contractAddress: string;
   public connectedAccounts: string[];
+  private isInitialized: boolean = false;
 
   /** Events */
   public initializedEvent = new EventEmitter();
@@ -35,19 +38,23 @@ export class Web3Service {
   constructor(
     private http: HttpClient,
     private authService: AuthService,
+    private modalService: NzModalService,
     private messageService: NzMessageService) {
   }
 
   public async initialize() : Promise<void> {
-    if (this.web3 === undefined || this.ethereumProvider === undefined) {
-      this.connectMetaMask();
-    }
+    if (this.isInitialized === false) {
+      if (this.web3 === undefined || this.ethereumProvider === undefined) {
+        this.connectMetaMask();
+      }
 
-    if (this.contract === undefined) {
-      await this.loadContract();
-    }
+      if (this.contract === undefined) {
+        await this.loadContract();
+      }
 
-    this.initializedEvent.emit();
+      this.initializedEvent.emit();
+      this.isInitialized = true;
+    }
   }
 
   private async connectMetaMask(): Promise<void> {
@@ -59,7 +66,7 @@ export class Web3Service {
         // Set up Web3.js to work with Metamask
         await this.setupWeb3();
       } else {
-        this.messageService.error('Missing Ethereum provider. Please install Metamask extension.', { nzDuration: 0 });
+        this.showModalBrowserNotSupportedEthereum();
       }
     } catch (err) {
         console.error("Cannot detect Ethereum provider.", err);
@@ -74,8 +81,14 @@ export class Web3Service {
 
     // Get connected account
     this.connectedAccounts = await this.web3.eth.getAccounts();
+    if (this.connectedAccounts.length === 0) {
+      this.showModalNoConnectedAccount();
+    }
     window.ethereum.on('accountsChanged', (accounts) => {
       this.connectedAccounts = accounts;
+      if (this.connectedAccounts.length === 0) {
+        this.showModalNoConnectedAccount();
+      }
       this.accountChangedEvent.emit();
       this.messageService.warning('Your acccount has been changed');
     });
@@ -110,5 +123,37 @@ export class Web3Service {
 
   public connectMetamask(): void {
     this.ethereumProvider.request({ method: 'eth_requestAccounts' });
+  }
+
+  private showModalBrowserNotSupportedEthereum(): void {
+    this.modalService.create({
+      nzTitle: 'Missing Ethereum provider.',
+      nzContent: 'This app requires browser has an Ethereum provider. Please install Metamask extension.',
+      nzMask: true,
+      nzMaskClosable: false,
+      nzClosable: false,
+      nzOkDisabled: true,
+      nzCancelDisabled: true,
+      nzOnOk: () => window.open('https://metamask.io')
+    });
+  }
+
+  private showModalNoConnectedAccount(): void {
+    const modalRef = this.modalService.create({
+      nzTitle: 'No account is connected.',
+      nzContent: ConnectMetamaskAccountComponent,
+      nzMask: true,
+      nzMaskClosable: false,
+      nzClosable: false,
+      nzOkDisabled: true,
+      nzCancelDisabled: true,
+      nzOnOk: () => window.open('https://metamask.io')
+    });
+
+    this.accountChangedEvent.subscribe(() => {
+      if (this.connectedAccounts.length > 0) {
+        modalRef.close();
+      }
+    })
   }
 }

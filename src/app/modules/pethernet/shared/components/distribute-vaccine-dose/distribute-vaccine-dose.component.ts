@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MedicalUnit } from '../../models/medical-unit';
 import { VaccineDose } from '../../models/vaccine-dose';
 import { VaccinedosesService } from '../../services/vaccinedoses.service';
+import { Web3Service } from '../../services/web3.service';
 
 @Component({
   selector: 'sf-distribute-vaccine-dose',
@@ -28,18 +29,48 @@ export class DistributeVaccineDoseComponent implements OnInit {
   public numberOfSelectedVaccines: number;
   public isSubmitting: boolean;
   public progressProzent: number = 0;
+  distributedSuccessfully: boolean;
+  connectedMetamaskAccount: string;
+  warnNoConnectedAccount: boolean;
+  ministryOfHealthAccountAddress: string;
 
   constructor(
     private router: Router,
     private ref: ChangeDetectorRef,
+    private web3Service: Web3Service,
     private activatedRoute: ActivatedRoute,
     private medicalUnitService: MedicalUnitService,
     private vaccineDosesService: VaccinedosesService,
   ) {
+    this.distributedSuccessfully = false;
     this.vaccineNames = [];
   }
 
   async ngOnInit() {
+    await this.web3Service.initialize();
+
+    const connectedAccounts = await this.web3Service.getConnectedAccounts();
+    if (connectedAccounts.length === 0) {
+      this.warnNoConnectedAccount = true;
+    } else {
+      this.warnNoConnectedAccount = false;
+      this.connectedMetamaskAccount = connectedAccounts[0];
+    }
+    this.ministryOfHealthAccountAddress = await this.web3Service.loadMinistryOfHealthAccountAddress();
+    this.ref.markForCheck();
+
+    this.web3Service.accountChangedEvent.subscribe(async x => {
+      const connectedAccounts = await this.web3Service.getConnectedAccounts();
+
+      if (connectedAccounts.length === 0) {
+        this.warnNoConnectedAccount = true;
+      } else {
+        this.warnNoConnectedAccount = false;
+        this.connectedMetamaskAccount = connectedAccounts[0];
+      }
+      this.ref.markForCheck();
+    });
+
     const resHandling: AbstractResponseHandling<VaccineDose[]> = {
       callback: (resp: AbstractResponse<VaccineDose[]>) => {
         const today = new Date();
@@ -126,6 +157,8 @@ export class DistributeVaccineDoseComponent implements OnInit {
       callback: () => {
         this.isSubmitting = false;
         this.ref.markForCheck();
+
+        this.distributedSuccessfully = true;
       },
     }
     await this.vaccineDosesService.distributeVaccineDoses(this.medicalUnitHash, vaccineDoseHashes.length, vaccineDoseHashes, responseHandling);

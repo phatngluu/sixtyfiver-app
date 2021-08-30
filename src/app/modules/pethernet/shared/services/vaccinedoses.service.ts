@@ -44,8 +44,6 @@ export class VaccinedosesService {
   public async addVaccineDose(vaccineDose: VaccineDose, responseHandling: AbstractResponseHandling<any>): Promise<void> {
     vaccineDose.hash = hash(`${vaccineDose.doseId}${vaccineDose.lotNo}${vaccineDose.vaccineName}${vaccineDose.expiredDate}`);
 
-    await this.web3Service.initialize();
-
     this.web3Service.contract.methods.addVaccineDose(vaccineDose.hash).send({
       from: this.web3Service.connectedAccounts[0],
       gas: 150000,
@@ -78,8 +76,6 @@ export class VaccinedosesService {
   }
 
   public async distributeVaccineDoses(medicalUnitHash: string, total: number, vaccineDoseHashes: string[], responseHandling: AbstractResponseHandling<any>) {
-    await this.web3Service.initialize();
-
     this.web3Service.contract.methods.distributeVaccineDoses(medicalUnitHash, total, vaccineDoseHashes).send({
       from: this.web3Service.connectedAccounts[0],
       gas: 150000,

@@ -19,6 +19,7 @@ import { NzSliderModule } from 'ng-zorro-antd/slider';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { NzStepsModule } from 'ng-zorro-antd/steps';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 
 // Directives
@@ -37,6 +38,7 @@ import { DistributeVaccineDoseComponent } from './shared/components/distribute-v
 import { IssueCertificateComponent } from './shared/components/issue-certificate/issue-certificate.component';
 import { PatientDetailComponent } from './shared/components/patient-detail/patient-detail.component';
 import { CertificateDetailComponent } from './shared/components/certificate-detail/certificate-detail.component';
+import { ConnectMetamaskAccountComponent } from './shared/components/connect-metamask-account/connect-metamask-account.component';
 
 // Pipes
 
@@ -60,6 +62,7 @@ import { CertificateDetailComponent } from './shared/components/certificate-deta
     IssueCertificateComponent,
     PatientDetailComponent,
     CertificateDetailComponent,
+    ConnectMetamaskAccountComponent,
 
     // Pipes
 
@@ -89,6 +92,7 @@ import { CertificateDetailComponent } from './shared/components/certificate-deta
     NzInputNumberModule,
     NzProgressModule,
     NzStepsModule,
+    NzModalModule,
   ]
 })
 export class PethernetModule { }

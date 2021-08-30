@@ -1,49 +1,57 @@
-<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm(validateForm.value)">
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>Full Name</nz-form-label>
-    <nz-form-control [nzSpan]="9" nzErrorTip="Please input your fullname!">
-      <nz-input-group>
-        <input formControlName="fullName" nz-input placeholder="Cao Minh Le" />
-      </nz-input-group>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>Birthday</nz-form-label>
-    <nz-form-control [nzSpan]="12">
-      <nz-date-picker formControlName="birthday"></nz-date-picker>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>Citizen Id</nz-form-label>
-    <nz-form-control [nzSpan]="9" nzHasFeedback nzValidatingTip="Checking..." [nzErrorTip]="userErrorTpl">
-      <input nz-input formControlName="citizenId" placeholder="B12334213" />
-      <ng-template #userErrorTpl let-control>
-        <ng-container *ngIf="control.hasError('required')">Please input your citizen identity!</ng-container>
-        <ng-container *ngIf="control.hasError('duplicated')">The citizen identity is redundant!</ng-container>
-        <ng-container *ngIf="control.hasError('notchecked')">The citizen identity is not checked.</ng-container>
-      </ng-template>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>Address</nz-form-label>
-    <nz-form-control [nzSpan]="9" nzErrorTip="Please input address!">
-      <nz-input-group>
-        <input formControlName="address" nz-input placeholder="26 Ung Van Khiem, Binh Thanh District, HCMC" />
-      </nz-input-group>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>Phone Number</nz-form-label>
-    <nz-form-control [nzSpan]="9" nzErrorTip="Please input phone number!">
-      <nz-input-group>
-        <input formControlName="phoneNumber" nz-input placeholder="0123456789" />
-      </nz-input-group>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-control [nzOffset]="7">
-      <button nz-button nzType="primary" [disabled]="!validateForm.valid" [nzLoading]="isSubmitting">Submit</button>
-      <!-- <button nz-button (click)="resetForm($event)">Reset</button> -->
-    </nz-form-control>
-  </nz-form-item>
-</form>
+<ng-container *ngIf="!registeredSuccessfuly">
+  <h3>Please register: </h3>
+
+  <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm(validateForm.value)">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>Full Name</nz-form-label>
+      <nz-form-control [nzSpan]="9" nzErrorTip="Please input your fullname!">
+        <nz-input-group>
+          <input formControlName="fullName" nz-input placeholder="Cao Minh Le" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>Birthday</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <nz-date-picker formControlName="birthday"></nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>Citizen Id</nz-form-label>
+      <nz-form-control [nzSpan]="9" nzHasFeedback nzValidatingTip="Checking..." [nzErrorTip]="userErrorTpl">
+        <input nz-input formControlName="citizenId" placeholder="B12334213" />
+        <ng-template #userErrorTpl let-control>
+          <ng-container *ngIf="control.hasError('required')">Please input your citizen identity!</ng-container>
+          <ng-container *ngIf="control.hasError('duplicated')">The citizen identity is redundant!</ng-container>
+          <ng-container *ngIf="control.hasError('notchecked')">The citizen identity is not checked.</ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>Address</nz-form-label>
+      <nz-form-control [nzSpan]="9" nzErrorTip="Please input address!">
+        <nz-input-group>
+          <input formControlName="address" nz-input placeholder="26 Ung Van Khiem, Binh Thanh District, HCMC" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>Phone Number</nz-form-label>
+      <nz-form-control [nzSpan]="9" nzErrorTip="Please input phone number!">
+        <nz-input-group>
+          <input formControlName="phoneNumber" nz-input placeholder="0123456789" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control [nzOffset]="7">
+        <button nz-button nzType="primary" [disabled]="!validateForm.valid" [nzLoading]="isSubmitting">Submit</button>
+        <!-- <button nz-button (click)="resetForm($event)">Reset</button> -->
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</ng-container>
+<ng-container *ngIf="registeredSuccessfuly">
+  <nz-result nzStatus="success" nzTitle="Successfully registered as a patient!"
+    nzSubTitle="Medical unit will issue certificate when you are injected."></nz-result>
+</ng-container>

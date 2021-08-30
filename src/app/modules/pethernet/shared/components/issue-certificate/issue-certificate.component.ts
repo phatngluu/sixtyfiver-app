@@ -26,6 +26,7 @@ export class IssueCertificateComponent implements OnInit {
   isSubmitting: boolean;
   public connectedMetamaskAccount: string;
   warnNoConnectedAccount: boolean;
+  issuedSuccessfuly: boolean;
 
   constructor(
     private ref: ChangeDetectorRef,
@@ -34,6 +35,8 @@ export class IssueCertificateComponent implements OnInit {
     private injectorService: InjectorService,
     private medicalUnitService: MedicalUnitService,
   ) {
+    this.issuedSuccessfuly = false;
+
     this.validateForm = this.fb.group({
       medicalUnitHash: [null, [Validators.required]],
       injectorCitizenId: [null, [Validators.required], [ValidationService.injectorCitizenIdExistenceValidator(this.injectorService)]],
@@ -92,6 +95,8 @@ export class IssueCertificateComponent implements OnInit {
       callback: (result: AbstractResponse<Certificate>) => {
         this.isSubmitting = false;
         this.ref.markForCheck();
+
+        this.issuedSuccessfuly = true;
       }
     }
 

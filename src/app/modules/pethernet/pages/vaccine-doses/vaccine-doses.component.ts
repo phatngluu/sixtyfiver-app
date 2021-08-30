@@ -8,12 +8,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class VaccinedosesComponent implements OnInit {
 
-  constructor(
-    private web3Service: Web3Service) {
-
-  }
+  constructor() {}
 
   ngOnInit(): void {
-    this.web3Service;
   }
 }

@@ -3,10 +3,10 @@
 </ng-container>
 
 <ng-container *ngIf="!warnNoConnectedAccount">
-  <nz-alert [nzSpan]="7" *ngIf="connectedMetamaskAccount !== ministryOfHealthAccountAddress" nzType="warning"
+  <nz-alert [nzSpan]="7" *ngIf="connectedMetamaskAccount.toLowerCase() !== ministryOfHealthAccountAddress.toLowerCase()" nzType="warning"
       nzMessage="Your connected Metamask account isn't matched with the registered one: {{ ministryOfHealthAccountAddress }}"></nz-alert>
 
-  <form *ngIf="connectedMetamaskAccount === ministryOfHealthAccountAddress" nz-form [formGroup]="validateForm" (ngSubmit)="submitForm(validateForm.value)">
+  <form *ngIf="connectedMetamaskAccount.toLowerCase() === ministryOfHealthAccountAddress.toLowerCase()" nz-form [formGroup]="validateForm" (ngSubmit)="submitForm(validateForm.value)">
     <nz-form-item>
       <nz-form-label [nzSpan]="7" nzRequired>Dose Id</nz-form-label>
       <nz-form-control [nzSpan]="12" nzErrorTip="Please input dose identity!">
