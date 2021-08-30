@@ -13,7 +13,7 @@
     <nz-alert [nzSpan]="7" nzType="warning" nzMessage="Your medical unit is not verified."></nz-alert>
   </ng-container>
 
-  <ng-container *ngIf="medicalUnit.verifiedOn !== null">
+  <ng-container *ngIf="medicalUnit.verifiedOn !== null && !issuedSuccessfuly">
     <nz-alert [nzSpan]="7" *ngIf="warnNoConnectedAccount" nzType="warning"
       nzMessage="You don't have any connected Metamask accounts."></nz-alert>
 
@@ -62,5 +62,8 @@
         </nz-form-control>
       </nz-form-item>
     </form>
+  </ng-container>
+  <ng-container *ngIf="issuedSuccessfuly">
+    <nz-result nzStatus="success" nzTitle="Successfully issued certificate!"></nz-result>
   </ng-container>
 </ng-container>

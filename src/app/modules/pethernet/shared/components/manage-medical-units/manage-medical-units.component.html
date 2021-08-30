@@ -1,96 +1,111 @@
-<nz-tabset nzType="card">
-  <nz-tab nzTitle="Verified Medical Unit">
-    <ng-template nz-tab>
-      <div *ngIf="verifiedMedUnits?.length > 0">
-        <nz-collapse>
-          <nz-collapse-panel *ngFor="let medUnit of verifiedMedUnits"
-            [nzHeader]="medUnit.medCode + ' - ' + medUnit.medName">
-            <form nz-form layout="horizontal">
-              <nz-form-item>
-                <nz-form-label [nzSpan]="7">Account</nz-form-label>
-                <nz-form-control [nzSpan]="12">
-                  <nz-alert nzType="info" [nzMessage]="medUnit.accountAddress"></nz-alert>
-                </nz-form-control>
-              </nz-form-item>
-              <nz-form-item>
-                <nz-form-label [nzSpan]="7">Address</nz-form-label>
-                <nz-form-control [nzSpan]="12">
-                  <nz-form-text>{{medUnit.physicalAddress}}</nz-form-text>
-                </nz-form-control>
-              </nz-form-item>
-              <nz-form-item>
-                <nz-form-label [nzSpan]="7">Registered on</nz-form-label>
-                <nz-form-control [nzSpan]="12">
-                  <nz-form-text>{{medUnit.registeredOn | date: 'dd/MM/yyyy'}}</nz-form-text>
-                </nz-form-control>
-              </nz-form-item>
-              <nz-form-item>
-                <nz-form-label [nzSpan]="7">Verified on</nz-form-label>
-                <nz-form-control [nzSpan]="12">
-                  <nz-form-text>{{medUnit.verifiedOn | date: 'dd/MM/yyyy'}}</nz-form-text>
-                </nz-form-control>
-              </nz-form-item>
-              <nz-form-item>
-                <nz-form-label [nzSpan]="7">Hash</nz-form-label>
-                <nz-form-control [nzSpan]="12">
-                  <nz-form-text><code>{{medUnit.hash}}</code></nz-form-text>
-                </nz-form-control>
-              </nz-form-item>
-              <nz-form-item>
-                <nz-form-control [nzOffset]="7">
-                  <button class="approve-btn" nzSize="large" nz-button (click)="distributeVaccine(medUnit)">Distribute Vaccine</button>
-                </nz-form-control>
-              </nz-form-item>
-            </form>
-          </nz-collapse-panel>
-        </nz-collapse>
-      </div>
-    </ng-template>
-  </nz-tab>
-  <nz-tab nzTitle="Unverified Medical Unit">
-    <ng-template nz-tab>
-      <div class="loadingDiv">
-        <nz-spin nzSimple *ngIf="isLoading"></nz-spin>
-      </div>
-      <div *ngIf="unverifiedMedUnits?.length > 0">
-        <nz-collapse>
-          <nz-collapse-panel *ngFor="let medUnit of unverifiedMedUnits"
-            [nzHeader]="medUnit.medCode + ' - ' + medUnit.medName">
-            <form nz-form layout="horizontal">
-              <nz-form-item>
-                <nz-form-label [nzSpan]="7">Account</nz-form-label>
-                <nz-form-control [nzSpan]="12">
-                  <nz-alert nzType="info" [nzMessage]="medUnit.accountAddress"></nz-alert>
-                </nz-form-control>
-              </nz-form-item>
-              <nz-form-item>
-                <nz-form-label [nzSpan]="7">Address</nz-form-label>
-                <nz-form-control [nzSpan]="12">
-                  <nz-form-text>{{medUnit.physicalAddress}}</nz-form-text>
-                </nz-form-control>
-              </nz-form-item>
-              <nz-form-item>
-                <nz-form-label [nzSpan]="7">Registered on</nz-form-label>
-                <nz-form-control [nzSpan]="12">
-                  <nz-form-text>{{medUnit.registeredOn | date: 'dd/MM/yyyy'}}</nz-form-text>
-                </nz-form-control>
-              </nz-form-item>
-              <nz-form-item>
-                <nz-form-label [nzSpan]="7">Hash</nz-form-label>
-                <nz-form-control [nzSpan]="12">
-                  <nz-form-text><code>{{medUnit.hash}}</code></nz-form-text>
-                </nz-form-control>
-              </nz-form-item>
-              <nz-form-item>
-                <nz-form-control [nzOffset]="7">
-                  <button class="approve-btn" nzSize="large" nz-button (click)="approveMedUnit(medUnit)">Approve</button>
-                  <button class="reject-btn" nzSize="large" nzDanger nz-button (click)="rejectMedUnit(medUnit)">Reject</button>
-                </nz-form-control>
-              </nz-form-item>
-            </form>
-          </nz-collapse-panel>
-        </nz-collapse>
-      </div>
-    </ng-template>
-  </nz-tab>
-</nz-tabset>
+<ng-container *ngIf="warnNoConnectedAccount">
+  <nz-alert [nzSpan]="7" nzType="warning" nzMessage="You don't have any connected Metamask accounts."></nz-alert>
+</ng-container>
+
+<ng-container *ngIf="!warnNoConnectedAccount">
+  <nz-alert [nzSpan]="7" *ngIf="connectedMetamaskAccount !== ministryOfHealthAccountAddress" nzType="warning"
+    nzMessage="Your connected Metamask account isn't matched with the registered one: {{ ministryOfHealthAccountAddress }}">
+  </nz-alert>
+
+  <ng-container *ngIf="connectedMetamaskAccount === ministryOfHealthAccountAddress">
+    <nz-tabset nzType="card">
+      <nz-tab nzTitle="Verified Medical Unit">
+        <ng-template nz-tab>
+          <div *ngIf="verifiedMedUnits?.length > 0">
+            <nz-collapse>
+              <nz-collapse-panel *ngFor="let medUnit of verifiedMedUnits"
+                [nzHeader]="medUnit.medCode + ' - ' + medUnit.medName">
+                <form nz-form layout="horizontal">
+                  <nz-form-item>
+                    <nz-form-label [nzSpan]="7">Account</nz-form-label>
+                    <nz-form-control [nzSpan]="12">
+                      <nz-alert nzType="info" [nzMessage]="medUnit.accountAddress"></nz-alert>
+                    </nz-form-control>
+                  </nz-form-item>
+                  <nz-form-item>
+                    <nz-form-label [nzSpan]="7">Address</nz-form-label>
+                    <nz-form-control [nzSpan]="12">
+                      <nz-form-text>{{medUnit.physicalAddress}}</nz-form-text>
+                    </nz-form-control>
+                  </nz-form-item>
+                  <nz-form-item>
+                    <nz-form-label [nzSpan]="7">Registered on</nz-form-label>
+                    <nz-form-control [nzSpan]="12">
+                      <nz-form-text>{{medUnit.registeredOn | date: 'dd/MM/yyyy'}}</nz-form-text>
+                    </nz-form-control>
+                  </nz-form-item>
+                  <nz-form-item>
+                    <nz-form-label [nzSpan]="7">Verified on</nz-form-label>
+                    <nz-form-control [nzSpan]="12">
+                      <nz-form-text>{{medUnit.verifiedOn | date: 'dd/MM/yyyy'}}</nz-form-text>
+                    </nz-form-control>
+                  </nz-form-item>
+                  <nz-form-item>
+                    <nz-form-label [nzSpan]="7">Hash</nz-form-label>
+                    <nz-form-control [nzSpan]="12">
+                      <nz-form-text><code>{{medUnit.hash}}</code></nz-form-text>
+                    </nz-form-control>
+                  </nz-form-item>
+                  <nz-form-item>
+                    <nz-form-control [nzOffset]="7">
+                      <button class="approve-btn" nzSize="large" nz-button
+                        (click)="distributeVaccine(medUnit)">Distribute Vaccine</button>
+                    </nz-form-control>
+                  </nz-form-item>
+                </form>
+              </nz-collapse-panel>
+            </nz-collapse>
+          </div>
+        </ng-template>
+      </nz-tab>
+      <nz-tab nzTitle="Unverified Medical Unit">
+        <ng-template nz-tab>
+          <div class="loadingDiv">
+            <nz-spin nzSimple *ngIf="isLoading"></nz-spin>
+          </div>
+          <div *ngIf="unverifiedMedUnits?.length > 0">
+            <nz-collapse>
+              <nz-collapse-panel *ngFor="let medUnit of unverifiedMedUnits"
+                [nzHeader]="medUnit.medCode + ' - ' + medUnit.medName">
+                <form nz-form layout="horizontal">
+                  <nz-form-item>
+                    <nz-form-label [nzSpan]="7">Account</nz-form-label>
+                    <nz-form-control [nzSpan]="12">
+                      <nz-alert nzType="info" [nzMessage]="medUnit.accountAddress"></nz-alert>
+                    </nz-form-control>
+                  </nz-form-item>
+                  <nz-form-item>
+                    <nz-form-label [nzSpan]="7">Address</nz-form-label>
+                    <nz-form-control [nzSpan]="12">
+                      <nz-form-text>{{medUnit.physicalAddress}}</nz-form-text>
+                    </nz-form-control>
+                  </nz-form-item>
+                  <nz-form-item>
+                    <nz-form-label [nzSpan]="7">Registered on</nz-form-label>
+                    <nz-form-control [nzSpan]="12">
+                      <nz-form-text>{{medUnit.registeredOn | date: 'dd/MM/yyyy'}}</nz-form-text>
+                    </nz-form-control>
+                  </nz-form-item>
+                  <nz-form-item>
+                    <nz-form-label [nzSpan]="7">Hash</nz-form-label>
+                    <nz-form-control [nzSpan]="12">
+                      <nz-form-text><code>{{medUnit.hash}}</code></nz-form-text>
+                    </nz-form-control>
+                  </nz-form-item>
+                  <nz-form-item>
+                    <nz-form-control [nzOffset]="7">
+                      <button class="approve-btn" nzSize="large" nz-button
+                        (click)="approveMedUnit(medUnit)">Approve</button>
+                      <button class="reject-btn" nzSize="large" nzDanger nz-button
+                        (click)="rejectMedUnit(medUnit)">Reject</button>
+                    </nz-form-control>
+                  </nz-form-item>
+                </form>
+              </nz-collapse-panel>
+            </nz-collapse>
+          </div>
+        </ng-template>
+      </nz-tab>
+    </nz-tabset>
+  </ng-container>
+</ng-container>
