@@ -3,11 +3,11 @@
 </ng-container>
 
 <ng-container *ngIf="!warnNoConnectedAccount">
-  <nz-alert [nzSpan]="7" *ngIf="connectedMetamaskAccount !== ministryOfHealthAccountAddress" nzType="warning"
+  <nz-alert [nzSpan]="7" *ngIf="connectedMetamaskAccount.toLowerCase() !== ministryOfHealthAccountAddress.toLowerCase()" nzType="warning"
     nzMessage="Your connected Metamask account isn't matched with the registered one: {{ ministryOfHealthAccountAddress }}">
   </nz-alert>
 
-  <ng-container *ngIf="connectedMetamaskAccount === ministryOfHealthAccountAddress">
+  <ng-container *ngIf="connectedMetamaskAccount.toLowerCase() === ministryOfHealthAccountAddress.toLowerCase()">
     <ng-container *ngIf="!distributedSuccessfully">
       <div id="app-dist-vacccine-med-unit">
         <form nz-form layout="horizontal">
