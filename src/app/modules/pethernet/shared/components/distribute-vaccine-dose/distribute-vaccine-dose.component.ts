@@ -161,7 +161,7 @@ export class DistributeVaccineDoseComponent implements OnInit {
         this.distributedSuccessfully = true;
       },
     }
-    await this.vaccineDosesService.distributeVaccineDoses(this.medicalUnitHash, vaccineDoseHashes.length, vaccineDoseHashes, responseHandling);
+    await this.vaccineDosesService.distributeVaccineDoses(this.medicalUnitHash, vaccineDoseHashes, responseHandling);
 
     this.progressProzent = 100;
     this.ref.markForCheck();

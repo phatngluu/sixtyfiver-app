@@ -75,8 +75,8 @@ export class VaccinedosesService {
     this.responseHandler.handle(responseHandling);
   }
 
-  public async distributeVaccineDoses(medicalUnitHash: string, total: number, vaccineDoseHashes: string[], responseHandling: AbstractResponseHandling<any>) {
-    this.web3Service.contract.methods.distributeVaccineDoses(medicalUnitHash, total, vaccineDoseHashes).send({
+  public async distributeVaccineDoses(medicalUnitHash: string, vaccineDoseHashes: string[], responseHandling: AbstractResponseHandling<any>) {
+    this.web3Service.contract.methods.distributeVaccineDoses(medicalUnitHash, vaccineDoseHashes).send({
       from: this.web3Service.connectedAccounts[0],
       gas: 150000,
     })
