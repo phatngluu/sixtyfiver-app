@@ -19,10 +19,6 @@ declare let window: any;
   providedIn: 'root'
 })
 export class Web3Service {
-  getEthereumProvider(): import("../models/ethereum-provider-extension").EthereumProviderExtension {
-    throw new Error('Method not implemented.');
-
-  }
   public web3: Web3;
   public ethereumProvider: EthereumProviderExtension;
   public contract: Contract;
@@ -42,18 +38,18 @@ export class Web3Service {
     private messageService: NzMessageService) {
   }
 
-  public async initialize() : Promise<void> {
+  public async initialize(): Promise<void> {
     if (this.isInitialized === false) {
-      if (this.web3 === undefined || this.ethereumProvider === undefined) {
-        this.connectMetaMask();
-      }
-
       if (this.contract === undefined) {
         await this.loadContract();
       }
 
-      this.initializedEvent.emit();
-      this.isInitialized = true;
+      if (this.web3 === undefined || this.ethereumProvider === undefined) {
+        this.connectMetaMask().then(() => {
+          this.initializedEvent.emit();
+          this.isInitialized = true;
+        });
+      }
     }
   }
 
@@ -69,7 +65,7 @@ export class Web3Service {
         this.showModalBrowserNotSupportedEthereum();
       }
     } catch (err) {
-        console.error("Cannot detect Ethereum provider.", err);
+      console.error("Cannot detect Ethereum provider.", err);
     };
   }
 
@@ -78,6 +74,7 @@ export class Web3Service {
     // If Metamask has been installed and configured. Then, Web3.givenProvider === window.ethereum
     // Initialize Web3 instance
     this.web3 = new Web3(Web3.givenProvider);
+    this.contract = new this.web3.eth.Contract(this.contractABI, this.contractAddress);
 
     // Get connected account
     this.connectedAccounts = await this.web3.eth.getAccounts();
@@ -101,7 +98,6 @@ export class Web3Service {
 
     this.contractAddress = contractInfo[0].message;
     this.contractABI = contractInfo[1].message;
-    this.contract = new this.web3.eth.Contract(this.contractABI, this.contractAddress);
   }
 
   public async loadMinistryOfHealthAccountAddress(): Promise<string> {
@@ -118,6 +114,7 @@ export class Web3Service {
   }
 
   public async getConnectedAccounts(): Promise<string[]> {
+    if (this.web3 === undefined) return [];
     return await this.web3.eth.getAccounts();
   }
 

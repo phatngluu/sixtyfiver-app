@@ -17,10 +17,10 @@
     <nz-alert [nzSpan]="7" *ngIf="warnNoConnectedAccount" nzType="warning"
       nzMessage="You don't have any connected Metamask accounts."></nz-alert>
 
-    <nz-alert [nzSpan]="7" *ngIf="!warnNoConnectedAccount && connectedMetamaskAccount.toLowerCase() !== medicalUnit.accountAddress.toLowerCase()" nzType="warning"
+    <nz-alert [nzSpan]="7" *ngIf="!warnNoConnectedAccount && connectedMetamaskAccount !== medicalUnit.accountAddress" nzType="warning"
       nzMessage="Your connected Metamask account isn't matched with the registered one: {{medicalUnit.accountAddress}}"></nz-alert>
 
-    <form *ngIf="!warnNoConnectedAccount && connectedMetamaskAccount.toLowerCase() === medicalUnit.accountAddress.toLowerCase()" nz-form [formGroup]="validateForm"
+    <form *ngIf="!warnNoConnectedAccount && connectedMetamaskAccount === medicalUnit.accountAddress" nz-form [formGroup]="validateForm"
       (ngSubmit)="submitForm(validateForm.value)">
       <nz-form-item>
         <nz-form-label [nzSpan]="7" nzRequired>Medical Unit</nz-form-label>
